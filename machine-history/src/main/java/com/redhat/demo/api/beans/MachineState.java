@@ -42,7 +42,7 @@ public class MachineState {
      */
     @JsonProperty("health")
     @JsonPropertyDescription("The machine health")
-    private Double health;
+    private Integer health;
 
     /**
      * The machine ID
@@ -90,7 +90,7 @@ public class MachineState {
      * 
      */
     @JsonProperty("health")
-    public Double getHealth() {
+    public Integer getHealth() {
         return health;
     }
 
@@ -100,7 +100,7 @@ public class MachineState {
      * 
      */
     @JsonProperty("health")
-    public void setHealth(Double health) {
+    public void setHealth(Integer health) {
         this.health = health;
     }
 

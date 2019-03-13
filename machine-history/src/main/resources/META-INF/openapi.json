@@ -6,7 +6,7 @@
     "version" : "1.0.0"
   },
   "paths" : {
-    "/machine" : {
+    "/machines" : {
       "summary" : "Returns a list of all known machine ID's",
       "get" : {
         "summary" : "Gets a list of all the machines",
@@ -28,7 +28,7 @@
         }
       }
     },
-    "/machine/{id}" : {
+    "/machines/{id}" : {
       "summary" : "The current machine state",
       "get" : {
         "summary" : "Gets the machine state",
@@ -73,8 +73,9 @@
             "type" : "string"
           },
           "health" : {
+            "format" : "int64",
             "description" : "The machine health",
-            "type" : "number"
+            "type" : "integer"
           }
         }
       }
