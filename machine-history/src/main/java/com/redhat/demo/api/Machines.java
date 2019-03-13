@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 public interface Machines {
   @GET
   @Produces("application/json")
-  List<Integer> allMachines();
+  List<Long> allMachines();
 
   @Path("/{id}")
   @GET
