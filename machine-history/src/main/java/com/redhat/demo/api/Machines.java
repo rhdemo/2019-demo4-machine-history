@@ -2,6 +2,7 @@ package com.redhat.demo.api;
 
 import com.redhat.demo.api.beans.MachineState;
 import java.lang.Integer;
+import java.lang.Object;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,10 +16,10 @@ import javax.ws.rs.Produces;
 public interface Machines {
   @GET
   @Produces("application/json")
-  List<Long> allMachines();
+  List<Integer> getAllIds();
 
   @Path("/{id}")
   @GET
   @Produces("application/json")
-  MachineState get(@PathParam("id") Integer id);
+  MachineState getById(@PathParam("id") Object id, @PathParam("id") Object id);
 }
