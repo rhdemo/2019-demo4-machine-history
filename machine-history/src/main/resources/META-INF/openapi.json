@@ -1,28 +1,21 @@
 {
-  "openapi" : "3.0.2",
+  "swagger" : "2.0",
   "info" : {
     "title" : "Machine History",
-    "description" : "The machine history management API",
     "version" : "1.0.0"
   },
   "paths" : {
     "/machines" : {
-      "summary" : "Returns a list of all known machine ID's",
       "get" : {
-        "summary" : "Gets a list of all the machines",
-        "operationId" : "allMachines",
+        "operationId" : "getAllIds",
+        "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
             "description" : "The list of machine ID's",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  }
-                }
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "integer"
               }
             }
           }
@@ -30,19 +23,14 @@
       }
     },
     "/machines/{id}" : {
-      "summary" : "The current machine state",
       "get" : {
         "summary" : "Gets the machine state",
-        "operationId" : "get",
+        "operationId" : "getById",
         "responses" : {
           "200" : {
             "description" : "The current machine state",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/MachineState"
-                }
-              }
+            "schema" : {
+              "$ref" : "#/definitions/MachineState"
             }
           }
         }
@@ -52,33 +40,29 @@
         "in" : "path",
         "description" : "The machine id",
         "required" : true,
-        "schema" : {
-          "type" : "integer"
-        }
+        "type" : "integer",
+        "format" : "int32"
       } ]
     }
   },
-  "components" : {
-    "schemas" : {
-      "MachineState" : {
-        "description" : "The representation of the current state of a machine",
-        "required" : [ "id", "name", "health" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "format" : "int64",
-            "description" : "The machine ID",
-            "type" : "integer"
-          },
-          "name" : {
-            "description" : "The machine name",
-            "type" : "string"
-          },
-          "health" : {
-            "format" : "int64",
-            "description" : "The machine health",
-            "type" : "integer"
-          }
+  "definitions" : {
+    "MachineState" : {
+      "description" : "The representation of the current state of a machine",
+      "required" : [ "id", "name", "health" ],
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "description" : "The machine ID",
+          "type" : "integer"
+        },
+        "name" : {
+          "description" : "The machine name",
+          "type" : "string"
+        },
+        "health" : {
+          "format" : "int64",
+          "description" : "The machine health",
+          "type" : "integer"
         }
       }
     }
