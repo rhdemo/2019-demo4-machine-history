@@ -45,6 +45,22 @@
         "type" : "integer",
         "format" : "int64"
       } ]
+    },
+    "/machines/{id}/history" : {
+      "get" : {
+        "summary" : "Gets all machine history",
+        "operationId" : "getHistory",
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MachineState"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
