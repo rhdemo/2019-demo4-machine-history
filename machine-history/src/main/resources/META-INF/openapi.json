@@ -86,7 +86,14 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "type" : "integer",
+        "format" : "int64"
+      } ]
     }
   },
   "definitions" : {
@@ -96,6 +103,7 @@
       "type" : "object",
       "properties" : {
         "id" : {
+          "format" : "int64",
           "description" : "The machine ID",
           "type" : "integer"
         },

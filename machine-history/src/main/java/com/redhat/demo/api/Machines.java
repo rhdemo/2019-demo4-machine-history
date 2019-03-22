@@ -34,11 +34,11 @@ public interface Machines {
   @GET
   @Produces("application/json")
   @Consumes("application/json")
-  List<MaintenanceData> getHistory();
+  List<MaintenanceData> getHistory(@PathParam("id") Object id);
 
   @Path("/records/{id}")
   @POST
   @Produces("application/json")
   @Consumes("application/json")
-  Integer createRecord(MaintenanceData body);
+  Integer createRecord(@PathParam("id") Object id, MaintenanceData body);
 }
