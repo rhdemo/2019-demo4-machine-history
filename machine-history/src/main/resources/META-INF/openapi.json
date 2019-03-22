@@ -7,7 +7,8 @@
   "paths" : {
     "/machines" : {
       "get" : {
-        "operationId" : "getAllIds",
+        "summary" : "Gets a list of all machines",
+        "operationId" : "getAllMachines",
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
@@ -15,8 +16,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "format" : "int64",
-                "type" : "integer"
+                "$ref" : "#/definitions/Machine"
               }
             }
           }
@@ -26,7 +26,7 @@
     "/machines/{id}" : {
       "get" : {
         "summary" : "Gets the machine state",
-        "operationId" : "getById",
+        "operationId" : "get",
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
@@ -45,6 +45,48 @@
         "type" : "integer",
         "format" : "int64"
       } ]
+    },
+    "/machines/records/{id}" : {
+      "get" : {
+        "summary" : "Gets all machine maintenance",
+        "description" : "Returns all maintenance records for the machine, in descending order",
+        "operationId" : "getHistory",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "The maintenance data",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MaintenanceData"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Creates a maintenance record",
+        "operationId" : "createRecord",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/MaintenanceData"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "The ID of the created record",
+            "schema" : {
+              "type" : "integer"
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -65,6 +107,50 @@
           "format" : "int64",
           "description" : "The machine health",
           "type" : "integer"
+        }
+      }
+    },
+    "Machine" : {
+      "description" : "A Machine",
+      "required" : [ "id", "name" ],
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "format" : "int64",
+          "description" : "The Machine ID",
+          "type" : "integer"
+        },
+        "name" : {
+          "description" : "The machine name",
+          "type" : "string"
+        }
+      }
+    },
+    "MaintenanceData" : {
+      "description" : "A record of maintenance performed on a machine",
+      "required" : [ "time", "mechanic", "startingHealth", "finalHealth" ],
+      "type" : "object",
+      "properties" : {
+        "time" : {
+          "format" : "int64",
+          "description" : "The time of the maintenance in unix epoch format",
+          "type" : "integer"
+        },
+        "mechanic" : {
+          "description" : "The mechanic name",
+          "type" : "string"
+        },
+        "startingHealth" : {
+          "description" : "The starting health of the machine",
+          "type" : "integer"
+        },
+        "finalHealth" : {
+          "description" : "The health of the machine after the maintenance",
+          "type" : "integer"
+        },
+        "Notes" : {
+          "description" : "The maintenance notes",
+          "type" : "string"
         }
       }
     }
