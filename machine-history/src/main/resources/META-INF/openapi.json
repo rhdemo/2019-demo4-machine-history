@@ -43,7 +43,7 @@
         "description" : "The machine id",
         "required" : true,
         "type" : "integer",
-        "format" : "int64"
+        "format" : "int32"
       } ]
     },
     "/machines/records/{id}" : {
@@ -92,7 +92,7 @@
         "in" : "path",
         "required" : true,
         "type" : "integer",
-        "format" : "int64"
+        "format" : "int32"
       } ]
     }
   },
@@ -103,7 +103,6 @@
       "type" : "object",
       "properties" : {
         "id" : {
-          "format" : "int64",
           "description" : "The machine ID",
           "type" : "integer"
         },
@@ -112,7 +111,6 @@
           "type" : "string"
         },
         "health" : {
-          "format" : "int64",
           "description" : "The machine health",
           "type" : "integer"
         }
@@ -124,7 +122,7 @@
       "type" : "object",
       "properties" : {
         "id" : {
-          "format" : "int64",
+          "format" : "int32",
           "description" : "The Machine ID",
           "type" : "integer"
         },
@@ -149,10 +147,12 @@
           "type" : "string"
         },
         "startingHealth" : {
+          "format" : "int32",
           "description" : "The starting health of the machine",
           "type" : "integer"
         },
         "finalHealth" : {
+          "format" : "int32",
           "description" : "The health of the machine after the maintenance",
           "type" : "integer"
         },
