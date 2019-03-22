@@ -14,7 +14,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"machine_id", "date"}, name = "timestamp_index"))
 @Entity
-public class MaintenanceHistory extends PanacheEntity {
+public class MaintenanceRecord extends PanacheEntity {
 
     @ManyToOne
     public Machine machine;
