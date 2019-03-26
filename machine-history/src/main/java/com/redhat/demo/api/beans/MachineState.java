@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "id",
     "name",
-    "health"
+    "health",
+    "lifetimeCost"
 })
 public class MachineState {
 
@@ -43,6 +44,8 @@ public class MachineState {
     @JsonProperty("health")
     @JsonPropertyDescription("The machine health")
     private Integer health;
+    @JsonProperty("lifetimeCost")
+    private Integer lifetimeCost;
 
     /**
      * The machine ID
@@ -102,6 +105,16 @@ public class MachineState {
     @JsonProperty("health")
     public void setHealth(Integer health) {
         this.health = health;
+    }
+
+    @JsonProperty("lifetimeCost")
+    public Integer getLifetimeCost() {
+        return lifetimeCost;
+    }
+
+    @JsonProperty("lifetimeCost")
+    public void setLifetimeCost(Integer lifetimeCost) {
+        this.lifetimeCost = lifetimeCost;
     }
 
 }
