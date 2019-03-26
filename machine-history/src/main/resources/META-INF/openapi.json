@@ -22,6 +22,19 @@
           }
         }
       }
+    },
+    "/machines/{id}" : {
+      "get" : {
+        "operationId" : "getMachine",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/MachineState"
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
