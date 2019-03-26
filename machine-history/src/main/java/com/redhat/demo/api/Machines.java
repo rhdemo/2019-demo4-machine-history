@@ -25,7 +25,7 @@ public interface Machines {
   @Path("/{id}")
   @GET
   @Produces("application/json")
-  MachineState get(@PathParam("id") Integer id);
+  MachineState get(@PathParam("id") Object id);
 
   /**
    * Returns all maintenance records for the machine, in descending order
@@ -34,11 +34,11 @@ public interface Machines {
   @GET
   @Produces("application/json")
   @Consumes("application/json")
-  List<MaintenanceData> getHistory(@PathParam("id") Integer id);
+  List<MaintenanceData> getHistory(@PathParam("id") Object id);
 
   @Path("/records/{id}")
   @POST
   @Produces("application/json")
   @Consumes("application/json")
-  Integer createRecord(@PathParam("id") Integer id, MaintenanceData body);
+  Integer createRecord(@PathParam("id") Object id, MaintenanceData body);
 }

@@ -94,6 +94,21 @@
         "type" : "integer",
         "format" : "int32"
       } ]
+    },
+    "/mechanics" : {
+      "get" : {
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Mechanic"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -158,6 +173,19 @@
         },
         "Notes" : {
           "description" : "The maintenance notes",
+          "type" : "string"
+        }
+      }
+    },
+    "Mechanic" : {
+      "description" : "A mechanic",
+      "required" : [ "id", "name" ],
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "name" : {
           "type" : "string"
         }
       }

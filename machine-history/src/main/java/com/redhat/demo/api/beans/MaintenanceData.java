@@ -28,7 +28,7 @@ public class MaintenanceData {
      */
     @JsonProperty("time")
     @JsonPropertyDescription("The time of the maintenance in unix epoch format")
-    private Long time;
+    private Integer time;
     /**
      * The mechanic name
      * (Required)
@@ -67,7 +67,7 @@ public class MaintenanceData {
      * 
      */
     @JsonProperty("time")
-    public Long getTime() {
+    public Integer getTime() {
         return time;
     }
 
@@ -77,7 +77,7 @@ public class MaintenanceData {
      * 
      */
     @JsonProperty("time")
-    public void setTime(Long time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
