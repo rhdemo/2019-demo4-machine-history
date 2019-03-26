@@ -2,13 +2,9 @@ package com.redhat.demo.api;
 
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineState;
-import com.redhat.demo.api.beans.MaintenanceData;
-import java.lang.Integer;
 import java.lang.Object;
 import java.util.List;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -25,20 +21,5 @@ public interface Machines {
   @Path("/{id}")
   @GET
   @Produces("application/json")
-  MachineState get(@PathParam("id") Integer id);
-
-  /**
-   * Returns all maintenance records for the machine, in descending order
-   */
-  @Path("/records/{id}")
-  @GET
-  @Produces("application/json")
-  @Consumes("application/json")
-  List<MaintenanceData> getHistory(@PathParam("id") Integer id);
-
-  @Path("/records/{id}")
-  @POST
-  @Produces("application/json")
-  @Consumes("application/json")
-  Integer createRecord(@PathParam("id") Integer id, MaintenanceData body);
+  MachineState get(@PathParam("id") Object id);
 }
