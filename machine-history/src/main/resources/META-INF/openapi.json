@@ -22,29 +22,6 @@
           }
         }
       }
-    },
-    "/machines/{id}" : {
-      "get" : {
-        "summary" : "Gets the machine state",
-        "operationId" : "get",
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "The current machine state",
-            "schema" : {
-              "$ref" : "#/definitions/MachineState"
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-        "name" : "id",
-        "in" : "path",
-        "description" : "The machine id",
-        "required" : true,
-        "type" : "integer",
-        "format" : "int32"
-      } ]
     }
   },
   "definitions" : {
@@ -63,6 +40,9 @@
         },
         "health" : {
           "description" : "The machine health",
+          "type" : "integer"
+        },
+        "lifetimeCost" : {
           "type" : "integer"
         }
       }
