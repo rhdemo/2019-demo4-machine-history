@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "mechanic",
     "startingHealth",
     "finalHealth",
-    "Notes"
+    "Notes",
+    "repairCost"
 })
 public class MaintenanceData {
 
@@ -28,7 +29,7 @@ public class MaintenanceData {
      */
     @JsonProperty("time")
     @JsonPropertyDescription("The time of the maintenance in unix epoch format")
-    private Long time;
+    private Integer time;
     /**
      * The mechanic name
      * (Required)
@@ -60,6 +61,13 @@ public class MaintenanceData {
     @JsonProperty("Notes")
     @JsonPropertyDescription("The maintenance notes")
     private String notes;
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("repairCost")
+    private Integer repairCost;
 
     /**
      * The time of the maintenance in unix epoch format
@@ -67,7 +75,7 @@ public class MaintenanceData {
      * 
      */
     @JsonProperty("time")
-    public Long getTime() {
+    public Integer getTime() {
         return time;
     }
 
@@ -77,7 +85,7 @@ public class MaintenanceData {
      * 
      */
     @JsonProperty("time")
-    public void setTime(Long time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -157,6 +165,26 @@ public class MaintenanceData {
     @JsonProperty("Notes")
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("repairCost")
+    public Integer getRepairCost() {
+        return repairCost;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("repairCost")
+    public void setRepairCost(Integer repairCost) {
+        this.repairCost = repairCost;
     }
 
 }

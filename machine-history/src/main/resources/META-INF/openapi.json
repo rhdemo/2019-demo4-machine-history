@@ -45,55 +45,6 @@
         "type" : "integer",
         "format" : "int32"
       } ]
-    },
-    "/machines/records/{id}" : {
-      "get" : {
-        "summary" : "Gets all machine maintenance",
-        "description" : "Returns all maintenance records for the machine, in descending order",
-        "operationId" : "getHistory",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "The maintenance data",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/MaintenanceData"
-              }
-            }
-          }
-        }
-      },
-      "post" : {
-        "summary" : "Creates a maintenance record",
-        "operationId" : "createRecord",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/MaintenanceData"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "The ID of the created record",
-            "schema" : {
-              "type" : "integer"
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-        "name" : "id",
-        "in" : "path",
-        "required" : true,
-        "type" : "integer",
-        "format" : "int32"
-      } ]
     }
   },
   "definitions" : {
@@ -134,7 +85,7 @@
     },
     "MaintenanceData" : {
       "description" : "A record of maintenance performed on a machine",
-      "required" : [ "time", "mechanic", "startingHealth", "finalHealth" ],
+      "required" : [ "time", "mechanic", "startingHealth", "finalHealth", "repairCost" ],
       "type" : "object",
       "properties" : {
         "time" : {
@@ -159,6 +110,9 @@
         "Notes" : {
           "description" : "The maintenance notes",
           "type" : "string"
+        },
+        "repairCost" : {
+          "type" : "integer"
         }
       }
     }
