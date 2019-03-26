@@ -44,4 +44,6 @@ public class MaintenanceRecord extends PanacheEntityBase {
     public int finalHealth;
 
     public String notes;
+
+    public int repairCost;
 }

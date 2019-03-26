@@ -26,38 +26,4 @@ public class MachineResource implements Machines {
             return m;
         }).collect(Collectors.toList());
     }
-
-    @Override
-    public MachineState get(Integer id) {
-        MaintenanceRecord history = MaintenanceRecord.find("machine.id=?1", Sort.descending("date"), id).firstResult();
-        MachineState s = new MachineState();
-        s.setHealth(history.finalHealth);
-        s.setName(history.machine.name);
-        s.setId(id);
-        return s;
-    }
-
-    @Override
-    public List<MaintenanceData> getHistory(Integer id) {
-        return MaintenanceRecord.<MaintenanceRecord>find("machine.id=?1", Sort.descending("date"), id).stream().map((i) -> {
-            MaintenanceData m = new MaintenanceData();
-            m.setFinalHealth(i.finalHealth);
-            m.setStartingHealth(i.startingHealth);
-            m.setMechanic(i.mechanic.name);
-            m.setNotes(i.notes);
-            m.setTime(i.date.getTime());
-            return m;
-        }).collect(Collectors.toList());
-    }
-
-    @Override
-    public Integer createRecord(@PathParam("id") Integer id, MaintenanceData body) {
-        MaintenanceRecord r = new MaintenanceRecord();
-        r.date = new Date();
-        r.finalHealth = body.getFinalHealth();
-        r.startingHealth = body.getStartingHealth();
-        r.mechanic = MechanicRecord.find("name", body.getMechanic()).singleResult();
-        r.machine = MachineRecord.findById(id);
-        return null;
-    }
 }
