@@ -3,49 +3,53 @@ package com.redhat.demo.api.beans;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
- * The representation of the current state of a machine
+ * A record of maintenance performed on a machine
  * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "name",
-    "health"
+    "date",
+    "health",
+    "mechanic"
 })
-public class MachineState {
+public class MaintenanceData {
 
     /**
-     * The machine ID
+     * 
      * (Required)
      * 
      */
     @JsonProperty("id")
-    @JsonPropertyDescription("The machine ID")
     private Integer id;
     /**
-     * The machine name
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The machine name")
-    private String name;
+    @JsonProperty("date")
+    private String date;
     /**
-     * The machine health
+     * 
      * (Required)
      * 
      */
     @JsonProperty("health")
-    @JsonPropertyDescription("The machine health")
     private Integer health;
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("mechanic")
+    private String mechanic;
 
     /**
-     * The machine ID
+     * 
      * (Required)
      * 
      */
@@ -55,7 +59,7 @@ public class MachineState {
     }
 
     /**
-     * The machine ID
+     * 
      * (Required)
      * 
      */
@@ -65,27 +69,27 @@ public class MachineState {
     }
 
     /**
-     * The machine name
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("date")
+    public String getDate() {
+        return date;
     }
 
     /**
-     * The machine name
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("date")
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**
-     * The machine health
+     * 
      * (Required)
      * 
      */
@@ -95,13 +99,33 @@ public class MachineState {
     }
 
     /**
-     * The machine health
+     * 
      * (Required)
      * 
      */
     @JsonProperty("health")
     public void setHealth(Integer health) {
         this.health = health;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("mechanic")
+    public String getMechanic() {
+        return mechanic;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("mechanic")
+    public void setMechanic(String mechanic) {
+        this.mechanic = mechanic;
     }
 
 }
