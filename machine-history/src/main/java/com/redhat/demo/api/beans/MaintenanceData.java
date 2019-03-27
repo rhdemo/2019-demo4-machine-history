@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "id",
     "date",
     "mechanic",
-    "repair"
+    "repair",
+    "finalHealth"
 })
 public class MaintenanceData {
 
@@ -47,6 +48,8 @@ public class MaintenanceData {
      */
     @JsonProperty("repair")
     private Integer repair;
+    @JsonProperty("finalHealth")
+    private Integer finalHealth;
 
     /**
      * 
@@ -126,6 +129,16 @@ public class MaintenanceData {
     @JsonProperty("repair")
     public void setRepair(Integer repair) {
         this.repair = repair;
+    }
+
+    @JsonProperty("finalHealth")
+    public Integer getFinalHealth() {
+        return finalHealth;
+    }
+
+    @JsonProperty("finalHealth")
+    public void setFinalHealth(Integer finalHealth) {
+        this.finalHealth = finalHealth;
     }
 
 }
