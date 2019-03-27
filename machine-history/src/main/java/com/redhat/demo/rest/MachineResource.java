@@ -1,7 +1,6 @@
 package com.redhat.demo.rest;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,20 +8,15 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
-import com.oracle.svm.core.jdk.IgnoreForGetCallerClass.Holder;
 import com.redhat.demo.api.Machines;
-import com.redhat.demo.api.beans.DamageData;
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
 import com.redhat.demo.api.beans.MachineState;
 import com.redhat.demo.api.beans.MaintenanceData;
-import com.redhat.demo.model.DamageRecord;
 import com.redhat.demo.model.MachineRecord;
 import com.redhat.demo.model.MaintenanceRecord;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.panache.common.Sort;
 
 @RequestScoped
@@ -48,15 +42,8 @@ public class MachineResource implements Machines {
     public MachineState getMachine(Integer id) {
         MachineState ms = new MachineState();
         MachineRecord m = MachineRecord.findById(id);
-        ms.setHealth(0);
-        int health = 100;
-        long totalFixed = (Long) entityManager
-                .createQuery("select sum(m.repair) from MaintenanceRecord m where m.machine.id=:machine")
-                .setParameter("machine", id).getSingleResult();
-        long totalDamage = (Long) entityManager
-                .createQuery("select sum(d.damage) from DamageRecord d where d.machine.id=:machine")
-                .setParameter("machine", id).getSingleResult();
-        ms.setHealth((int) (100 - totalDamage + totalFixed));
+        MaintenanceRecord mr = MaintenanceRecord.find("machine=?1 order by date desc", m).firstResult();
+        ms.setHealth(mr.health);
         ms.setName(m.name);
         return ms;
     }
@@ -71,22 +58,12 @@ public class MachineResource implements Machines {
                 MaintenanceData data = new MaintenanceData();
                 data.setId(mr.id);
                 data.setDate(dateFormat.format(mr.date));
-                data.setHealth(mr.repair);
+                data.setRepair(mr.repair);
+                data.setFinalHealth(mr.health);
                 data.setMechanic(mr.mechanic);
                 return data;
             }).collect(Collectors.toList());
         history.setMaintenance(maint);
-
-        List<DamageData> damage = DamageRecord.<DamageRecord>find("machine = ?1", Sort.descending("date"), m)
-            .page(0, 5)
-            .stream().map(mr -> {
-                DamageData data = new DamageData();
-                data.setId(mr.id);
-                data.setDate(dateFormat.format(mr.date));
-                data.setAmount(mr.damage);
-                return data;
-            }).collect(Collectors.toList());
-        history.setDamage(damage);
         return history;
     }
 }

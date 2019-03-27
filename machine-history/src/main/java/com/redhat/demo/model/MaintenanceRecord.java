@@ -38,4 +38,9 @@ public class MaintenanceRecord extends PanacheEntityBase {
      * The amount of health that was repaired
      */
     public int repair;
+
+    /**
+     * The health at the end of the repair
+     */
+    public int health;
 }
