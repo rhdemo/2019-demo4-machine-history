@@ -3,7 +3,6 @@ package com.redhat.demo.api.beans;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -13,84 +12,104 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "time",
-    "mechanic",
-    "startingHealth",
-    "finalHealth",
-    "Notes",
-    "repairCost"
+    "id",
+    "date",
+    "health",
+    "mechanic"
 })
 public class MaintenanceData {
 
     /**
-     * The time of the maintenance in unix epoch format
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("time")
-    @JsonPropertyDescription("The time of the maintenance in unix epoch format")
-    private Integer time;
+    @JsonProperty("id")
+    private Integer id;
     /**
-     * The mechanic name
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("date")
+    private String date;
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("health")
+    private Integer health;
+    /**
+     * 
      * (Required)
      * 
      */
     @JsonProperty("mechanic")
-    @JsonPropertyDescription("The mechanic name")
     private String mechanic;
-    /**
-     * The starting health of the machine
-     * (Required)
-     * 
-     */
-    @JsonProperty("startingHealth")
-    @JsonPropertyDescription("The starting health of the machine")
-    private Integer startingHealth;
-    /**
-     * The health of the machine after the maintenance
-     * (Required)
-     * 
-     */
-    @JsonProperty("finalHealth")
-    @JsonPropertyDescription("The health of the machine after the maintenance")
-    private Integer finalHealth;
-    /**
-     * The maintenance notes
-     * 
-     */
-    @JsonProperty("Notes")
-    @JsonPropertyDescription("The maintenance notes")
-    private String notes;
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("repairCost")
-    private Integer repairCost;
 
     /**
-     * The time of the maintenance in unix epoch format
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("time")
-    public Integer getTime() {
-        return time;
+    @JsonProperty("id")
+    public Integer getId() {
+        return id;
     }
 
     /**
-     * The time of the maintenance in unix epoch format
+     * 
      * (Required)
      * 
      */
-    @JsonProperty("time")
-    public void setTime(Integer time) {
-        this.time = time;
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
-     * The mechanic name
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("date")
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("date")
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("health")
+    public Integer getHealth() {
+        return health;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("health")
+    public void setHealth(Integer health) {
+        this.health = health;
+    }
+
+    /**
+     * 
      * (Required)
      * 
      */
@@ -100,91 +119,13 @@ public class MaintenanceData {
     }
 
     /**
-     * The mechanic name
+     * 
      * (Required)
      * 
      */
     @JsonProperty("mechanic")
     public void setMechanic(String mechanic) {
         this.mechanic = mechanic;
-    }
-
-    /**
-     * The starting health of the machine
-     * (Required)
-     * 
-     */
-    @JsonProperty("startingHealth")
-    public Integer getStartingHealth() {
-        return startingHealth;
-    }
-
-    /**
-     * The starting health of the machine
-     * (Required)
-     * 
-     */
-    @JsonProperty("startingHealth")
-    public void setStartingHealth(Integer startingHealth) {
-        this.startingHealth = startingHealth;
-    }
-
-    /**
-     * The health of the machine after the maintenance
-     * (Required)
-     * 
-     */
-    @JsonProperty("finalHealth")
-    public Integer getFinalHealth() {
-        return finalHealth;
-    }
-
-    /**
-     * The health of the machine after the maintenance
-     * (Required)
-     * 
-     */
-    @JsonProperty("finalHealth")
-    public void setFinalHealth(Integer finalHealth) {
-        this.finalHealth = finalHealth;
-    }
-
-    /**
-     * The maintenance notes
-     * 
-     */
-    @JsonProperty("Notes")
-    public String getNotes() {
-        return notes;
-    }
-
-    /**
-     * The maintenance notes
-     * 
-     */
-    @JsonProperty("Notes")
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("repairCost")
-    public Integer getRepairCost() {
-        return repairCost;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("repairCost")
-    public void setRepairCost(Integer repairCost) {
-        this.repairCost = repairCost;
     }
 
 }
