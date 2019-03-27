@@ -8,9 +8,9 @@ create database machine_history_testing;
 create database machine_history_dev;
 
 \c machine_history_testing
-\i test.sql
+\i ddl.sql
 
 \c machine_history_dev
-\i dev.sql
+\i ddl.sql
 
 \c postgres

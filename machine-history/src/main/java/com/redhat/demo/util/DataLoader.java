@@ -3,7 +3,9 @@ package com.redhat.demo.util;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +17,8 @@ import javax.transaction.Transactional;
 import com.redhat.demo.model.DamageRecord;
 import com.redhat.demo.model.MachineRecord;
 import com.redhat.demo.model.MaintenanceRecord;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import io.quarkus.runtime.StartupEvent;
 
@@ -34,17 +38,22 @@ public class DataLoader {
     @Inject
     EntityManager em;
 
+    boolean enabled = false;
+
     static final int DAYS = 600;
     static final int MAX_INTERVAL = 20;
 
     @Transactional
     void startup(@Observes StartupEvent startup) {
+        if(!enabled) {
+            return;
+        }
 
         em.createQuery("delete from MaintenanceRecord").executeUpdate();
         em.createQuery("delete from DamageRecord").executeUpdate();
         em.createQuery("delete from MachineRecord").executeUpdate();
 
-        Random r = new Random();
+        SecureRandom r = new SecureRandom();
         int id = 1;
         for (String name : MACHINES) {
             MachineRecord m = new MachineRecord();
@@ -56,19 +65,19 @@ public class DataLoader {
             int health = 100;
             int target = r.nextInt(60) + 20;
             do {
-                Date date = new Date();
-                date.setTime(date.getTime() - dayCount * 24 * 60 * 60 * 1000);
-                dayCount -= r.nextInt(MAX_INTERVAL);
+                Calendar c = new GregorianCalendar();
+                c.add(Calendar.DATE, -dayCount);
+                dayCount -= (r.nextInt(MAX_INTERVAL) + 2);
                 if (health > target) {
                     DamageRecord d = new DamageRecord();
                     d.damage = r.nextInt(10);
                     health -= d.damage;
-                    d.date = date;
+                    d.date = c.getTime();
                     d.machine = m;
                     d.persist();
                 } else {
                     MaintenanceRecord mr = new MaintenanceRecord();
-                    mr.date = date;
+                    mr.date = c.getTime();
                     mr.machine = m;
                     mr.mechanic = MECHANICS[r.nextInt(MECHANICS.length)];
                     mr.repair = Math.max(r.nextInt(40) + 20, 100 - health);

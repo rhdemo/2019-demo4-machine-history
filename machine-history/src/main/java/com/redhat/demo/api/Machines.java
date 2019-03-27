@@ -22,10 +22,10 @@ public interface Machines {
   @Path("/{id}")
   @GET
   @Produces("application/json")
-  MachineState getMachine(@PathParam("id") Object id);
+  MachineState getMachine(@PathParam("id") Integer id);
 
   @Path("/history/{id}")
   @GET
   @Produces("application/json")
-  MachineHistory generatedMethod1(@PathParam("id") Object id);
+  MachineHistory machineHistory(@PathParam("id") Integer id);
 }
