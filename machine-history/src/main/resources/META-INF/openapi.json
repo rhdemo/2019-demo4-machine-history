@@ -44,6 +44,7 @@
     },
     "/machines/history/{id}" : {
       "get" : {
+        "operationId" : "machineHistory",
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
@@ -99,7 +100,7 @@
     },
     "MaintenanceData" : {
       "description" : "A record of maintenance performed on a machine",
-      "required" : [ "id", "date", "health", "mechanic" ],
+      "required" : [ "id", "date", "repair", "mechanic" ],
       "type" : "object",
       "properties" : {
         "id" : {
@@ -108,17 +109,20 @@
         "date" : {
           "type" : "string"
         },
-        "health" : {
-          "type" : "integer"
-        },
         "mechanic" : {
           "type" : "string"
+        },
+        "repair" : {
+          "type" : "integer"
+        },
+        "finalHealth" : {
+          "type" : "integer"
         }
       }
     },
     "MachineHistory" : {
       "description" : "The history of a machine",
-      "required" : [ "maintenance", "damage" ],
+      "required" : [ "maintenance", "name" ],
       "type" : "object",
       "properties" : {
         "maintenance" : {
@@ -127,25 +131,7 @@
             "$ref" : "#/definitions/MaintenanceData"
           }
         },
-        "damage" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/DamageData"
-          }
-        }
-      }
-    },
-    "DamageData" : {
-      "required" : [ "id", "amount", "date" ],
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer"
-        },
-        "amount" : {
-          "type" : "integer"
-        },
-        "date" : {
+        "name" : {
           "type" : "string"
         }
       }
