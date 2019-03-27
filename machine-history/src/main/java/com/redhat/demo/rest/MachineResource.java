@@ -47,7 +47,7 @@ public class MachineResource implements Machines {
                 MaintenanceData data = new MaintenanceData();
                 data.setId(mr.id);
                 data.setDate(dateFormat.format(mr.date));
-                data.setHealth(mr.repair);
+                data.setRepair(mr.repair);
                 data.setMechanic(mr.mechanic);
                 return data;
             }).collect(Collectors.toList());
