@@ -1,6 +1,7 @@
 package com.redhat.demo.api;
 
 import com.redhat.demo.api.beans.Machine;
+import com.redhat.demo.api.beans.MachineHistory;
 import com.redhat.demo.api.beans.MachineState;
 import java.lang.Object;
 import java.util.List;
@@ -22,4 +23,9 @@ public interface Machines {
   @GET
   @Produces("application/json")
   MachineState getMachine(@PathParam("id") Object id);
+
+  @Path("/history/{id}")
+  @GET
+  @Produces("application/json")
+  MachineHistory generatedMethod1(@PathParam("id") Object id);
 }
