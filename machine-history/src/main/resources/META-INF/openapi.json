@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.2",
   "info" : {
-    "title" : "Copy of Machine History Initial V3",
+    "title" : "Copy of Machine History Initial v3",
     "version" : "1.0.0"
   },
   "paths" : {
@@ -49,33 +49,29 @@
           "type" : "integer"
         }
       } ]
-    },
-    "/machines/{id}" : {
-      "get" : {
-        "responses" : {
-          "200" : {
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/MachineState"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-        "name" : "id",
-        "in" : "path",
-        "required" : true,
-        "schema" : {
-          "type" : "integer"
-        }
-      } ]
     }
   },
   "components" : {
     "schemas" : {
+      "MachineState" : {
+        "description" : "The representation of the current state of a machine",
+        "required" : [ "id", "name", "health" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "description" : "The machine ID",
+            "type" : "integer"
+          },
+          "name" : {
+            "description" : "The machine name",
+            "type" : "string"
+          },
+          "health" : {
+            "description" : "The machine health",
+            "type" : "integer"
+          }
+        }
+      },
       "Machine" : {
         "description" : "A Machine",
         "required" : [ "id", "name" ],
@@ -108,12 +104,15 @@
           },
           "repair" : {
             "type" : "integer"
+          },
+          "finalHealth" : {
+            "type" : "integer"
           }
         }
       },
       "MachineHistory" : {
         "description" : "The history of a machine",
-        "required" : [ "maintenance", "damage", "name" ],
+        "required" : [ "maintenance", "name" ],
         "type" : "object",
         "properties" : {
           "maintenance" : {
@@ -122,44 +121,8 @@
               "$ref" : "#/components/schemas/MaintenanceData"
             }
           },
-          "damage" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DamageData"
-            }
-          },
           "name" : {
             "type" : "string"
-          }
-        }
-      },
-      "DamageData" : {
-        "required" : [ "id", "amount", "date" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "amount" : {
-            "type" : "integer"
-          },
-          "date" : {
-            "type" : "string"
-          }
-        }
-      },
-      "MachineState" : {
-        "required" : [ "id", "name", "health" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "health" : {
-            "type" : "integer"
           }
         }
       }

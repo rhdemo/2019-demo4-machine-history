@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "maintenance",
-    "damage",
     "name"
 })
 public class MachineHistory {
@@ -27,13 +26,6 @@ public class MachineHistory {
      */
     @JsonProperty("maintenance")
     private List<MaintenanceData> maintenance = new ArrayList<MaintenanceData>();
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("damage")
-    private List<DamageData> damage = new ArrayList<DamageData>();
     /**
      * 
      * (Required)
@@ -60,26 +52,6 @@ public class MachineHistory {
     @JsonProperty("maintenance")
     public void setMaintenance(List<MaintenanceData> maintenance) {
         this.maintenance = maintenance;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("damage")
-    public List<DamageData> getDamage() {
-        return damage;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("damage")
-    public void setDamage(List<DamageData> damage) {
-        this.damage = damage;
     }
 
     /**
