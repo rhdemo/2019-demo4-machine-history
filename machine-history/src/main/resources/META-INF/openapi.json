@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.2",
   "info" : {
-    "title" : "Copy of Machine History Initial v3",
+    "title" : "Machine History Initial v3",
     "version" : "1.0.0"
   },
   "paths" : {
