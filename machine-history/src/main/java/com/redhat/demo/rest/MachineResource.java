@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import com.redhat.demo.api.Machines;
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
+import com.redhat.demo.api.beans.MachineState;
 import com.redhat.demo.api.beans.MaintenanceData;
 import com.redhat.demo.model.MachineRecord;
 import com.redhat.demo.model.MaintenanceRecord;
@@ -52,7 +53,6 @@ public class MachineResource implements Machines {
                 return data;
             }).collect(Collectors.toList());
         history.setMaintenance(maint);
-
         return history;
     }
 }
