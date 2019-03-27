@@ -49,6 +49,29 @@
           "type" : "integer"
         }
       } ]
+    },
+    "/machines/{id}" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MachineState"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ]
     }
   },
   "components" : {
@@ -122,6 +145,21 @@
           },
           "date" : {
             "type" : "string"
+          }
+        }
+      },
+      "MachineState" : {
+        "required" : [ "id", "name", "health" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "health" : {
+            "type" : "integer"
           }
         }
       }
