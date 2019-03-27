@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "id",
     "date",
-    "health",
-    "mechanic"
+    "mechanic",
+    "repair"
 })
 public class MaintenanceData {
 
@@ -38,15 +38,15 @@ public class MaintenanceData {
      * (Required)
      * 
      */
-    @JsonProperty("health")
-    private Integer health;
+    @JsonProperty("mechanic")
+    private String mechanic;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("mechanic")
-    private String mechanic;
+    @JsonProperty("repair")
+    private Integer repair;
 
     /**
      * 
@@ -93,26 +93,6 @@ public class MaintenanceData {
      * (Required)
      * 
      */
-    @JsonProperty("health")
-    public Integer getHealth() {
-        return health;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("health")
-    public void setHealth(Integer health) {
-        this.health = health;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("mechanic")
     public String getMechanic() {
         return mechanic;
@@ -126,6 +106,26 @@ public class MaintenanceData {
     @JsonProperty("mechanic")
     public void setMechanic(String mechanic) {
         this.mechanic = mechanic;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("repair")
+    public Integer getRepair() {
+        return repair;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("repair")
+    public void setRepair(Integer repair) {
+        this.repair = repair;
     }
 
 }
