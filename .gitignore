@@ -1,3 +1,4 @@
+quarkus.log
 .DS_Store
 target
 *.iml

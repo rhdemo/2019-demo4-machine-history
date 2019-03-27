@@ -2,7 +2,6 @@ package com.redhat.demo.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +13,12 @@ import javax.persistence.TemporalType;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
+/**
+ * DamageRecord
+ */
 @Entity
-@Table(name = "maintenance_record")
-public class MaintenanceRecord extends PanacheEntityBase {
+@Table(name = "damage_record")
+public class DamageRecord extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +27,8 @@ public class MaintenanceRecord extends PanacheEntityBase {
     @ManyToOne
     public MachineRecord machine;
 
-    public String mechanic;
-
-    /**
-     * The time of the status
-     */
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
     public Date date;
 
-    /**
-     * The amount of health that was repaired
-     */
-    public int repair;
+    public int damage;
 }

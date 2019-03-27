@@ -45,7 +45,7 @@ public class MachineState {
     @JsonPropertyDescription("The machine health")
     private Integer health;
     @JsonProperty("lifetimeCost")
-    private Integer lifetimeCost;
+    private Long lifetimeCost;
 
     /**
      * The machine ID
@@ -108,12 +108,12 @@ public class MachineState {
     }
 
     @JsonProperty("lifetimeCost")
-    public Integer getLifetimeCost() {
+    public Long getLifetimeCost() {
         return lifetimeCost;
     }
 
     @JsonProperty("lifetimeCost")
-    public void setLifetimeCost(Integer lifetimeCost) {
+    public void setLifetimeCost(Long lifetimeCost) {
         this.lifetimeCost = lifetimeCost;
     }
 
