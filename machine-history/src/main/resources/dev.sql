@@ -35,7 +35,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: machine_record; Type: TABLE; Schema: public; Owner: stuart
+-- Name: machine_record; Type: TABLE; Schema: public; Owner: machine_history_user
 --
 
 CREATE TABLE machine_record (
@@ -44,10 +44,10 @@ CREATE TABLE machine_record (
 );
 
 
-ALTER TABLE machine_record OWNER TO stuart;
+ALTER TABLE machine_record OWNER TO machine_history_user;
 
 --
--- Name: maintenance_record; Type: TABLE; Schema: public; Owner: stuart
+-- Name: maintenance_record; Type: TABLE; Schema: public; Owner: machine_history_user
 --
 
 CREATE TABLE maintenance_record (
@@ -60,10 +60,10 @@ CREATE TABLE maintenance_record (
 );
 
 
-ALTER TABLE maintenance_record OWNER TO stuart;
+ALTER TABLE maintenance_record OWNER TO machine_history_user;
 
 --
--- Name: maintenance_record_id_seq; Type: SEQUENCE; Schema: public; Owner: stuart
+-- Name: maintenance_record_id_seq; Type: SEQUENCE; Schema: public; Owner: machine_history_user
 --
 
 CREATE SEQUENCE maintenance_record_id_seq
@@ -74,24 +74,24 @@ CREATE SEQUENCE maintenance_record_id_seq
     CACHE 1;
 
 
-ALTER TABLE maintenance_record_id_seq OWNER TO stuart;
+ALTER TABLE maintenance_record_id_seq OWNER TO machine_history_user;
 
 --
--- Name: maintenance_record_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: stuart
+-- Name: maintenance_record_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: machine_history_user
 --
 
 ALTER SEQUENCE maintenance_record_id_seq OWNED BY maintenance_record.id;
 
 
 --
--- Name: maintenance_record id; Type: DEFAULT; Schema: public; Owner: stuart
+-- Name: maintenance_record id; Type: DEFAULT; Schema: public; Owner: machine_history_user
 --
 
 ALTER TABLE ONLY maintenance_record ALTER COLUMN id SET DEFAULT nextval('maintenance_record_id_seq'::regclass);
 
 
 --
--- Data for Name: machine_record; Type: TABLE DATA; Schema: public; Owner: stuart
+-- Data for Name: machine_record; Type: TABLE DATA; Schema: public; Owner: machine_history_user
 --
 
 COPY machine_record (id, name) FROM stdin;
@@ -109,7 +109,7 @@ COPY machine_record (id, name) FROM stdin;
 
 
 --
--- Data for Name: maintenance_record; Type: TABLE DATA; Schema: public; Owner: stuart
+-- Data for Name: maintenance_record; Type: TABLE DATA; Schema: public; Owner: machine_history_user
 --
 
 COPY maintenance_record (id, machine_id, date, repair, health, mechanic) FROM stdin;
@@ -469,14 +469,14 @@ COPY maintenance_record (id, machine_id, date, repair, health, mechanic) FROM st
 
 
 --
--- Name: maintenance_record_id_seq; Type: SEQUENCE SET; Schema: public; Owner: stuart
+-- Name: maintenance_record_id_seq; Type: SEQUENCE SET; Schema: public; Owner: machine_history_user
 --
 
 SELECT pg_catalog.setval('maintenance_record_id_seq', 1084, true);
 
 
 --
--- Name: machine_record machine_record_pkey; Type: CONSTRAINT; Schema: public; Owner: stuart
+-- Name: machine_record machine_record_pkey; Type: CONSTRAINT; Schema: public; Owner: machine_history_user
 --
 
 ALTER TABLE ONLY machine_record
@@ -484,7 +484,7 @@ ALTER TABLE ONLY machine_record
 
 
 --
--- Name: maintenance_record maintenance_record_pkey; Type: CONSTRAINT; Schema: public; Owner: stuart
+-- Name: maintenance_record maintenance_record_pkey; Type: CONSTRAINT; Schema: public; Owner: machine_history_user
 --
 
 ALTER TABLE ONLY maintenance_record
@@ -492,7 +492,7 @@ ALTER TABLE ONLY maintenance_record
 
 
 --
--- Name: maintenance_record maintenance_record_machine_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: stuart
+-- Name: maintenance_record maintenance_record_machine_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: machine_history_user
 --
 
 ALTER TABLE ONLY maintenance_record
