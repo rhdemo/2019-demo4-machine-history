@@ -3,6 +3,7 @@ package com.redhat.demo.api;
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
 import com.redhat.demo.api.beans.MachineState;
+import java.lang.Integer;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,6 +18,11 @@ public interface Machines {
   @GET
   @Produces("application/json")
   List<Machine> getAllMachines();
+
+  @Path("/{id}")
+  @GET
+  @Produces("application/json")
+  MachineState getMachine(@PathParam("id") Integer id);
 
   @Path("/history/{id}")
   @GET
