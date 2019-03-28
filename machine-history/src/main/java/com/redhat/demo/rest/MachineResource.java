@@ -55,4 +55,12 @@ public class MachineResource implements Machines {
         history.setMaintenance(maint);
         return history;
     }
+
+    MachineState calculateState(Integer machineId) {
+        MaintenanceRecord record = MaintenanceRecord.find("maaachine.id=?1", machineId).firstResult();
+        MachineState ms = new MachineState();
+        ms.setId(machineId);
+        ms.setName(record.machine.name);
+        return ms;
+    }
 }
