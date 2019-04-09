@@ -3,6 +3,7 @@ package com.redhat.demo.api;
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
 import java.lang.Integer;
+import java.lang.Object;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,4 +23,9 @@ public interface MachinesResource {
   @GET
   @Produces("application/json")
   MachineHistory machineHistory(@PathParam("id") Integer id);
+
+  @Path("/{di}")
+  @GET
+  @Produces("application/json")
+  void generatedMethod1(@PathParam("di") Object di);
 }
