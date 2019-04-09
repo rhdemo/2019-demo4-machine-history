@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Path;
 
-import com.redhat.demo.api.Machines;
+import com.redhat.demo.api.MachinesResource;
 import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
 import com.redhat.demo.api.beans.MachineState;
@@ -21,7 +21,7 @@ import io.quarkus.panache.common.Sort;
 
 @RequestScoped
 @Path("/machines")
-public class MachineResource implements Machines {
+public class MachinesResourceImpl implements MachinesResource {
 
     @Inject
     EntityManager entityManager;
