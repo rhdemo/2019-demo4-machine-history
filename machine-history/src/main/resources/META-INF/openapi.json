@@ -41,6 +41,16 @@
         "required" : true,
         "type" : "integer"
       } ]
+    },
+    "/machines/{di}" : {
+      "get" : {
+        "produces" : [ "application/json" ]
+      },
+      "parameters" : [ {
+        "name" : "di",
+        "in" : "path",
+        "required" : true
+      } ]
     }
   },
   "definitions" : {
