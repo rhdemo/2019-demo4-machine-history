@@ -2,14 +2,15 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.14
--- Dumped by pg_dump version 9.6.5
+-- Dumped from database version 10.7 (Debian 10.7-1.pgdg90+1)
+-- Dumped by pg_dump version 10.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -28,8 +29,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -38,7 +37,7 @@ SET default_with_oids = false;
 -- Name: accounts; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE accounts (
+CREATE TABLE public.accounts (
     user_id character varying(255) NOT NULL,
     type character varying(32) NOT NULL,
     linked_on timestamp without time zone,
@@ -51,7 +50,7 @@ CREATE TABLE accounts (
 -- Name: acl; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE acl (
+CREATE TABLE public.acl (
     user_id character varying(255) NOT NULL,
     design_id bigint NOT NULL,
     role character varying(255) NOT NULL
@@ -62,7 +61,7 @@ CREATE TABLE acl (
 -- Name: acl_invites; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE acl_invites (
+CREATE TABLE public.acl_invites (
     created_by character varying(255) NOT NULL,
     created_on timestamp without time zone NOT NULL,
     created_by_display character varying(255),
@@ -80,7 +79,7 @@ CREATE TABLE acl_invites (
 -- Name: admin_event_entity; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE admin_event_entity (
+CREATE TABLE public.admin_event_entity (
     id character varying(36) NOT NULL,
     admin_event_time bigint,
     realm_id character varying(255),
@@ -100,7 +99,7 @@ CREATE TABLE admin_event_entity (
 -- Name: api_content; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE api_content (
+CREATE TABLE public.api_content (
     design_id bigint NOT NULL,
     version bigint NOT NULL,
     type smallint NOT NULL,
@@ -116,7 +115,7 @@ CREATE TABLE api_content (
 -- Name: api_content_version_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE api_content_version_seq
+CREATE SEQUENCE public.api_content_version_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -128,14 +127,14 @@ CREATE SEQUENCE api_content_version_seq
 -- Name: api_content_version_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE api_content_version_seq OWNED BY api_content.version;
+ALTER SEQUENCE public.api_content_version_seq OWNED BY public.api_content.version;
 
 
 --
 -- Name: api_designs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE api_designs (
+CREATE TABLE public.api_designs (
     id bigint NOT NULL,
     name character varying(255) NOT NULL,
     description character varying(1024),
@@ -150,7 +149,7 @@ CREATE TABLE api_designs (
 -- Name: api_designs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE api_designs_id_seq
+CREATE SEQUENCE public.api_designs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -162,14 +161,14 @@ CREATE SEQUENCE api_designs_id_seq
 -- Name: api_designs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE api_designs_id_seq OWNED BY api_designs.id;
+ALTER SEQUENCE public.api_designs_id_seq OWNED BY public.api_designs.id;
 
 
 --
 -- Name: apicurio; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE apicurio (
+CREATE TABLE public.apicurio (
     prop_name character varying(255) NOT NULL,
     prop_value character varying(255)
 );
@@ -179,7 +178,7 @@ CREATE TABLE apicurio (
 -- Name: associated_policy; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE associated_policy (
+CREATE TABLE public.associated_policy (
     policy_id character varying(36) NOT NULL,
     associated_policy_id character varying(36) NOT NULL
 );
@@ -189,7 +188,7 @@ CREATE TABLE associated_policy (
 -- Name: authentication_execution; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE authentication_execution (
+CREATE TABLE public.authentication_execution (
     id character varying(36) NOT NULL,
     alias character varying(255),
     authenticator character varying(36),
@@ -207,7 +206,7 @@ CREATE TABLE authentication_execution (
 -- Name: authentication_flow; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE authentication_flow (
+CREATE TABLE public.authentication_flow (
     id character varying(36) NOT NULL,
     alias character varying(255),
     description character varying(255),
@@ -222,7 +221,7 @@ CREATE TABLE authentication_flow (
 -- Name: authenticator_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE authenticator_config (
+CREATE TABLE public.authenticator_config (
     id character varying(36) NOT NULL,
     alias character varying(255),
     realm_id character varying(36)
@@ -233,7 +232,7 @@ CREATE TABLE authenticator_config (
 -- Name: authenticator_config_entry; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE authenticator_config_entry (
+CREATE TABLE public.authenticator_config_entry (
     authenticator_id character varying(36) NOT NULL,
     value text,
     name character varying(255) NOT NULL
@@ -244,7 +243,7 @@ CREATE TABLE authenticator_config_entry (
 -- Name: broker_link; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE broker_link (
+CREATE TABLE public.broker_link (
     identity_provider character varying(255) NOT NULL,
     storage_provider_id character varying(255),
     realm_id character varying(36) NOT NULL,
@@ -259,7 +258,7 @@ CREATE TABLE broker_link (
 -- Name: client; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client (
+CREATE TABLE public.client (
     id character varying(36) NOT NULL,
     enabled boolean DEFAULT false NOT NULL,
     full_scope_allowed boolean DEFAULT false NOT NULL,
@@ -292,7 +291,7 @@ CREATE TABLE client (
 -- Name: client_attributes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_attributes (
+CREATE TABLE public.client_attributes (
     client_id character varying(36) NOT NULL,
     value character varying(4000),
     name character varying(255) NOT NULL
@@ -303,7 +302,7 @@ CREATE TABLE client_attributes (
 -- Name: client_auth_flow_bindings; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_auth_flow_bindings (
+CREATE TABLE public.client_auth_flow_bindings (
     client_id character varying(36) NOT NULL,
     flow_id character varying(36),
     binding_name character varying(255) NOT NULL
@@ -314,7 +313,7 @@ CREATE TABLE client_auth_flow_bindings (
 -- Name: client_default_roles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_default_roles (
+CREATE TABLE public.client_default_roles (
     client_id character varying(36) NOT NULL,
     role_id character varying(36) NOT NULL
 );
@@ -324,7 +323,7 @@ CREATE TABLE client_default_roles (
 -- Name: client_initial_access; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_initial_access (
+CREATE TABLE public.client_initial_access (
     id character varying(36) NOT NULL,
     realm_id character varying(36) NOT NULL,
     "timestamp" integer,
@@ -338,7 +337,7 @@ CREATE TABLE client_initial_access (
 -- Name: client_node_registrations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_node_registrations (
+CREATE TABLE public.client_node_registrations (
     client_id character varying(36) NOT NULL,
     value integer,
     name character varying(255) NOT NULL
@@ -349,7 +348,7 @@ CREATE TABLE client_node_registrations (
 -- Name: client_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_scope (
+CREATE TABLE public.client_scope (
     id character varying(36) NOT NULL,
     name character varying(255),
     realm_id character varying(36),
@@ -362,7 +361,7 @@ CREATE TABLE client_scope (
 -- Name: client_scope_attributes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_scope_attributes (
+CREATE TABLE public.client_scope_attributes (
     scope_id character varying(36) NOT NULL,
     value character varying(2048),
     name character varying(255) NOT NULL
@@ -373,7 +372,7 @@ CREATE TABLE client_scope_attributes (
 -- Name: client_scope_client; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_scope_client (
+CREATE TABLE public.client_scope_client (
     client_id character varying(36) NOT NULL,
     scope_id character varying(36) NOT NULL,
     default_scope boolean DEFAULT false NOT NULL
@@ -384,7 +383,7 @@ CREATE TABLE client_scope_client (
 -- Name: client_scope_role_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_scope_role_mapping (
+CREATE TABLE public.client_scope_role_mapping (
     scope_id character varying(36) NOT NULL,
     role_id character varying(36) NOT NULL
 );
@@ -394,7 +393,7 @@ CREATE TABLE client_scope_role_mapping (
 -- Name: client_session; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_session (
+CREATE TABLE public.client_session (
     id character varying(36) NOT NULL,
     client_id character varying(36),
     redirect_uri character varying(255),
@@ -412,7 +411,7 @@ CREATE TABLE client_session (
 -- Name: client_session_auth_status; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_session_auth_status (
+CREATE TABLE public.client_session_auth_status (
     authenticator character varying(36) NOT NULL,
     status integer,
     client_session character varying(36) NOT NULL
@@ -423,7 +422,7 @@ CREATE TABLE client_session_auth_status (
 -- Name: client_session_note; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_session_note (
+CREATE TABLE public.client_session_note (
     name character varying(255) NOT NULL,
     value character varying(255),
     client_session character varying(36) NOT NULL
@@ -434,7 +433,7 @@ CREATE TABLE client_session_note (
 -- Name: client_session_prot_mapper; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_session_prot_mapper (
+CREATE TABLE public.client_session_prot_mapper (
     protocol_mapper_id character varying(36) NOT NULL,
     client_session character varying(36) NOT NULL
 );
@@ -444,7 +443,7 @@ CREATE TABLE client_session_prot_mapper (
 -- Name: client_session_role; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_session_role (
+CREATE TABLE public.client_session_role (
     role_id character varying(255) NOT NULL,
     client_session character varying(36) NOT NULL
 );
@@ -454,7 +453,7 @@ CREATE TABLE client_session_role (
 -- Name: client_user_session_note; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE client_user_session_note (
+CREATE TABLE public.client_user_session_note (
     name character varying(255) NOT NULL,
     value character varying(2048),
     client_session character varying(36) NOT NULL
@@ -465,7 +464,7 @@ CREATE TABLE client_user_session_note (
 -- Name: codegen; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE codegen (
+CREATE TABLE public.codegen (
     id bigint NOT NULL,
     created_by character varying(255) NOT NULL,
     created_on timestamp without time zone NOT NULL,
@@ -481,7 +480,7 @@ CREATE TABLE codegen (
 -- Name: codegen_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE codegen_id_seq
+CREATE SEQUENCE public.codegen_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -493,14 +492,14 @@ CREATE SEQUENCE codegen_id_seq
 -- Name: codegen_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE codegen_id_seq OWNED BY codegen.id;
+ALTER SEQUENCE public.codegen_id_seq OWNED BY public.codegen.id;
 
 
 --
 -- Name: component; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE component (
+CREATE TABLE public.component (
     id character varying(36) NOT NULL,
     name character varying(255),
     parent_id character varying(36),
@@ -515,7 +514,7 @@ CREATE TABLE component (
 -- Name: component_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE component_config (
+CREATE TABLE public.component_config (
     id character varying(36) NOT NULL,
     component_id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
@@ -527,7 +526,7 @@ CREATE TABLE component_config (
 -- Name: composite_role; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE composite_role (
+CREATE TABLE public.composite_role (
     composite character varying(36) NOT NULL,
     child_role character varying(36) NOT NULL
 );
@@ -537,7 +536,7 @@ CREATE TABLE composite_role (
 -- Name: credential; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE credential (
+CREATE TABLE public.credential (
     id character varying(36) NOT NULL,
     device character varying(255),
     hash_iterations integer,
@@ -557,7 +556,7 @@ CREATE TABLE credential (
 -- Name: credential_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE credential_attribute (
+CREATE TABLE public.credential_attribute (
     id character varying(36) NOT NULL,
     credential_id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
@@ -569,7 +568,7 @@ CREATE TABLE credential_attribute (
 -- Name: databasechangelog; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE databasechangelog (
+CREATE TABLE public.databasechangelog (
     id character varying(255) NOT NULL,
     author character varying(255) NOT NULL,
     filename character varying(255) NOT NULL,
@@ -591,7 +590,7 @@ CREATE TABLE databasechangelog (
 -- Name: databasechangeloglock; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE databasechangeloglock (
+CREATE TABLE public.databasechangeloglock (
     id integer NOT NULL,
     locked boolean NOT NULL,
     lockgranted timestamp without time zone,
@@ -603,7 +602,7 @@ CREATE TABLE databasechangeloglock (
 -- Name: default_client_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE default_client_scope (
+CREATE TABLE public.default_client_scope (
     realm_id character varying(36) NOT NULL,
     scope_id character varying(36) NOT NULL,
     default_scope boolean DEFAULT false NOT NULL
@@ -614,7 +613,7 @@ CREATE TABLE default_client_scope (
 -- Name: event_entity; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE event_entity (
+CREATE TABLE public.event_entity (
     id character varying(36) NOT NULL,
     client_id character varying(255),
     details_json character varying(2550),
@@ -632,7 +631,7 @@ CREATE TABLE event_entity (
 -- Name: fed_credential_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_credential_attribute (
+CREATE TABLE public.fed_credential_attribute (
     id character varying(36) NOT NULL,
     credential_id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
@@ -644,7 +643,7 @@ CREATE TABLE fed_credential_attribute (
 -- Name: fed_user_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_attribute (
+CREATE TABLE public.fed_user_attribute (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     user_id character varying(255) NOT NULL,
@@ -658,7 +657,7 @@ CREATE TABLE fed_user_attribute (
 -- Name: fed_user_consent; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_consent (
+CREATE TABLE public.fed_user_consent (
     id character varying(36) NOT NULL,
     client_id character varying(36),
     user_id character varying(255) NOT NULL,
@@ -675,7 +674,7 @@ CREATE TABLE fed_user_consent (
 -- Name: fed_user_consent_cl_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_consent_cl_scope (
+CREATE TABLE public.fed_user_consent_cl_scope (
     user_consent_id character varying(36) NOT NULL,
     scope_id character varying(36) NOT NULL
 );
@@ -685,7 +684,7 @@ CREATE TABLE fed_user_consent_cl_scope (
 -- Name: fed_user_credential; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_credential (
+CREATE TABLE public.fed_user_credential (
     id character varying(36) NOT NULL,
     device character varying(255),
     hash_iterations integer,
@@ -707,7 +706,7 @@ CREATE TABLE fed_user_credential (
 -- Name: fed_user_group_membership; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_group_membership (
+CREATE TABLE public.fed_user_group_membership (
     group_id character varying(36) NOT NULL,
     user_id character varying(255) NOT NULL,
     realm_id character varying(36) NOT NULL,
@@ -719,7 +718,7 @@ CREATE TABLE fed_user_group_membership (
 -- Name: fed_user_required_action; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_required_action (
+CREATE TABLE public.fed_user_required_action (
     required_action character varying(255) DEFAULT ' '::character varying NOT NULL,
     user_id character varying(255) NOT NULL,
     realm_id character varying(36) NOT NULL,
@@ -731,7 +730,7 @@ CREATE TABLE fed_user_required_action (
 -- Name: fed_user_role_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fed_user_role_mapping (
+CREATE TABLE public.fed_user_role_mapping (
     role_id character varying(36) NOT NULL,
     user_id character varying(255) NOT NULL,
     realm_id character varying(36) NOT NULL,
@@ -743,7 +742,7 @@ CREATE TABLE fed_user_role_mapping (
 -- Name: federated_identity; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE federated_identity (
+CREATE TABLE public.federated_identity (
     identity_provider character varying(255) NOT NULL,
     realm_id character varying(36),
     federated_user_id character varying(255),
@@ -757,7 +756,7 @@ CREATE TABLE federated_identity (
 -- Name: federated_user; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE federated_user (
+CREATE TABLE public.federated_user (
     id character varying(255) NOT NULL,
     storage_provider_id character varying(255),
     realm_id character varying(36) NOT NULL
@@ -768,7 +767,7 @@ CREATE TABLE federated_user (
 -- Name: group_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE group_attribute (
+CREATE TABLE public.group_attribute (
     id character varying(36) DEFAULT 'sybase-needs-something-here'::character varying NOT NULL,
     name character varying(255) NOT NULL,
     value character varying(255),
@@ -780,7 +779,7 @@ CREATE TABLE group_attribute (
 -- Name: group_role_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE group_role_mapping (
+CREATE TABLE public.group_role_mapping (
     role_id character varying(36) NOT NULL,
     group_id character varying(36) NOT NULL
 );
@@ -790,7 +789,7 @@ CREATE TABLE group_role_mapping (
 -- Name: identity_provider; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE identity_provider (
+CREATE TABLE public.identity_provider (
     internal_id character varying(36) NOT NULL,
     enabled boolean DEFAULT false NOT NULL,
     provider_alias character varying(255),
@@ -811,7 +810,7 @@ CREATE TABLE identity_provider (
 -- Name: identity_provider_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE identity_provider_config (
+CREATE TABLE public.identity_provider_config (
     identity_provider_id character varying(36) NOT NULL,
     value text,
     name character varying(255) NOT NULL
@@ -822,7 +821,7 @@ CREATE TABLE identity_provider_config (
 -- Name: identity_provider_mapper; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE identity_provider_mapper (
+CREATE TABLE public.identity_provider_mapper (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     idp_alias character varying(255) NOT NULL,
@@ -835,7 +834,7 @@ CREATE TABLE identity_provider_mapper (
 -- Name: idp_mapper_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE idp_mapper_config (
+CREATE TABLE public.idp_mapper_config (
     idp_mapper_id character varying(36) NOT NULL,
     value text,
     name character varying(255) NOT NULL
@@ -846,7 +845,7 @@ CREATE TABLE idp_mapper_config (
 -- Name: keycloak_group; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE keycloak_group (
+CREATE TABLE public.keycloak_group (
     id character varying(36) NOT NULL,
     name character varying(255),
     parent_group character varying(36),
@@ -858,7 +857,7 @@ CREATE TABLE keycloak_group (
 -- Name: keycloak_role; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE keycloak_role (
+CREATE TABLE public.keycloak_role (
     id character varying(36) NOT NULL,
     client_realm_constraint character varying(36),
     client_role boolean DEFAULT false NOT NULL,
@@ -874,7 +873,7 @@ CREATE TABLE keycloak_role (
 -- Name: migration_model; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE migration_model (
+CREATE TABLE public.migration_model (
     id character varying(36) NOT NULL,
     version character varying(36)
 );
@@ -884,7 +883,7 @@ CREATE TABLE migration_model (
 -- Name: offline_client_session; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE offline_client_session (
+CREATE TABLE public.offline_client_session (
     user_session_id character varying(36) NOT NULL,
     client_id character varying(36) NOT NULL,
     offline_flag character varying(4) NOT NULL,
@@ -899,7 +898,7 @@ CREATE TABLE offline_client_session (
 -- Name: offline_user_session; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE offline_user_session (
+CREATE TABLE public.offline_user_session (
     user_session_id character varying(36) NOT NULL,
     user_id character varying(255) NOT NULL,
     realm_id character varying(36) NOT NULL,
@@ -913,7 +912,7 @@ CREATE TABLE offline_user_session (
 -- Name: policy_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE policy_config (
+CREATE TABLE public.policy_config (
     policy_id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     value text
@@ -924,7 +923,7 @@ CREATE TABLE policy_config (
 -- Name: protocol_mapper; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE protocol_mapper (
+CREATE TABLE public.protocol_mapper (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     protocol character varying(255) NOT NULL,
@@ -938,7 +937,7 @@ CREATE TABLE protocol_mapper (
 -- Name: protocol_mapper_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE protocol_mapper_config (
+CREATE TABLE public.protocol_mapper_config (
     protocol_mapper_id character varying(36) NOT NULL,
     value text,
     name character varying(255) NOT NULL
@@ -949,7 +948,7 @@ CREATE TABLE protocol_mapper_config (
 -- Name: realm; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm (
+CREATE TABLE public.realm (
     id character varying(36) NOT NULL,
     access_code_lifespan integer,
     user_action_lifespan integer,
@@ -1007,7 +1006,7 @@ CREATE TABLE realm (
 -- Name: realm_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_attribute (
+CREATE TABLE public.realm_attribute (
     name character varying(255) NOT NULL,
     value character varying(255),
     realm_id character varying(36) NOT NULL
@@ -1018,7 +1017,7 @@ CREATE TABLE realm_attribute (
 -- Name: realm_default_groups; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_default_groups (
+CREATE TABLE public.realm_default_groups (
     realm_id character varying(36) NOT NULL,
     group_id character varying(36) NOT NULL
 );
@@ -1028,7 +1027,7 @@ CREATE TABLE realm_default_groups (
 -- Name: realm_default_roles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_default_roles (
+CREATE TABLE public.realm_default_roles (
     realm_id character varying(36) NOT NULL,
     role_id character varying(36) NOT NULL
 );
@@ -1038,7 +1037,7 @@ CREATE TABLE realm_default_roles (
 -- Name: realm_enabled_event_types; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_enabled_event_types (
+CREATE TABLE public.realm_enabled_event_types (
     realm_id character varying(36) NOT NULL,
     value character varying(255) NOT NULL
 );
@@ -1048,7 +1047,7 @@ CREATE TABLE realm_enabled_event_types (
 -- Name: realm_events_listeners; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_events_listeners (
+CREATE TABLE public.realm_events_listeners (
     realm_id character varying(36) NOT NULL,
     value character varying(255) NOT NULL
 );
@@ -1058,7 +1057,7 @@ CREATE TABLE realm_events_listeners (
 -- Name: realm_required_credential; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_required_credential (
+CREATE TABLE public.realm_required_credential (
     type character varying(255) NOT NULL,
     form_label character varying(255),
     input boolean DEFAULT false NOT NULL,
@@ -1071,7 +1070,7 @@ CREATE TABLE realm_required_credential (
 -- Name: realm_smtp_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_smtp_config (
+CREATE TABLE public.realm_smtp_config (
     realm_id character varying(36) NOT NULL,
     value character varying(255),
     name character varying(255) NOT NULL
@@ -1082,7 +1081,7 @@ CREATE TABLE realm_smtp_config (
 -- Name: realm_supported_locales; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE realm_supported_locales (
+CREATE TABLE public.realm_supported_locales (
     realm_id character varying(36) NOT NULL,
     value character varying(255) NOT NULL
 );
@@ -1092,7 +1091,7 @@ CREATE TABLE realm_supported_locales (
 -- Name: redirect_uris; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE redirect_uris (
+CREATE TABLE public.redirect_uris (
     client_id character varying(36) NOT NULL,
     value character varying(255) NOT NULL
 );
@@ -1102,7 +1101,7 @@ CREATE TABLE redirect_uris (
 -- Name: required_action_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE required_action_config (
+CREATE TABLE public.required_action_config (
     required_action_id character varying(36) NOT NULL,
     value text,
     name character varying(255) NOT NULL
@@ -1113,7 +1112,7 @@ CREATE TABLE required_action_config (
 -- Name: required_action_provider; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE required_action_provider (
+CREATE TABLE public.required_action_provider (
     id character varying(36) NOT NULL,
     alias character varying(255),
     name character varying(255),
@@ -1128,7 +1127,7 @@ CREATE TABLE required_action_provider (
 -- Name: resource_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_attribute (
+CREATE TABLE public.resource_attribute (
     id character varying(36) DEFAULT 'sybase-needs-something-here'::character varying NOT NULL,
     name character varying(255) NOT NULL,
     value character varying(255),
@@ -1140,7 +1139,7 @@ CREATE TABLE resource_attribute (
 -- Name: resource_policy; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_policy (
+CREATE TABLE public.resource_policy (
     resource_id character varying(36) NOT NULL,
     policy_id character varying(36) NOT NULL
 );
@@ -1150,7 +1149,7 @@ CREATE TABLE resource_policy (
 -- Name: resource_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_scope (
+CREATE TABLE public.resource_scope (
     resource_id character varying(36) NOT NULL,
     scope_id character varying(36) NOT NULL
 );
@@ -1160,7 +1159,7 @@ CREATE TABLE resource_scope (
 -- Name: resource_server; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_server (
+CREATE TABLE public.resource_server (
     id character varying(36) NOT NULL,
     allow_rs_remote_mgmt boolean DEFAULT false NOT NULL,
     policy_enforce_mode character varying(15) NOT NULL
@@ -1171,7 +1170,7 @@ CREATE TABLE resource_server (
 -- Name: resource_server_perm_ticket; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_server_perm_ticket (
+CREATE TABLE public.resource_server_perm_ticket (
     id character varying(36) NOT NULL,
     owner character varying(36) NOT NULL,
     requester character varying(36) NOT NULL,
@@ -1188,7 +1187,7 @@ CREATE TABLE resource_server_perm_ticket (
 -- Name: resource_server_policy; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_server_policy (
+CREATE TABLE public.resource_server_policy (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     description character varying(255),
@@ -1204,7 +1203,7 @@ CREATE TABLE resource_server_policy (
 -- Name: resource_server_resource; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_server_resource (
+CREATE TABLE public.resource_server_resource (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     uri character varying(255),
@@ -1221,7 +1220,7 @@ CREATE TABLE resource_server_resource (
 -- Name: resource_server_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE resource_server_scope (
+CREATE TABLE public.resource_server_scope (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     icon_uri character varying(255),
@@ -1234,7 +1233,7 @@ CREATE TABLE resource_server_scope (
 -- Name: scope_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE scope_mapping (
+CREATE TABLE public.scope_mapping (
     client_id character varying(36) NOT NULL,
     role_id character varying(36) NOT NULL
 );
@@ -1244,7 +1243,7 @@ CREATE TABLE scope_mapping (
 -- Name: scope_policy; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE scope_policy (
+CREATE TABLE public.scope_policy (
     scope_id character varying(36) NOT NULL,
     policy_id character varying(36) NOT NULL
 );
@@ -1254,7 +1253,7 @@ CREATE TABLE scope_policy (
 -- Name: session_uuids; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE session_uuids (
+CREATE TABLE public.session_uuids (
     uuid character varying(255) NOT NULL,
     design_id bigint NOT NULL,
     user_id character varying(255) NOT NULL,
@@ -1268,7 +1267,7 @@ CREATE TABLE session_uuids (
 -- Name: user_attribute; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_attribute (
+CREATE TABLE public.user_attribute (
     name character varying(255) NOT NULL,
     value character varying(255),
     user_id character varying(36) NOT NULL,
@@ -1280,7 +1279,7 @@ CREATE TABLE user_attribute (
 -- Name: user_consent; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_consent (
+CREATE TABLE public.user_consent (
     id character varying(36) NOT NULL,
     client_id character varying(36),
     user_id character varying(36) NOT NULL,
@@ -1295,7 +1294,7 @@ CREATE TABLE user_consent (
 -- Name: user_consent_client_scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_consent_client_scope (
+CREATE TABLE public.user_consent_client_scope (
     user_consent_id character varying(36) NOT NULL,
     scope_id character varying(36) NOT NULL
 );
@@ -1305,7 +1304,7 @@ CREATE TABLE user_consent_client_scope (
 -- Name: user_entity; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_entity (
+CREATE TABLE public.user_entity (
     id character varying(36) NOT NULL,
     email character varying(255),
     email_constraint character varying(255),
@@ -1326,7 +1325,7 @@ CREATE TABLE user_entity (
 -- Name: user_federation_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_federation_config (
+CREATE TABLE public.user_federation_config (
     user_federation_provider_id character varying(36) NOT NULL,
     value character varying(255),
     name character varying(255) NOT NULL
@@ -1337,7 +1336,7 @@ CREATE TABLE user_federation_config (
 -- Name: user_federation_mapper; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_federation_mapper (
+CREATE TABLE public.user_federation_mapper (
     id character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     federation_provider_id character varying(36) NOT NULL,
@@ -1350,7 +1349,7 @@ CREATE TABLE user_federation_mapper (
 -- Name: user_federation_mapper_config; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_federation_mapper_config (
+CREATE TABLE public.user_federation_mapper_config (
     user_federation_mapper_id character varying(36) NOT NULL,
     value character varying(255),
     name character varying(255) NOT NULL
@@ -1361,7 +1360,7 @@ CREATE TABLE user_federation_mapper_config (
 -- Name: user_federation_provider; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_federation_provider (
+CREATE TABLE public.user_federation_provider (
     id character varying(36) NOT NULL,
     changed_sync_period integer,
     display_name character varying(255),
@@ -1377,7 +1376,7 @@ CREATE TABLE user_federation_provider (
 -- Name: user_group_membership; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_group_membership (
+CREATE TABLE public.user_group_membership (
     group_id character varying(36) NOT NULL,
     user_id character varying(36) NOT NULL
 );
@@ -1387,7 +1386,7 @@ CREATE TABLE user_group_membership (
 -- Name: user_required_action; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_required_action (
+CREATE TABLE public.user_required_action (
     user_id character varying(36) NOT NULL,
     required_action character varying(255) DEFAULT ' '::character varying NOT NULL
 );
@@ -1397,7 +1396,7 @@ CREATE TABLE user_required_action (
 -- Name: user_role_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_role_mapping (
+CREATE TABLE public.user_role_mapping (
     role_id character varying(255) NOT NULL,
     user_id character varying(36) NOT NULL
 );
@@ -1407,7 +1406,7 @@ CREATE TABLE user_role_mapping (
 -- Name: user_session; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_session (
+CREATE TABLE public.user_session (
     id character varying(36) NOT NULL,
     auth_method character varying(255),
     ip_address character varying(255),
@@ -1427,7 +1426,7 @@ CREATE TABLE user_session (
 -- Name: user_session_note; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_session_note (
+CREATE TABLE public.user_session_note (
     user_session character varying(36) NOT NULL,
     name character varying(255) NOT NULL,
     value character varying(2048)
@@ -1438,7 +1437,7 @@ CREATE TABLE user_session_note (
 -- Name: username_login_failure; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE username_login_failure (
+CREATE TABLE public.username_login_failure (
     realm_id character varying(36) NOT NULL,
     username character varying(255) NOT NULL,
     failed_login_not_before integer,
@@ -1452,7 +1451,7 @@ CREATE TABLE username_login_failure (
 -- Name: web_origins; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE web_origins (
+CREATE TABLE public.web_origins (
     client_id character varying(36) NOT NULL,
     value character varying(255) NOT NULL
 );
@@ -1462,28 +1461,28 @@ CREATE TABLE web_origins (
 -- Name: api_content version; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY api_content ALTER COLUMN version SET DEFAULT nextval('api_content_version_seq'::regclass);
+ALTER TABLE ONLY public.api_content ALTER COLUMN version SET DEFAULT nextval('public.api_content_version_seq'::regclass);
 
 
 --
 -- Name: api_designs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY api_designs ALTER COLUMN id SET DEFAULT nextval('api_designs_id_seq'::regclass);
+ALTER TABLE ONLY public.api_designs ALTER COLUMN id SET DEFAULT nextval('public.api_designs_id_seq'::regclass);
 
 
 --
 -- Name: codegen id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY codegen ALTER COLUMN id SET DEFAULT nextval('codegen_id_seq'::regclass);
+ALTER TABLE ONLY public.codegen ALTER COLUMN id SET DEFAULT nextval('public.codegen_id_seq'::regclass);
 
 
 --
 -- Data for Name: accounts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY accounts (user_id, type, linked_on, used_on, nonce) FROM stdin;
+COPY public.accounts (user_id, type, linked_on, used_on, nonce) FROM stdin;
 stuart.w.douglas@gmail.com	GitHub	2019-04-04 05:47:13.742	\N	\N
 \.
 
@@ -1492,8 +1491,8 @@ stuart.w.douglas@gmail.com	GitHub	2019-04-04 05:47:13.742	\N	\N
 -- Data for Name: acl; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY acl (user_id, design_id, role) FROM stdin;
-stuart.w.douglas@gmail.com	1	owner
+COPY public.acl (user_id, design_id, role) FROM stdin;
+stuart.w.douglas@gmail.com	2	owner
 \.
 
 
@@ -1501,7 +1500,7 @@ stuart.w.douglas@gmail.com	1	owner
 -- Data for Name: acl_invites; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY acl_invites (created_by, created_on, created_by_display, design_id, role, invite_id, status, modified_by, modified_on, subject) FROM stdin;
+COPY public.acl_invites (created_by, created_on, created_by_display, design_id, role, invite_id, status, modified_by, modified_on, subject) FROM stdin;
 \.
 
 
@@ -1509,7 +1508,7 @@ COPY acl_invites (created_by, created_on, created_by_display, design_id, role, i
 -- Data for Name: admin_event_entity; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY admin_event_entity (id, admin_event_time, realm_id, operation_type, auth_realm_id, auth_client_id, auth_user_id, ip_address, resource_path, representation, error, resource_type) FROM stdin;
+COPY public.admin_event_entity (id, admin_event_time, realm_id, operation_type, auth_realm_id, auth_client_id, auth_user_id, ip_address, resource_path, representation, error, resource_type) FROM stdin;
 \.
 
 
@@ -1517,39 +1516,27 @@ COPY admin_event_entity (id, admin_event_time, realm_id, operation_type, auth_re
 -- Data for Name: api_content; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY api_content (design_id, version, type, data, created_by, created_on, reverted, modified_on) FROM stdin;
-1	1	0	{\n  "openapi" : "3.0.2",\n  "info" : {\n    "title" : "Machine History Initial v3",\n    "version" : "1.0.0"\n  },\n  "paths" : {\n    "/machines" : {\n      "get" : {\n        "summary" : "Gets a list of all machines",\n        "operationId" : "getAllMachines",\n        "responses" : {\n          "200" : {\n            "description" : "The list of machine ID's",\n            "content" : {\n              "application/json" : {\n                "schema" : {\n                  "type" : "array",\n                  "items" : {\n                    "$ref" : "#/components/schemas/Machine"\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    "/machines/history/{id}" : {\n      "get" : {\n        "operationId" : "machineHistory",\n        "responses" : {\n          "200" : {\n            "content" : {\n              "application/json" : {\n                "schema" : {\n                  "$ref" : "#/components/schemas/MachineHistory"\n                }\n              }\n            }\n          }\n        }\n      },\n      "parameters" : [ {\n        "name" : "id",\n        "in" : "path",\n        "required" : true,\n        "schema" : {\n          "type" : "integer"\n        }\n      } ]\n    },\n    "/machines/{id}" : {\n      "get" : {\n        "responses" : {\n          "200" : {\n            "content" : {\n              "application/json" : {\n                "schema" : {\n                  "$ref" : "#/components/schemas/MachineState"\n                }\n              }\n            }\n          }\n        }\n      },\n      "parameters" : [ {\n        "name" : "id",\n        "in" : "path",\n        "required" : true,\n        "schema" : {\n          "type" : "integer"\n        }\n      } ]\n    }\n  },\n  "components" : {\n    "schemas" : {\n      "MachineState" : {\n        "description" : "The representation of the current state of a machine",\n        "required" : [ "id", "name", "health" ],\n        "type" : "object",\n        "properties" : {\n          "id" : {\n            "description" : "The machine ID",\n            "type" : "integer"\n          },\n          "name" : {\n            "description" : "The machine name",\n            "type" : "string"\n          },\n          "health" : {\n            "description" : "The machine health",\n            "type" : "integer"\n          }\n        }\n      },\n      "Machine" : {\n        "description" : "A Machine",\n        "required" : [ "id", "name" ],\n        "type" : "object",\n        "properties" : {\n          "id" : {\n            "format" : "int32",\n            "description" : "The Machine ID",\n            "type" : "integer"\n          },\n          "name" : {\n            "description" : "The machine name",\n            "type" : "string"\n          }\n        }\n      },\n      "MaintenanceData" : {\n        "description" : "A record of maintenance performed on a machine",\n        "required" : [ "id", "date", "repair", "mechanic" ],\n        "type" : "object",\n        "properties" : {\n          "id" : {\n            "type" : "integer"\n          },\n          "date" : {\n            "type" : "string"\n          },\n          "mechanic" : {\n            "type" : "string"\n          },\n          "repair" : {\n            "type" : "integer"\n          },\n          "finalHealth" : {\n            "type" : "integer"\n          }\n        }\n      },\n      "MachineHistory" : {\n        "description" : "The history of a machine",\n        "required" : [ "maintenance", "name" ],\n        "type" : "object",\n        "properties" : {\n          "maintenance" : {\n            "type" : "array",\n            "items" : {\n              "$ref" : "#/components/schemas/MaintenanceData"\n            }\n          },\n          "name" : {\n            "type" : "string"\n          }\n        }\n      }\n    }\n  }\n}	stuart.w.douglas@gmail.com	2019-04-04 05:46:37.822	0	\N
+COPY public.api_content (design_id, version, type, data, created_by, created_on, reverted, modified_on) FROM stdin;
+2	2	0	{\n  "swagger" : "2.0",\n  "info" : {\n    "title" : "Machine History",\n    "version" : "1.0.0"\n  },\n  "paths" : {\n    "/machines" : {\n      "get" : {\n        "summary" : "Gets a list of all machines",\n        "operationId" : "getAllMachines",\n        "produces" : [ "application/json" ],\n        "responses" : {\n          "200" : {\n            "description" : "The list of machine ID's",\n            "schema" : {\n              "type" : "array",\n              "items" : {\n                "$ref" : "#/definitions/Machine"\n              }\n            }\n          }\n        }\n      }\n    },\n    "/machines/{id}" : {\n      "get" : {\n        "operationId" : "getMachine",\n        "produces" : [ "application/json" ],\n        "responses" : {\n          "200" : {\n            "schema" : {\n              "$ref" : "#/definitions/MachineState"\n            }\n          }\n        }\n      },\n      "parameters" : [ {\n        "name" : "id",\n        "in" : "path",\n        "required" : true,\n        "type" : "integer"\n      } ]\n    },\n    "/machines/history/{id}" : {\n      "get" : {\n        "operationId" : "machineHistory",\n        "produces" : [ "application/json" ],\n        "responses" : {\n          "200" : {\n            "schema" : {\n              "$ref" : "#/definitions/MachineHistory"\n            }\n          }\n        }\n      },\n      "parameters" : [ {\n        "name" : "id",\n        "in" : "path",\n        "required" : true,\n        "type" : "integer"\n      } ]\n    }\n  },\n  "definitions" : {\n    "MachineState" : {\n      "description" : "The representation of the current state of a machine",\n      "required" : [ "id", "name", "health" ],\n      "type" : "object",\n      "properties" : {\n        "id" : {\n          "description" : "The machine ID",\n          "type" : "integer"\n        },\n        "name" : {\n          "description" : "The machine name",\n          "type" : "string"\n        },\n        "health" : {\n          "description" : "The machine health",\n          "type" : "integer"\n        }\n      }\n    },\n    "Machine" : {\n      "description" : "A Machine",\n      "required" : [ "id", "name" ],\n      "type" : "object",\n      "properties" : {\n        "id" : {\n          "format" : "int32",\n          "description" : "The Machine ID",\n          "type" : "integer"\n        },\n        "name" : {\n          "description" : "The machine name",\n          "type" : "string"\n        }\n      }\n    },\n    "MaintenanceData" : {\n      "description" : "A record of maintenance performed on a machine",\n      "required" : [ "id", "date", "repair", "mechanic" ],\n      "type" : "object",\n      "properties" : {\n        "id" : {\n          "type" : "integer"\n        },\n        "date" : {\n          "type" : "string"\n        },\n        "mechanic" : {\n          "type" : "string"\n        },\n        "repair" : {\n          "type" : "integer"\n        },\n        "finalHealth" : {\n          "type" : "integer"\n        }\n      }\n    },\n    "MachineHistory" : {\n      "description" : "The history of a machine",\n      "required" : [ "maintenance", "name" ],\n      "type" : "object",\n      "properties" : {\n        "maintenance" : {\n          "type" : "array",\n          "items" : {\n            "$ref" : "#/definitions/MaintenanceData"\n          }\n        },\n        "name" : {\n          "type" : "string"\n        }\n      }\n    }\n  }\n}	stuart.w.douglas@gmail.com	2019-04-09 05:35:42.235	0	\N
+2	3	1	{"__type":"DeletePathCommand_20","_path":"/machines/{id}","_oldPath":{"get":{"operationId":"getMachine","produces":["application/json"],"responses":{"200":{"schema":{"$ref":"#/definitions/MachineState"}}}},"parameters":[{"name":"id","in":"path","required":true,"type":"integer"}]}}	stuart.w.douglas@gmail.com	2019-04-09 05:35:52.967	0	\N
+2	4	0	{\n  "swagger": "2.0",\n  "info": {\n    "title": "Machine History",\n    "version": "1.0.0"\n  },\n  "paths": {\n    "/machines": {\n      "get": {\n        "summary": "Gets a list of all machines",\n        "operationId": "getAllMachines",\n        "produces": [\n          "application/json"\n        ],\n        "responses": {\n          "200": {\n            "description": "The list of machine ID's",\n            "schema": {\n              "type": "array",\n              "items": {\n                "$ref": "#/definitions/Machine"\n              }\n            }\n          }\n        }\n      }\n    },\n    "/machines/history/{id}": {\n      "get": {\n        "operationId": "machineHistory",\n        "produces": [\n          "application/json"\n        ],\n        "responses": {\n          "200": {\n            "schema": {\n              "$ref": "#/definitions/MachineHistory"\n            }\n          }\n        }\n      },\n      "parameters": [\n        {\n          "name": "id",\n          "in": "path",\n          "required": true,\n          "type": "integer"\n        }\n      ]\n    }\n  },\n  "definitions": {\n    "MachineState": {\n      "description": "The representation of the current state of a machine",\n      "required": [\n        "id",\n        "name",\n        "health"\n      ],\n      "type": "object",\n      "properties": {\n        "id": {\n          "description": "The machine ID",\n          "type": "integer"\n        },\n        "name": {\n          "description": "The machine name",\n          "type": "string"\n        },\n        "health": {\n          "description": "The machine health",\n          "type": "integer"\n        }\n      }\n    },\n    "Machine": {\n      "description": "A Machine",\n      "required": [\n        "id",\n        "name"\n      ],\n      "type": "object",\n      "properties": {\n        "id": {\n          "format": "int32",\n          "description": "The Machine ID",\n          "type": "integer"\n        },\n        "name": {\n          "description": "The machine name",\n          "type": "string"\n        }\n      }\n    },\n    "MaintenanceData": {\n      "description": "A record of maintenance performed on a machine",\n      "required": [\n        "id",\n        "date",\n        "repair",\n        "mechanic"\n      ],\n      "type": "object",\n      "properties": {\n        "id": {\n          "type": "integer"\n        },\n        "date": {\n          "type": "string"\n        },\n        "mechanic": {\n          "type": "string"\n        },\n        "repair": {\n          "type": "integer"\n        },\n        "finalHealth": {\n          "type": "integer"\n        }\n      }\n    },\n    "MachineHistory": {\n      "description": "The history of a machine",\n      "required": [\n        "maintenance",\n        "name"\n      ],\n      "type": "object",\n      "properties": {\n        "maintenance": {\n          "type": "array",\n          "items": {\n            "$ref": "#/definitions/MaintenanceData"\n          }\n        },\n        "name": {\n          "type": "string"\n        }\n      }\n    }\n  }\n}	stuart.w.douglas@gmail.com	2019-04-09 05:36:06.62	0	\N
 \.
-
-
---
--- Name: api_content_version_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('api_content_version_seq', 1, true);
 
 
 --
 -- Data for Name: api_designs; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY api_designs (id, name, description, created_by, created_on, tags, api_type) FROM stdin;
-1	Machine History Initial v3	\N	stuart.w.douglas@gmail.com	2019-04-04 05:46:37.822	\N	OpenAPI30
+COPY public.api_designs (id, name, description, created_by, created_on, tags, api_type) FROM stdin;
+2	Machine History	\N	stuart.w.douglas@gmail.com	2019-04-09 05:35:42.235	\N	OpenAPI20
 \.
-
-
---
--- Name: api_designs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('api_designs_id_seq', 1, true);
 
 
 --
 -- Data for Name: apicurio; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY apicurio (prop_name, prop_value) FROM stdin;
+COPY public.apicurio (prop_name, prop_value) FROM stdin;
 db_version	8
 \.
 
@@ -1558,7 +1545,7 @@ db_version	8
 -- Data for Name: associated_policy; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY associated_policy (policy_id, associated_policy_id) FROM stdin;
+COPY public.associated_policy (policy_id, associated_policy_id) FROM stdin;
 \.
 
 
@@ -1566,7 +1553,7 @@ COPY associated_policy (policy_id, associated_policy_id) FROM stdin;
 -- Data for Name: authentication_execution; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY authentication_execution (id, alias, authenticator, realm_id, flow_id, requirement, priority, authenticator_flow, auth_flow_id, auth_config) FROM stdin;
+COPY public.authentication_execution (id, alias, authenticator, realm_id, flow_id, requirement, priority, authenticator_flow, auth_flow_id, auth_config) FROM stdin;
 b342ce5c-813a-40c5-9ae6-bd40feece608	\N	auth-cookie	master	14fc0101-93a1-4fb8-907a-baf3e1f2bc67	2	10	f	\N	\N
 253ae60d-edd9-4b0b-930f-d8932697f2b8	\N	auth-spnego	master	14fc0101-93a1-4fb8-907a-baf3e1f2bc67	3	20	f	\N	\N
 b4cb3975-bff0-4c28-af02-f323a782ef6e	\N	identity-provider-redirector	master	14fc0101-93a1-4fb8-907a-baf3e1f2bc67	2	25	f	\N	\N
@@ -1635,7 +1622,7 @@ f2750773-d639-40de-895f-9be5ccf920a0	\N	http-basic-authenticator	apicurio	fd5082
 -- Data for Name: authentication_flow; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY authentication_flow (id, alias, description, realm_id, provider_id, top_level, built_in) FROM stdin;
+COPY public.authentication_flow (id, alias, description, realm_id, provider_id, top_level, built_in) FROM stdin;
 14fc0101-93a1-4fb8-907a-baf3e1f2bc67	browser	browser based authentication	master	basic-flow	t	t
 5175eba9-6a66-4fa3-9d9e-6c9ba9bc1426	forms	Username, password, otp and other auth forms.	master	basic-flow	f	t
 89e8f4ad-7681-41eb-bf3e-c781136c8060	direct grant	OpenID Connect Resource Owner Grant	master	basic-flow	t	t
@@ -1667,7 +1654,7 @@ fd508211-99f1-4e04-bfda-088df429f3f0	saml ecp	SAML ECP Profile Authentication Fl
 -- Data for Name: authenticator_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY authenticator_config (id, alias, realm_id) FROM stdin;
+COPY public.authenticator_config (id, alias, realm_id) FROM stdin;
 8bbb71a9-1cdc-472b-be9d-bb6fc6d7e936	review profile config	master
 f5adf073-9b9c-40c7-a4e1-0f84a1563ed2	create unique user config	master
 8dd21117-505d-4c2d-a3c2-0cd472d47757	create unique user config	apicurio
@@ -1679,7 +1666,7 @@ f935b554-2296-4fff-acb1-ecc5dd52dae4	review profile config	apicurio
 -- Data for Name: authenticator_config_entry; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY authenticator_config_entry (authenticator_id, value, name) FROM stdin;
+COPY public.authenticator_config_entry (authenticator_id, value, name) FROM stdin;
 8bbb71a9-1cdc-472b-be9d-bb6fc6d7e936	missing	update.profile.on.first.login
 f5adf073-9b9c-40c7-a4e1-0f84a1563ed2	false	require.password.update.after.registration
 8dd21117-505d-4c2d-a3c2-0cd472d47757	false	require.password.update.after.registration
@@ -1691,7 +1678,7 @@ f935b554-2296-4fff-acb1-ecc5dd52dae4	missing	update.profile.on.first.login
 -- Data for Name: broker_link; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY broker_link (identity_provider, storage_provider_id, realm_id, broker_user_id, broker_username, token, user_id) FROM stdin;
+COPY public.broker_link (identity_provider, storage_provider_id, realm_id, broker_user_id, broker_username, token, user_id) FROM stdin;
 \.
 
 
@@ -1699,7 +1686,7 @@ COPY broker_link (identity_provider, storage_provider_id, realm_id, broker_user_
 -- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client (id, enabled, full_scope_allowed, client_id, not_before, public_client, secret, base_url, bearer_only, management_url, surrogate_auth_required, realm_id, protocol, node_rereg_timeout, frontchannel_logout, consent_required, name, service_accounts_enabled, client_authenticator_type, root_url, description, registration_token, standard_flow_enabled, implicit_flow_enabled, direct_access_grants_enabled) FROM stdin;
+COPY public.client (id, enabled, full_scope_allowed, client_id, not_before, public_client, secret, base_url, bearer_only, management_url, surrogate_auth_required, realm_id, protocol, node_rereg_timeout, frontchannel_logout, consent_required, name, service_accounts_enabled, client_authenticator_type, root_url, description, registration_token, standard_flow_enabled, implicit_flow_enabled, direct_access_grants_enabled) FROM stdin;
 8702814b-4ddc-4ed2-8f07-9185873cc2df	t	t	master-realm	0	f	1b5bace1-dd79-4703-8f7f-7047720870e0	\N	t	\N	f	master	\N	0	f	f	master Realm	f	client-secret	\N	\N	\N	t	f	f
 f036cd86-f38d-49d0-83a7-e1babea17489	t	f	account	0	f	c118acf2-7802-40f3-afa3-d25be02ac4e7	/auth/realms/master/account	f	\N	f	master	openid-connect	0	f	f	${client_account}	f	client-secret	\N	\N	\N	t	f	f
 086db8dd-b7d8-4f56-84bf-7547f233c86d	t	f	broker	0	f	f338325f-15a3-41a4-8648-590835ac3e81	\N	f	\N	f	master	openid-connect	0	f	f	${client_broker}	f	client-secret	\N	\N	\N	t	f	f
@@ -1720,7 +1707,7 @@ b6ebc625-903d-4a5b-b641-2bd9e0b0b8e3	t	f	broker	0	f	**********	\N	f	\N	f	apicuri
 -- Data for Name: client_attributes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_attributes (client_id, value, name) FROM stdin;
+COPY public.client_attributes (client_id, value, name) FROM stdin;
 d00c75ee-f771-41d4-9374-02ee2b60119f	false	saml.assertion.signature
 d00c75ee-f771-41d4-9374-02ee2b60119f	false	saml.force.post.binding
 d00c75ee-f771-41d4-9374-02ee2b60119f	false	saml.multivalued.roles
@@ -1748,7 +1735,7 @@ d00c75ee-f771-41d4-9374-02ee2b60119f	false	saml.onetimeuse.condition
 -- Data for Name: client_auth_flow_bindings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_auth_flow_bindings (client_id, flow_id, binding_name) FROM stdin;
+COPY public.client_auth_flow_bindings (client_id, flow_id, binding_name) FROM stdin;
 \.
 
 
@@ -1756,7 +1743,7 @@ COPY client_auth_flow_bindings (client_id, flow_id, binding_name) FROM stdin;
 -- Data for Name: client_default_roles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_default_roles (client_id, role_id) FROM stdin;
+COPY public.client_default_roles (client_id, role_id) FROM stdin;
 f036cd86-f38d-49d0-83a7-e1babea17489	9d79a9a2-e942-4332-ba3c-c9d9a2db521d
 f036cd86-f38d-49d0-83a7-e1babea17489	45382874-db6b-4c3c-97c6-480f68745f7d
 b6ebc625-903d-4a5b-b641-2bd9e0b0b8e3	6d5d5080-1541-4acb-8d7f-3fc93f723f56
@@ -1769,7 +1756,7 @@ b6ebc625-903d-4a5b-b641-2bd9e0b0b8e3	6d5d5080-1541-4acb-8d7f-3fc93f723f56
 -- Data for Name: client_initial_access; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_initial_access (id, realm_id, "timestamp", expiration, count, remaining_count) FROM stdin;
+COPY public.client_initial_access (id, realm_id, "timestamp", expiration, count, remaining_count) FROM stdin;
 \.
 
 
@@ -1777,7 +1764,7 @@ COPY client_initial_access (id, realm_id, "timestamp", expiration, count, remain
 -- Data for Name: client_node_registrations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_node_registrations (client_id, value, name) FROM stdin;
+COPY public.client_node_registrations (client_id, value, name) FROM stdin;
 \.
 
 
@@ -1785,7 +1772,7 @@ COPY client_node_registrations (client_id, value, name) FROM stdin;
 -- Data for Name: client_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_scope (id, name, realm_id, description, protocol) FROM stdin;
+COPY public.client_scope (id, name, realm_id, description, protocol) FROM stdin;
 36285060-103f-4503-8fb7-3fa11fcbf595	offline_access	master	OpenID Connect built-in scope: offline_access	openid-connect
 c78f16fe-fc10-450b-84e6-326f1e16ef5a	role_list	master	SAML role list	saml
 2b6ba3f5-0578-45ed-a575-5a6eeb832d1e	profile	master	OpenID Connect built-in scope: profile	openid-connect
@@ -1805,7 +1792,7 @@ a638cf1e-d35d-402b-baa2-0ddbb602bf33	phone	apicurio	OpenID Connect built-in scop
 -- Data for Name: client_scope_attributes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_scope_attributes (scope_id, value, name) FROM stdin;
+COPY public.client_scope_attributes (scope_id, value, name) FROM stdin;
 36285060-103f-4503-8fb7-3fa11fcbf595	${offlineAccessScopeConsentText}	consent.screen.text
 36285060-103f-4503-8fb7-3fa11fcbf595	true	display.on.consent.screen
 c78f16fe-fc10-450b-84e6-326f1e16ef5a	${samlRoleListScopeConsentText}	consent.screen.text
@@ -1837,7 +1824,7 @@ a638cf1e-d35d-402b-baa2-0ddbb602bf33	true	display.on.consent.screen
 -- Data for Name: client_scope_client; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_scope_client (client_id, scope_id, default_scope) FROM stdin;
+COPY public.client_scope_client (client_id, scope_id, default_scope) FROM stdin;
 f036cd86-f38d-49d0-83a7-e1babea17489	c78f16fe-fc10-450b-84e6-326f1e16ef5a	t
 ec1a3547-c74d-4d4e-9d2b-88554766ab10	c78f16fe-fc10-450b-84e6-326f1e16ef5a	t
 086db8dd-b7d8-4f56-84bf-7547f233c86d	c78f16fe-fc10-450b-84e6-326f1e16ef5a	t
@@ -1923,7 +1910,7 @@ b6ebc625-903d-4a5b-b641-2bd9e0b0b8e3	a638cf1e-d35d-402b-baa2-0ddbb602bf33	f
 -- Data for Name: client_scope_role_mapping; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_scope_role_mapping (scope_id, role_id) FROM stdin;
+COPY public.client_scope_role_mapping (scope_id, role_id) FROM stdin;
 36285060-103f-4503-8fb7-3fa11fcbf595	2b2f7770-e203-4e18-bdf6-3485f41362e3
 202bccce-83ad-4b51-b1cc-03b30767615e	4b82c838-4ba2-4263-9147-873f69f1495a
 \.
@@ -1933,7 +1920,7 @@ COPY client_scope_role_mapping (scope_id, role_id) FROM stdin;
 -- Data for Name: client_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_session (id, client_id, redirect_uri, state, "timestamp", session_id, auth_method, realm_id, auth_user_id, current_action) FROM stdin;
+COPY public.client_session (id, client_id, redirect_uri, state, "timestamp", session_id, auth_method, realm_id, auth_user_id, current_action) FROM stdin;
 \.
 
 
@@ -1941,7 +1928,7 @@ COPY client_session (id, client_id, redirect_uri, state, "timestamp", session_id
 -- Data for Name: client_session_auth_status; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_session_auth_status (authenticator, status, client_session) FROM stdin;
+COPY public.client_session_auth_status (authenticator, status, client_session) FROM stdin;
 \.
 
 
@@ -1949,7 +1936,7 @@ COPY client_session_auth_status (authenticator, status, client_session) FROM std
 -- Data for Name: client_session_note; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_session_note (name, value, client_session) FROM stdin;
+COPY public.client_session_note (name, value, client_session) FROM stdin;
 \.
 
 
@@ -1957,7 +1944,7 @@ COPY client_session_note (name, value, client_session) FROM stdin;
 -- Data for Name: client_session_prot_mapper; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_session_prot_mapper (protocol_mapper_id, client_session) FROM stdin;
+COPY public.client_session_prot_mapper (protocol_mapper_id, client_session) FROM stdin;
 \.
 
 
@@ -1965,7 +1952,7 @@ COPY client_session_prot_mapper (protocol_mapper_id, client_session) FROM stdin;
 -- Data for Name: client_session_role; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_session_role (role_id, client_session) FROM stdin;
+COPY public.client_session_role (role_id, client_session) FROM stdin;
 \.
 
 
@@ -1973,7 +1960,7 @@ COPY client_session_role (role_id, client_session) FROM stdin;
 -- Data for Name: client_user_session_note; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY client_user_session_note (name, value, client_session) FROM stdin;
+COPY public.client_user_session_note (name, value, client_session) FROM stdin;
 \.
 
 
@@ -1981,23 +1968,16 @@ COPY client_user_session_note (name, value, client_session) FROM stdin;
 -- Data for Name: codegen; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY codegen (id, created_by, created_on, modified_by, modified_on, design_id, ptype, attributes) FROM stdin;
-1	stuart.w.douglas@gmail.com	2019-04-04 05:48:08.961	stuart.w.douglas@gmail.com	2019-04-04 05:49:50.192	1	thorntail	javaPackage=Y29tLnJlZGhhdC5kZW1vLmFwaQ==\npublish-branch=bWFzdGVy\ngroupId=Y29tLnJlZGhhdC5kZW1v\npublish-org=cmhkZW1v\npublish-type=R2l0SHVi\npullRequest-url=aHR0cHM6Ly9naXRodWIuY29tL3JoZGVtby8yMDE5LWRlbW80LW1hY2hpbmUtaGlzdG9yeS9wdWxsLzM5\npublish-repo=MjAxOS1kZW1vNC1tYWNoaW5lLWhpc3Rvcnk=\nartifactId=bWFjaGluZS1oaXN0b3J5\nlocation=c291cmNlQ29udHJvbA==\npublish-commitMessage=SW1wb3J0IEFQSQ==\nupdate-only=dHJ1ZQ==\npublish-location=L21hY2hpbmUtaGlzdG9yeQ==\n
+COPY public.codegen (id, created_by, created_on, modified_by, modified_on, design_id, ptype, attributes) FROM stdin;
+2	stuart.w.douglas@gmail.com	2019-04-09 05:36:42.204	stuart.w.douglas@gmail.com	2019-04-09 06:03:15.509	2	jaxrs	javaPackage=Y29tLnJlZGhhdC5kZW1vLmFwaQ==\npublish-branch=bWFzdGVy\ngroupId=Y29tLnJlZGhhdC5kZW1v\npublish-org=cmhkZW1v\npublish-type=R2l0SHVi\npullRequest-url=aHR0cHM6Ly9naXRodWIuY29tL3JoZGVtby8yMDE5LWRlbW80LW1hY2hpbmUtaGlzdG9yeS9wdWxsLzQz\npublish-repo=MjAxOS1kZW1vNC1tYWNoaW5lLWhpc3Rvcnk=\nartifactId=bWFjaGluZS1oaXN0b3J5\nlocation=c291cmNlQ29udHJvbA==\npublish-commitMessage=SW1wb3J0IEFQSQ==\nupdate-only=dHJ1ZQ==\npublish-location=L21hY2hpbmUtaGlzdG9yeQ==\n
 \.
-
-
---
--- Name: codegen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('codegen_id_seq', 1, true);
 
 
 --
 -- Data for Name: component; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY component (id, name, parent_id, provider_id, provider_type, realm_id, sub_type) FROM stdin;
+COPY public.component (id, name, parent_id, provider_id, provider_type, realm_id, sub_type) FROM stdin;
 4e5504e0-c5f9-40b7-a29b-a9a378998b99	Trusted Hosts	master	trusted-hosts	org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy	master	anonymous
 c558d6c1-821b-4375-b6b5-c4c25337b697	Consent Required	master	consent-required	org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy	master	anonymous
 11361699-3ccd-483a-b9b7-5e41c2ec108a	Full Scope Disabled	master	scope	org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy	master	anonymous
@@ -2027,7 +2007,7 @@ faf59f09-a28e-4966-8f10-4c26cc919d36	hmac-generated	apicurio	hmac-generated	org.
 -- Data for Name: component_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY component_config (id, component_id, name, value) FROM stdin;
+COPY public.component_config (id, component_id, name, value) FROM stdin;
 be7ea2b6-f248-4072-a90d-81df3993d77e	e3a87a15-a977-404c-bae3-aaa03282d5aa	allowed-protocol-mapper-types	oidc-sha256-pairwise-sub-mapper
 517610b5-6bc5-4fd2-bc06-8bad4dfd8da3	e3a87a15-a977-404c-bae3-aaa03282d5aa	allowed-protocol-mapper-types	saml-user-attribute-mapper
 f168ba02-f903-441d-9e42-bbe694fba88f	e3a87a15-a977-404c-bae3-aaa03282d5aa	allowed-protocol-mapper-types	oidc-address-mapper
@@ -2097,7 +2077,7 @@ a89afcca-3c1d-43b7-b0ba-174c04ff2181	1d5feae9-2d0e-4d96-b6b7-c593ef91f6fe	allow-
 -- Data for Name: composite_role; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY composite_role (composite, child_role) FROM stdin;
+COPY public.composite_role (composite, child_role) FROM stdin;
 9d69ff93-e779-49fa-8f09-63b000396f51	7039042b-2512-469f-8d2e-b0bb7a9be9d5
 9d69ff93-e779-49fa-8f09-63b000396f51	02015320-4598-45eb-a238-6f7448f545d1
 9d69ff93-e779-49fa-8f09-63b000396f51	bdd14c0f-9ff9-4997-9ff9-92be0588647b
@@ -2171,7 +2151,7 @@ a352d363-fcaf-4253-92dc-05969bf7d64a	bce506e4-ade2-43a2-952c-ac8f38a60136
 -- Data for Name: credential; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY credential (id, device, hash_iterations, salt, type, value, user_id, created_date, counter, digits, period, algorithm) FROM stdin;
+COPY public.credential (id, device, hash_iterations, salt, type, value, user_id, created_date, counter, digits, period, algorithm) FROM stdin;
 dffd9d87-af94-47da-95a8-6ef36a95bcfb	\N	27500	\\x30689ccd7bdc622d0f89ea726471f55a	password	+ktvDt+NOOXWmy8QdfF34YqfEw0toTFbhHPZFCyYvNYoXmIccpod8poCbfDQCKYvv0YrW0KDWQsEehNaYYbyTA==	7a464a04-90e0-494b-bc47-56f2290f19ff	\N	0	0	0	pbkdf2-sha256
 5608fc75-c839-4a3a-90c4-57c068f39fc4	\N	27500	\\x62db46f9857a706f4e0a9f388aabe72a	password	YelZfeSglqVClx4xJdHqs7WSqg4MsG18faqu7bfS4OVNxA+JXIMwyJqU+sZJNsLUnj6fZ60BWp7RUvX1za+Zzw==	cd6c9fe9-460f-48e6-91b2-f48c70f69ac6	1554356722054	0	0	0	pbkdf2-sha256
 \.
@@ -2181,7 +2161,7 @@ dffd9d87-af94-47da-95a8-6ef36a95bcfb	\N	27500	\\x30689ccd7bdc622d0f89ea726471f55
 -- Data for Name: credential_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY credential_attribute (id, credential_id, name, value) FROM stdin;
+COPY public.credential_attribute (id, credential_id, name, value) FROM stdin;
 \.
 
 
@@ -2189,7 +2169,7 @@ COPY credential_attribute (id, credential_id, name, value) FROM stdin;
 -- Data for Name: databasechangelog; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY databasechangelog (id, author, filename, dateexecuted, orderexecuted, exectype, md5sum, description, comments, tag, liquibase, contexts, labels, deployment_id) FROM stdin;
+COPY public.databasechangelog (id, author, filename, dateexecuted, orderexecuted, exectype, md5sum, description, comments, tag, liquibase, contexts, labels, deployment_id) FROM stdin;
 1.0.0.Final-KEYCLOAK-5461	sthorger@redhat.com	META-INF/jpa-changelog-1.0.0.Final.xml	2019-04-04 05:34:01.258375	1	EXECUTED	7:4e70412f24a3f382c82183742ec79317	createTable tableName=APPLICATION_DEFAULT_ROLES; createTable tableName=CLIENT; createTable tableName=CLIENT_SESSION; createTable tableName=CLIENT_SESSION_ROLE; createTable tableName=COMPOSITE_ROLE; createTable tableName=CREDENTIAL; createTable tab...		\N	3.5.4	\N	\N	4356040746
 1.0.0.Final-KEYCLOAK-5461	sthorger@redhat.com	META-INF/db2-jpa-changelog-1.0.0.Final.xml	2019-04-04 05:34:01.268994	2	MARK_RAN	7:cb16724583e9675711801c6875114f28	createTable tableName=APPLICATION_DEFAULT_ROLES; createTable tableName=CLIENT; createTable tableName=CLIENT_SESSION; createTable tableName=CLIENT_SESSION_ROLE; createTable tableName=COMPOSITE_ROLE; createTable tableName=CREDENTIAL; createTable tab...		\N	3.5.4	\N	\N	4356040746
 1.1.0.Beta1	sthorger@redhat.com	META-INF/jpa-changelog-1.1.0.Beta1.xml	2019-04-04 05:34:01.328614	3	EXECUTED	7:0310eb8ba07cec616460794d42ade0fa	delete tableName=CLIENT_SESSION_ROLE; delete tableName=CLIENT_SESSION; delete tableName=USER_SESSION; createTable tableName=CLIENT_ATTRIBUTES; createTable tableName=CLIENT_SESSION_NOTE; createTable tableName=APP_NODE_REGISTRATIONS; addColumn table...		\N	3.5.4	\N	\N	4356040746
@@ -2256,7 +2236,7 @@ authz-4.0.0.Beta3	psilva@redhat.com	META-INF/jpa-changelog-authz-4.0.0.Beta3.xml
 -- Data for Name: databasechangeloglock; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY databasechangeloglock (id, locked, lockgranted, lockedby) FROM stdin;
+COPY public.databasechangeloglock (id, locked, lockgranted, lockedby) FROM stdin;
 1	f	\N	\N
 \.
 
@@ -2265,7 +2245,7 @@ COPY databasechangeloglock (id, locked, lockgranted, lockedby) FROM stdin;
 -- Data for Name: default_client_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY default_client_scope (realm_id, scope_id, default_scope) FROM stdin;
+COPY public.default_client_scope (realm_id, scope_id, default_scope) FROM stdin;
 master	36285060-103f-4503-8fb7-3fa11fcbf595	f
 master	c78f16fe-fc10-450b-84e6-326f1e16ef5a	t
 master	2b6ba3f5-0578-45ed-a575-5a6eeb832d1e	t
@@ -2285,7 +2265,7 @@ apicurio	a638cf1e-d35d-402b-baa2-0ddbb602bf33	f
 -- Data for Name: event_entity; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY event_entity (id, client_id, details_json, error, ip_address, realm_id, session_id, event_time, type, user_id) FROM stdin;
+COPY public.event_entity (id, client_id, details_json, error, ip_address, realm_id, session_id, event_time, type, user_id) FROM stdin;
 \.
 
 
@@ -2293,7 +2273,7 @@ COPY event_entity (id, client_id, details_json, error, ip_address, realm_id, ses
 -- Data for Name: fed_credential_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_credential_attribute (id, credential_id, name, value) FROM stdin;
+COPY public.fed_credential_attribute (id, credential_id, name, value) FROM stdin;
 \.
 
 
@@ -2301,7 +2281,7 @@ COPY fed_credential_attribute (id, credential_id, name, value) FROM stdin;
 -- Data for Name: fed_user_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_attribute (id, name, user_id, realm_id, storage_provider_id, value) FROM stdin;
+COPY public.fed_user_attribute (id, name, user_id, realm_id, storage_provider_id, value) FROM stdin;
 \.
 
 
@@ -2309,7 +2289,7 @@ COPY fed_user_attribute (id, name, user_id, realm_id, storage_provider_id, value
 -- Data for Name: fed_user_consent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_consent (id, client_id, user_id, realm_id, storage_provider_id, created_date, last_updated_date, client_storage_provider, external_client_id) FROM stdin;
+COPY public.fed_user_consent (id, client_id, user_id, realm_id, storage_provider_id, created_date, last_updated_date, client_storage_provider, external_client_id) FROM stdin;
 \.
 
 
@@ -2317,7 +2297,7 @@ COPY fed_user_consent (id, client_id, user_id, realm_id, storage_provider_id, cr
 -- Data for Name: fed_user_consent_cl_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_consent_cl_scope (user_consent_id, scope_id) FROM stdin;
+COPY public.fed_user_consent_cl_scope (user_consent_id, scope_id) FROM stdin;
 \.
 
 
@@ -2325,7 +2305,7 @@ COPY fed_user_consent_cl_scope (user_consent_id, scope_id) FROM stdin;
 -- Data for Name: fed_user_credential; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_credential (id, device, hash_iterations, salt, type, value, created_date, counter, digits, period, algorithm, user_id, realm_id, storage_provider_id) FROM stdin;
+COPY public.fed_user_credential (id, device, hash_iterations, salt, type, value, created_date, counter, digits, period, algorithm, user_id, realm_id, storage_provider_id) FROM stdin;
 \.
 
 
@@ -2333,7 +2313,7 @@ COPY fed_user_credential (id, device, hash_iterations, salt, type, value, create
 -- Data for Name: fed_user_group_membership; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_group_membership (group_id, user_id, realm_id, storage_provider_id) FROM stdin;
+COPY public.fed_user_group_membership (group_id, user_id, realm_id, storage_provider_id) FROM stdin;
 \.
 
 
@@ -2341,7 +2321,7 @@ COPY fed_user_group_membership (group_id, user_id, realm_id, storage_provider_id
 -- Data for Name: fed_user_required_action; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_required_action (required_action, user_id, realm_id, storage_provider_id) FROM stdin;
+COPY public.fed_user_required_action (required_action, user_id, realm_id, storage_provider_id) FROM stdin;
 \.
 
 
@@ -2349,7 +2329,7 @@ COPY fed_user_required_action (required_action, user_id, realm_id, storage_provi
 -- Data for Name: fed_user_role_mapping; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY fed_user_role_mapping (role_id, user_id, realm_id, storage_provider_id) FROM stdin;
+COPY public.fed_user_role_mapping (role_id, user_id, realm_id, storage_provider_id) FROM stdin;
 \.
 
 
@@ -2357,8 +2337,8 @@ COPY fed_user_role_mapping (role_id, user_id, realm_id, storage_provider_id) FRO
 -- Data for Name: federated_identity; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY federated_identity (identity_provider, realm_id, federated_user_id, federated_username, token, user_id) FROM stdin;
-github	apicurio	328571	stuartwdouglas	access_token=6429a79eeeec93adff45fa7cdd559e4dffd7bd59&scope=read%3Aorg%2Crepo%2Cuser%3Aemail&token_type=bearer	cd6c9fe9-460f-48e6-91b2-f48c70f69ac6
+COPY public.federated_identity (identity_provider, realm_id, federated_user_id, federated_username, token, user_id) FROM stdin;
+github	apicurio	328571	stuartwdouglas	access_token=0552b0765125dc1406b104d4a284b12b7031633b&scope=read%3Aorg%2Crepo%2Cuser%3Aemail&token_type=bearer	cd6c9fe9-460f-48e6-91b2-f48c70f69ac6
 \.
 
 
@@ -2366,7 +2346,7 @@ github	apicurio	328571	stuartwdouglas	access_token=6429a79eeeec93adff45fa7cdd559
 -- Data for Name: federated_user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY federated_user (id, storage_provider_id, realm_id) FROM stdin;
+COPY public.federated_user (id, storage_provider_id, realm_id) FROM stdin;
 \.
 
 
@@ -2374,7 +2354,7 @@ COPY federated_user (id, storage_provider_id, realm_id) FROM stdin;
 -- Data for Name: group_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY group_attribute (id, name, value, group_id) FROM stdin;
+COPY public.group_attribute (id, name, value, group_id) FROM stdin;
 \.
 
 
@@ -2382,7 +2362,7 @@ COPY group_attribute (id, name, value, group_id) FROM stdin;
 -- Data for Name: group_role_mapping; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY group_role_mapping (role_id, group_id) FROM stdin;
+COPY public.group_role_mapping (role_id, group_id) FROM stdin;
 \.
 
 
@@ -2390,7 +2370,7 @@ COPY group_role_mapping (role_id, group_id) FROM stdin;
 -- Data for Name: identity_provider; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY identity_provider (internal_id, enabled, provider_alias, provider_id, store_token, authenticate_by_default, realm_id, add_token_role, trust_email, first_broker_login_flow_id, post_broker_login_flow_id, provider_display_name, link_only) FROM stdin;
+COPY public.identity_provider (internal_id, enabled, provider_alias, provider_id, store_token, authenticate_by_default, realm_id, add_token_role, trust_email, first_broker_login_flow_id, post_broker_login_flow_id, provider_display_name, link_only) FROM stdin;
 8c2324be-ae70-41ec-9ed0-c1ec45df8910	t	github	github	t	f	apicurio	t	t	015ed7a5-12db-4292-8e00-fc9ae16d3a51	\N	\N	f
 \.
 
@@ -2399,7 +2379,7 @@ COPY identity_provider (internal_id, enabled, provider_alias, provider_id, store
 -- Data for Name: identity_provider_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY identity_provider_config (identity_provider_id, value, name) FROM stdin;
+COPY public.identity_provider_config (identity_provider_id, value, name) FROM stdin;
 8c2324be-ae70-41ec-9ed0-c1ec45df8910		hideOnLoginPage
 8c2324be-ae70-41ec-9ed0-c1ec45df8910	c73fa5218834188ff756	clientId
 8c2324be-ae70-41ec-9ed0-c1ec45df8910		disableUserInfo
@@ -2413,7 +2393,7 @@ COPY identity_provider_config (identity_provider_id, value, name) FROM stdin;
 -- Data for Name: identity_provider_mapper; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY identity_provider_mapper (id, name, idp_alias, idp_mapper_name, realm_id) FROM stdin;
+COPY public.identity_provider_mapper (id, name, idp_alias, idp_mapper_name, realm_id) FROM stdin;
 \.
 
 
@@ -2421,7 +2401,7 @@ COPY identity_provider_mapper (id, name, idp_alias, idp_mapper_name, realm_id) F
 -- Data for Name: idp_mapper_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY idp_mapper_config (idp_mapper_id, value, name) FROM stdin;
+COPY public.idp_mapper_config (idp_mapper_id, value, name) FROM stdin;
 \.
 
 
@@ -2429,7 +2409,7 @@ COPY idp_mapper_config (idp_mapper_id, value, name) FROM stdin;
 -- Data for Name: keycloak_group; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY keycloak_group (id, name, parent_group, realm_id) FROM stdin;
+COPY public.keycloak_group (id, name, parent_group, realm_id) FROM stdin;
 \.
 
 
@@ -2437,7 +2417,7 @@ COPY keycloak_group (id, name, parent_group, realm_id) FROM stdin;
 -- Data for Name: keycloak_role; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY keycloak_role (id, client_realm_constraint, client_role, description, name, realm_id, client, realm) FROM stdin;
+COPY public.keycloak_role (id, client_realm_constraint, client_role, description, name, realm_id, client, realm) FROM stdin;
 9d69ff93-e779-49fa-8f09-63b000396f51	master	f	${role_admin}	admin	master	\N	master
 7039042b-2512-469f-8d2e-b0bb7a9be9d5	master	f	${role_create-realm}	create-realm	master	\N	master
 02015320-4598-45eb-a238-6f7448f545d1	8702814b-4ddc-4ed2-8f07-9185873cc2df	t	${role_create-client}	create-client	master	8702814b-4ddc-4ed2-8f07-9185873cc2df	\N
@@ -2514,7 +2494,7 @@ f5797267-0db0-468d-8265-5574ff29faf6	672c1b68-be12-464a-a904-86a7c352d1b9	t	${ro
 -- Data for Name: migration_model; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY migration_model (id, version) FROM stdin;
+COPY public.migration_model (id, version) FROM stdin;
 SINGLETON	4.0.0
 \.
 
@@ -2523,7 +2503,7 @@ SINGLETON	4.0.0
 -- Data for Name: offline_client_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY offline_client_session (user_session_id, client_id, offline_flag, "timestamp", data, client_storage_provider, external_client_id) FROM stdin;
+COPY public.offline_client_session (user_session_id, client_id, offline_flag, "timestamp", data, client_storage_provider, external_client_id) FROM stdin;
 \.
 
 
@@ -2531,7 +2511,7 @@ COPY offline_client_session (user_session_id, client_id, offline_flag, "timestam
 -- Data for Name: offline_user_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY offline_user_session (user_session_id, user_id, realm_id, last_session_refresh, offline_flag, data) FROM stdin;
+COPY public.offline_user_session (user_session_id, user_id, realm_id, last_session_refresh, offline_flag, data) FROM stdin;
 \.
 
 
@@ -2539,7 +2519,7 @@ COPY offline_user_session (user_session_id, user_id, realm_id, last_session_refr
 -- Data for Name: policy_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY policy_config (policy_id, name, value) FROM stdin;
+COPY public.policy_config (policy_id, name, value) FROM stdin;
 \.
 
 
@@ -2547,7 +2527,7 @@ COPY policy_config (policy_id, name, value) FROM stdin;
 -- Data for Name: protocol_mapper; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY protocol_mapper (id, name, protocol, protocol_mapper_name, client_id, client_scope_id) FROM stdin;
+COPY public.protocol_mapper (id, name, protocol, protocol_mapper_name, client_id, client_scope_id) FROM stdin;
 8bd119a1-3216-42ca-ac5d-c20c16885626	locale	openid-connect	oidc-usermodel-attribute-mapper	c15085ea-9ade-4e9e-b867-cc94574dfda1	\N
 a7c50df0-b74a-454c-8dc6-6be3b38a4f52	role list	saml	saml-role-list-mapper	\N	c78f16fe-fc10-450b-84e6-326f1e16ef5a
 18550332-6061-4493-a5c2-7056a6885084	full name	openid-connect	oidc-full-name-mapper	\N	2b6ba3f5-0578-45ed-a575-5a6eeb832d1e
@@ -2639,7 +2619,7 @@ d42c629e-5d0f-444a-a596-3cb15cd124eb	family name	openid-connect	oidc-usermodel-p
 -- Data for Name: protocol_mapper_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY protocol_mapper_config (protocol_mapper_id, value, name) FROM stdin;
+COPY public.protocol_mapper_config (protocol_mapper_id, value, name) FROM stdin;
 8bd119a1-3216-42ca-ac5d-c20c16885626	true	userinfo.token.claim
 8bd119a1-3216-42ca-ac5d-c20c16885626	locale	user.attribute
 8bd119a1-3216-42ca-ac5d-c20c16885626	true	id.token.claim
@@ -3103,7 +3083,7 @@ d42c629e-5d0f-444a-a596-3cb15cd124eb	String	jsonType.label
 -- Data for Name: realm; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm (id, access_code_lifespan, user_action_lifespan, access_token_lifespan, account_theme, admin_theme, email_theme, enabled, events_enabled, events_expiration, login_theme, name, not_before, password_policy, registration_allowed, remember_me, reset_password_allowed, social, ssl_required, sso_idle_timeout, sso_max_lifespan, update_profile_on_soc_login, verify_email, master_admin_client, login_lifespan, internationalization_enabled, default_locale, reg_email_as_username, admin_events_enabled, admin_events_details_enabled, edit_username_allowed, otp_policy_counter, otp_policy_window, otp_policy_period, otp_policy_digits, otp_policy_alg, otp_policy_type, browser_flow, registration_flow, direct_grant_flow, reset_credentials_flow, client_auth_flow, offline_session_idle_timeout, revoke_refresh_token, access_token_life_implicit, login_with_email_allowed, duplicate_emails_allowed, docker_auth_flow, refresh_token_max_reuse, allow_user_managed_access) FROM stdin;
+COPY public.realm (id, access_code_lifespan, user_action_lifespan, access_token_lifespan, account_theme, admin_theme, email_theme, enabled, events_enabled, events_expiration, login_theme, name, not_before, password_policy, registration_allowed, remember_me, reset_password_allowed, social, ssl_required, sso_idle_timeout, sso_max_lifespan, update_profile_on_soc_login, verify_email, master_admin_client, login_lifespan, internationalization_enabled, default_locale, reg_email_as_username, admin_events_enabled, admin_events_details_enabled, edit_username_allowed, otp_policy_counter, otp_policy_window, otp_policy_period, otp_policy_digits, otp_policy_alg, otp_policy_type, browser_flow, registration_flow, direct_grant_flow, reset_credentials_flow, client_auth_flow, offline_session_idle_timeout, revoke_refresh_token, access_token_life_implicit, login_with_email_allowed, duplicate_emails_allowed, docker_auth_flow, refresh_token_max_reuse, allow_user_managed_access) FROM stdin;
 master	60	300	60	\N	\N	\N	t	f	0	\N	master	0	\N	f	f	f	f	EXTERNAL	1800	36000	f	f	8702814b-4ddc-4ed2-8f07-9185873cc2df	1800	f	\N	f	f	f	f	0	1	30	6	HmacSHA1	totp	14fc0101-93a1-4fb8-907a-baf3e1f2bc67	815317d3-6f71-4635-baa3-897884ecb30b	89e8f4ad-7681-41eb-bf3e-c781136c8060	0db8d7cc-6902-448c-9f99-03ce25ca6d37	f86ec19b-9b2d-4426-9ae3-ecde3c7722e6	2592000	f	900	t	f	4b83895d-3c3f-46d5-8f47-5f9be44477b8	0	f
 apicurio	60	300	300	\N	\N	\N	t	f	0	apicurio	apicurio	0	\N	t	t	f	f	NONE	1800	36000	f	f	94e4d3b9-5e4e-4f7f-92d2-68d1b01fe40c	1800	f	\N	t	f	f	f	0	1	30	6	HmacSHA1	totp	c460ce37-c909-4652-b384-b1db6946080d	8ce2b483-3dd8-428f-957b-42fd343d7350	57e0ec37-7e1b-4c6f-b04f-58c240b350fa	3b6b9062-33d4-40f2-8edd-8aae8dc5fbcc	04b52715-4a24-4f1e-87e3-057ad4411023	2592000	f	900	t	f	91423aca-8bc1-4e10-9e4c-f7ab44db13e2	0	f
 \.
@@ -3113,7 +3093,7 @@ apicurio	60	300	300	\N	\N	\N	t	f	0	apicurio	apicurio	0	\N	t	t	f	f	NONE	1800	3600
 -- Data for Name: realm_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_attribute (name, value, realm_id) FROM stdin;
+COPY public.realm_attribute (name, value, realm_id) FROM stdin;
 _browser_header.xContentTypeOptions	nosniff	master
 _browser_header.xRobotsTag	none	master
 _browser_header.xFrameOptions	SAMEORIGIN	master
@@ -3157,7 +3137,7 @@ actionTokenGeneratedByUserLifespan	300	apicurio
 -- Data for Name: realm_default_groups; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_default_groups (realm_id, group_id) FROM stdin;
+COPY public.realm_default_groups (realm_id, group_id) FROM stdin;
 \.
 
 
@@ -3165,7 +3145,7 @@ COPY realm_default_groups (realm_id, group_id) FROM stdin;
 -- Data for Name: realm_default_roles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_default_roles (realm_id, role_id) FROM stdin;
+COPY public.realm_default_roles (realm_id, role_id) FROM stdin;
 master	2b2f7770-e203-4e18-bdf6-3485f41362e3
 master	cfc6b387-459b-4bb0-ae76-b46f2d25bb53
 apicurio	4b82c838-4ba2-4263-9147-873f69f1495a
@@ -3177,7 +3157,7 @@ apicurio	088b8094-3929-44fb-b0ce-c837a3251ac4
 -- Data for Name: realm_enabled_event_types; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_enabled_event_types (realm_id, value) FROM stdin;
+COPY public.realm_enabled_event_types (realm_id, value) FROM stdin;
 \.
 
 
@@ -3185,7 +3165,7 @@ COPY realm_enabled_event_types (realm_id, value) FROM stdin;
 -- Data for Name: realm_events_listeners; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_events_listeners (realm_id, value) FROM stdin;
+COPY public.realm_events_listeners (realm_id, value) FROM stdin;
 master	jboss-logging
 apicurio	jboss-logging
 \.
@@ -3195,7 +3175,7 @@ apicurio	jboss-logging
 -- Data for Name: realm_required_credential; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_required_credential (type, form_label, input, secret, realm_id) FROM stdin;
+COPY public.realm_required_credential (type, form_label, input, secret, realm_id) FROM stdin;
 password	password	t	t	master
 password	password	t	t	apicurio
 \.
@@ -3205,7 +3185,7 @@ password	password	t	t	apicurio
 -- Data for Name: realm_smtp_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_smtp_config (realm_id, value, name) FROM stdin;
+COPY public.realm_smtp_config (realm_id, value, name) FROM stdin;
 \.
 
 
@@ -3213,7 +3193,7 @@ COPY realm_smtp_config (realm_id, value, name) FROM stdin;
 -- Data for Name: realm_supported_locales; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY realm_supported_locales (realm_id, value) FROM stdin;
+COPY public.realm_supported_locales (realm_id, value) FROM stdin;
 apicurio	
 \.
 
@@ -3222,7 +3202,7 @@ apicurio
 -- Data for Name: redirect_uris; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY redirect_uris (client_id, value) FROM stdin;
+COPY public.redirect_uris (client_id, value) FROM stdin;
 f036cd86-f38d-49d0-83a7-e1babea17489	/auth/realms/master/account/*
 c15085ea-9ade-4e9e-b867-cc94574dfda1	/auth/admin/master/console/*
 0a6fe8b8-b357-4fa8-b0a4-253a08e4f8e2	/auth/admin/apicurio/console/*
@@ -3235,7 +3215,7 @@ c15085ea-9ade-4e9e-b867-cc94574dfda1	/auth/admin/master/console/*
 -- Data for Name: required_action_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY required_action_config (required_action_id, value, name) FROM stdin;
+COPY public.required_action_config (required_action_id, value, name) FROM stdin;
 \.
 
 
@@ -3243,7 +3223,7 @@ COPY required_action_config (required_action_id, value, name) FROM stdin;
 -- Data for Name: required_action_provider; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY required_action_provider (id, alias, name, realm_id, enabled, default_action, provider_id) FROM stdin;
+COPY public.required_action_provider (id, alias, name, realm_id, enabled, default_action, provider_id) FROM stdin;
 cb5dba23-a9e1-4270-a38e-2a1ac49b2e62	VERIFY_EMAIL	Verify Email	master	t	f	VERIFY_EMAIL
 53366ea4-d207-4553-b2b1-6da5f5696b47	UPDATE_PROFILE	Update Profile	master	t	f	UPDATE_PROFILE
 276f407f-9d4c-4dcf-9b79-05b58d04193d	CONFIGURE_TOTP	Configure OTP	master	t	f	CONFIGURE_TOTP
@@ -3261,7 +3241,7 @@ f8b394cb-f4e9-4970-a802-cd8677ce87f3	VERIFY_EMAIL	Verify Email	apicurio	t	f	VERI
 -- Data for Name: resource_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_attribute (id, name, value, resource_id) FROM stdin;
+COPY public.resource_attribute (id, name, value, resource_id) FROM stdin;
 \.
 
 
@@ -3269,7 +3249,7 @@ COPY resource_attribute (id, name, value, resource_id) FROM stdin;
 -- Data for Name: resource_policy; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_policy (resource_id, policy_id) FROM stdin;
+COPY public.resource_policy (resource_id, policy_id) FROM stdin;
 \.
 
 
@@ -3277,7 +3257,7 @@ COPY resource_policy (resource_id, policy_id) FROM stdin;
 -- Data for Name: resource_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_scope (resource_id, scope_id) FROM stdin;
+COPY public.resource_scope (resource_id, scope_id) FROM stdin;
 \.
 
 
@@ -3285,7 +3265,7 @@ COPY resource_scope (resource_id, scope_id) FROM stdin;
 -- Data for Name: resource_server; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_server (id, allow_rs_remote_mgmt, policy_enforce_mode) FROM stdin;
+COPY public.resource_server (id, allow_rs_remote_mgmt, policy_enforce_mode) FROM stdin;
 \.
 
 
@@ -3293,7 +3273,7 @@ COPY resource_server (id, allow_rs_remote_mgmt, policy_enforce_mode) FROM stdin;
 -- Data for Name: resource_server_perm_ticket; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_server_perm_ticket (id, owner, requester, created_timestamp, granted_timestamp, resource_id, scope_id, resource_server_id, policy_id) FROM stdin;
+COPY public.resource_server_perm_ticket (id, owner, requester, created_timestamp, granted_timestamp, resource_id, scope_id, resource_server_id, policy_id) FROM stdin;
 \.
 
 
@@ -3301,7 +3281,7 @@ COPY resource_server_perm_ticket (id, owner, requester, created_timestamp, grant
 -- Data for Name: resource_server_policy; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_server_policy (id, name, description, type, decision_strategy, logic, resource_server_id, owner) FROM stdin;
+COPY public.resource_server_policy (id, name, description, type, decision_strategy, logic, resource_server_id, owner) FROM stdin;
 \.
 
 
@@ -3309,7 +3289,7 @@ COPY resource_server_policy (id, name, description, type, decision_strategy, log
 -- Data for Name: resource_server_resource; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_server_resource (id, name, uri, type, icon_uri, owner, resource_server_id, owner_managed_access, display_name) FROM stdin;
+COPY public.resource_server_resource (id, name, uri, type, icon_uri, owner, resource_server_id, owner_managed_access, display_name) FROM stdin;
 \.
 
 
@@ -3317,7 +3297,7 @@ COPY resource_server_resource (id, name, uri, type, icon_uri, owner, resource_se
 -- Data for Name: resource_server_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY resource_server_scope (id, name, icon_uri, resource_server_id, display_name) FROM stdin;
+COPY public.resource_server_scope (id, name, icon_uri, resource_server_id, display_name) FROM stdin;
 \.
 
 
@@ -3325,7 +3305,7 @@ COPY resource_server_scope (id, name, icon_uri, resource_server_id, display_name
 -- Data for Name: scope_mapping; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY scope_mapping (client_id, role_id) FROM stdin;
+COPY public.scope_mapping (client_id, role_id) FROM stdin;
 \.
 
 
@@ -3333,7 +3313,7 @@ COPY scope_mapping (client_id, role_id) FROM stdin;
 -- Data for Name: scope_policy; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY scope_policy (scope_id, policy_id) FROM stdin;
+COPY public.scope_policy (scope_id, policy_id) FROM stdin;
 \.
 
 
@@ -3341,7 +3321,7 @@ COPY scope_policy (scope_id, policy_id) FROM stdin;
 -- Data for Name: session_uuids; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY session_uuids (uuid, design_id, user_id, secret, version, expires_on) FROM stdin;
+COPY public.session_uuids (uuid, design_id, user_id, secret, version, expires_on) FROM stdin;
 \.
 
 
@@ -3349,7 +3329,7 @@ COPY session_uuids (uuid, design_id, user_id, secret, version, expires_on) FROM 
 -- Data for Name: user_attribute; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_attribute (name, value, user_id, id) FROM stdin;
+COPY public.user_attribute (name, value, user_id, id) FROM stdin;
 \.
 
 
@@ -3357,7 +3337,7 @@ COPY user_attribute (name, value, user_id, id) FROM stdin;
 -- Data for Name: user_consent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_consent (id, client_id, user_id, created_date, last_updated_date, client_storage_provider, external_client_id) FROM stdin;
+COPY public.user_consent (id, client_id, user_id, created_date, last_updated_date, client_storage_provider, external_client_id) FROM stdin;
 \.
 
 
@@ -3365,7 +3345,7 @@ COPY user_consent (id, client_id, user_id, created_date, last_updated_date, clie
 -- Data for Name: user_consent_client_scope; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_consent_client_scope (user_consent_id, scope_id) FROM stdin;
+COPY public.user_consent_client_scope (user_consent_id, scope_id) FROM stdin;
 \.
 
 
@@ -3373,7 +3353,7 @@ COPY user_consent_client_scope (user_consent_id, scope_id) FROM stdin;
 -- Data for Name: user_entity; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_entity (id, email, email_constraint, email_verified, enabled, federation_link, first_name, last_name, realm_id, username, created_timestamp, service_account_client_link, not_before) FROM stdin;
+COPY public.user_entity (id, email, email_constraint, email_verified, enabled, federation_link, first_name, last_name, realm_id, username, created_timestamp, service_account_client_link, not_before) FROM stdin;
 7a464a04-90e0-494b-bc47-56f2290f19ff	\N	30ef884f-2829-46ce-8508-36aa388c58bd	f	t	\N	\N	\N	master	admin	1554356056181	\N	0
 cd6c9fe9-460f-48e6-91b2-f48c70f69ac6	stuart.w.douglas@gmail.com	stuart.w.douglas@gmail.com	f	t	\N	Stuart	Douglas	apicurio	stuart.w.douglas@gmail.com	1554356721855	\N	0
 \.
@@ -3383,7 +3363,7 @@ cd6c9fe9-460f-48e6-91b2-f48c70f69ac6	stuart.w.douglas@gmail.com	stuart.w.douglas
 -- Data for Name: user_federation_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_federation_config (user_federation_provider_id, value, name) FROM stdin;
+COPY public.user_federation_config (user_federation_provider_id, value, name) FROM stdin;
 \.
 
 
@@ -3391,7 +3371,7 @@ COPY user_federation_config (user_federation_provider_id, value, name) FROM stdi
 -- Data for Name: user_federation_mapper; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_federation_mapper (id, name, federation_provider_id, federation_mapper_type, realm_id) FROM stdin;
+COPY public.user_federation_mapper (id, name, federation_provider_id, federation_mapper_type, realm_id) FROM stdin;
 \.
 
 
@@ -3399,7 +3379,7 @@ COPY user_federation_mapper (id, name, federation_provider_id, federation_mapper
 -- Data for Name: user_federation_mapper_config; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_federation_mapper_config (user_federation_mapper_id, value, name) FROM stdin;
+COPY public.user_federation_mapper_config (user_federation_mapper_id, value, name) FROM stdin;
 \.
 
 
@@ -3407,7 +3387,7 @@ COPY user_federation_mapper_config (user_federation_mapper_id, value, name) FROM
 -- Data for Name: user_federation_provider; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_federation_provider (id, changed_sync_period, display_name, full_sync_period, last_sync, priority, provider_name, realm_id) FROM stdin;
+COPY public.user_federation_provider (id, changed_sync_period, display_name, full_sync_period, last_sync, priority, provider_name, realm_id) FROM stdin;
 \.
 
 
@@ -3415,7 +3395,7 @@ COPY user_federation_provider (id, changed_sync_period, display_name, full_sync_
 -- Data for Name: user_group_membership; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_group_membership (group_id, user_id) FROM stdin;
+COPY public.user_group_membership (group_id, user_id) FROM stdin;
 \.
 
 
@@ -3423,7 +3403,7 @@ COPY user_group_membership (group_id, user_id) FROM stdin;
 -- Data for Name: user_required_action; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_required_action (user_id, required_action) FROM stdin;
+COPY public.user_required_action (user_id, required_action) FROM stdin;
 \.
 
 
@@ -3431,7 +3411,7 @@ COPY user_required_action (user_id, required_action) FROM stdin;
 -- Data for Name: user_role_mapping; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_role_mapping (role_id, user_id) FROM stdin;
+COPY public.user_role_mapping (role_id, user_id) FROM stdin;
 45382874-db6b-4c3c-97c6-480f68745f7d	7a464a04-90e0-494b-bc47-56f2290f19ff
 2b2f7770-e203-4e18-bdf6-3485f41362e3	7a464a04-90e0-494b-bc47-56f2290f19ff
 9d79a9a2-e942-4332-ba3c-c9d9a2db521d	7a464a04-90e0-494b-bc47-56f2290f19ff
@@ -3449,7 +3429,7 @@ cfc6b387-459b-4bb0-ae76-b46f2d25bb53	7a464a04-90e0-494b-bc47-56f2290f19ff
 -- Data for Name: user_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_session (id, auth_method, ip_address, last_session_refresh, login_username, realm_id, remember_me, started, user_id, user_session_state, broker_session_id, broker_user_id) FROM stdin;
+COPY public.user_session (id, auth_method, ip_address, last_session_refresh, login_username, realm_id, remember_me, started, user_id, user_session_state, broker_session_id, broker_user_id) FROM stdin;
 \.
 
 
@@ -3457,7 +3437,7 @@ COPY user_session (id, auth_method, ip_address, last_session_refresh, login_user
 -- Data for Name: user_session_note; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY user_session_note (user_session, name, value) FROM stdin;
+COPY public.user_session_note (user_session, name, value) FROM stdin;
 \.
 
 
@@ -3465,7 +3445,7 @@ COPY user_session_note (user_session, name, value) FROM stdin;
 -- Data for Name: username_login_failure; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY username_login_failure (realm_id, username, failed_login_not_before, last_failure, last_ip_failure, num_failures) FROM stdin;
+COPY public.username_login_failure (realm_id, username, failed_login_not_before, last_failure, last_ip_failure, num_failures) FROM stdin;
 \.
 
 
@@ -3473,16 +3453,37 @@ COPY username_login_failure (realm_id, username, failed_login_not_before, last_f
 -- Data for Name: web_origins; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY web_origins (client_id, value) FROM stdin;
+COPY public.web_origins (client_id, value) FROM stdin;
 0ca69b5c-7f5b-4f16-b8ba-cdca66eca9e1	+
 \.
+
+
+--
+-- Name: api_content_version_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.api_content_version_seq', 4, true);
+
+
+--
+-- Name: api_designs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.api_designs_id_seq', 2, true);
+
+
+--
+-- Name: codegen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.codegen_id_seq', 2, true);
 
 
 --
 -- Name: username_login_failure CONSTRAINT_17-2; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY username_login_failure
+ALTER TABLE ONLY public.username_login_failure
     ADD CONSTRAINT "CONSTRAINT_17-2" PRIMARY KEY (realm_id, username);
 
 
@@ -3490,7 +3491,7 @@ ALTER TABLE ONLY username_login_failure
 -- Name: keycloak_role UK_J3RWUVD56ONTGSUHOGM184WW2-2; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_role
+ALTER TABLE ONLY public.keycloak_role
     ADD CONSTRAINT "UK_J3RWUVD56ONTGSUHOGM184WW2-2" UNIQUE (name, client_realm_constraint);
 
 
@@ -3498,7 +3499,7 @@ ALTER TABLE ONLY keycloak_role
 -- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY accounts
+ALTER TABLE ONLY public.accounts
     ADD CONSTRAINT accounts_pkey PRIMARY KEY (user_id, type);
 
 
@@ -3506,7 +3507,7 @@ ALTER TABLE ONLY accounts
 -- Name: acl_invites acl_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY acl_invites
+ALTER TABLE ONLY public.acl_invites
     ADD CONSTRAINT acl_invites_pkey PRIMARY KEY (invite_id);
 
 
@@ -3514,7 +3515,7 @@ ALTER TABLE ONLY acl_invites
 -- Name: acl acl_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY acl
+ALTER TABLE ONLY public.acl
     ADD CONSTRAINT acl_pkey PRIMARY KEY (user_id, design_id);
 
 
@@ -3522,7 +3523,7 @@ ALTER TABLE ONLY acl
 -- Name: api_content api_content_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY api_content
+ALTER TABLE ONLY public.api_content
     ADD CONSTRAINT api_content_pkey PRIMARY KEY (design_id, version);
 
 
@@ -3530,7 +3531,7 @@ ALTER TABLE ONLY api_content
 -- Name: api_designs api_designs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY api_designs
+ALTER TABLE ONLY public.api_designs
     ADD CONSTRAINT api_designs_pkey PRIMARY KEY (id);
 
 
@@ -3538,7 +3539,7 @@ ALTER TABLE ONLY api_designs
 -- Name: apicurio apicurio_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY apicurio
+ALTER TABLE ONLY public.apicurio
     ADD CONSTRAINT apicurio_pkey PRIMARY KEY (prop_name);
 
 
@@ -3546,7 +3547,7 @@ ALTER TABLE ONLY apicurio
 -- Name: client_auth_flow_bindings c_cli_flow_bind; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_auth_flow_bindings
+ALTER TABLE ONLY public.client_auth_flow_bindings
     ADD CONSTRAINT c_cli_flow_bind PRIMARY KEY (client_id, binding_name);
 
 
@@ -3554,7 +3555,7 @@ ALTER TABLE ONLY client_auth_flow_bindings
 -- Name: client_scope_client c_cli_scope_bind; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_client
+ALTER TABLE ONLY public.client_scope_client
     ADD CONSTRAINT c_cli_scope_bind PRIMARY KEY (client_id, scope_id);
 
 
@@ -3562,7 +3563,7 @@ ALTER TABLE ONLY client_scope_client
 -- Name: client_initial_access cnstr_client_init_acc_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_initial_access
+ALTER TABLE ONLY public.client_initial_access
     ADD CONSTRAINT cnstr_client_init_acc_pk PRIMARY KEY (id);
 
 
@@ -3570,7 +3571,7 @@ ALTER TABLE ONLY client_initial_access
 -- Name: codegen codegen_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY codegen
+ALTER TABLE ONLY public.codegen
     ADD CONSTRAINT codegen_pkey PRIMARY KEY (id);
 
 
@@ -3578,7 +3579,7 @@ ALTER TABLE ONLY codegen
 -- Name: realm_default_groups con_group_id_def_groups; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_groups
+ALTER TABLE ONLY public.realm_default_groups
     ADD CONSTRAINT con_group_id_def_groups UNIQUE (group_id);
 
 
@@ -3586,7 +3587,7 @@ ALTER TABLE ONLY realm_default_groups
 -- Name: broker_link constr_broker_link_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY broker_link
+ALTER TABLE ONLY public.broker_link
     ADD CONSTRAINT constr_broker_link_pk PRIMARY KEY (identity_provider, user_id);
 
 
@@ -3594,7 +3595,7 @@ ALTER TABLE ONLY broker_link
 -- Name: client_user_session_note constr_cl_usr_ses_note; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_user_session_note
+ALTER TABLE ONLY public.client_user_session_note
     ADD CONSTRAINT constr_cl_usr_ses_note PRIMARY KEY (client_session, name);
 
 
@@ -3602,7 +3603,7 @@ ALTER TABLE ONLY client_user_session_note
 -- Name: client_default_roles constr_client_default_roles; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_default_roles
+ALTER TABLE ONLY public.client_default_roles
     ADD CONSTRAINT constr_client_default_roles PRIMARY KEY (client_id, role_id);
 
 
@@ -3610,7 +3611,7 @@ ALTER TABLE ONLY client_default_roles
 -- Name: component_config constr_component_config_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY component_config
+ALTER TABLE ONLY public.component_config
     ADD CONSTRAINT constr_component_config_pk PRIMARY KEY (id);
 
 
@@ -3618,7 +3619,7 @@ ALTER TABLE ONLY component_config
 -- Name: component constr_component_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY component
+ALTER TABLE ONLY public.component
     ADD CONSTRAINT constr_component_pk PRIMARY KEY (id);
 
 
@@ -3626,7 +3627,7 @@ ALTER TABLE ONLY component
 -- Name: fed_user_required_action constr_fed_required_action; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_required_action
+ALTER TABLE ONLY public.fed_user_required_action
     ADD CONSTRAINT constr_fed_required_action PRIMARY KEY (required_action, user_id);
 
 
@@ -3634,7 +3635,7 @@ ALTER TABLE ONLY fed_user_required_action
 -- Name: fed_user_attribute constr_fed_user_attr_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_attribute
+ALTER TABLE ONLY public.fed_user_attribute
     ADD CONSTRAINT constr_fed_user_attr_pk PRIMARY KEY (id);
 
 
@@ -3642,7 +3643,7 @@ ALTER TABLE ONLY fed_user_attribute
 -- Name: fed_user_consent constr_fed_user_consent_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_consent
+ALTER TABLE ONLY public.fed_user_consent
     ADD CONSTRAINT constr_fed_user_consent_pk PRIMARY KEY (id);
 
 
@@ -3650,7 +3651,7 @@ ALTER TABLE ONLY fed_user_consent
 -- Name: fed_user_credential constr_fed_user_cred_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_credential
+ALTER TABLE ONLY public.fed_user_credential
     ADD CONSTRAINT constr_fed_user_cred_pk PRIMARY KEY (id);
 
 
@@ -3658,7 +3659,7 @@ ALTER TABLE ONLY fed_user_credential
 -- Name: fed_user_group_membership constr_fed_user_group; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_group_membership
+ALTER TABLE ONLY public.fed_user_group_membership
     ADD CONSTRAINT constr_fed_user_group PRIMARY KEY (group_id, user_id);
 
 
@@ -3666,7 +3667,7 @@ ALTER TABLE ONLY fed_user_group_membership
 -- Name: fed_user_role_mapping constr_fed_user_role; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_role_mapping
+ALTER TABLE ONLY public.fed_user_role_mapping
     ADD CONSTRAINT constr_fed_user_role PRIMARY KEY (role_id, user_id);
 
 
@@ -3674,7 +3675,7 @@ ALTER TABLE ONLY fed_user_role_mapping
 -- Name: federated_user constr_federated_user; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY federated_user
+ALTER TABLE ONLY public.federated_user
     ADD CONSTRAINT constr_federated_user PRIMARY KEY (id);
 
 
@@ -3682,7 +3683,7 @@ ALTER TABLE ONLY federated_user
 -- Name: realm_default_groups constr_realm_default_groups; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_groups
+ALTER TABLE ONLY public.realm_default_groups
     ADD CONSTRAINT constr_realm_default_groups PRIMARY KEY (realm_id, group_id);
 
 
@@ -3690,7 +3691,7 @@ ALTER TABLE ONLY realm_default_groups
 -- Name: realm_enabled_event_types constr_realm_enabl_event_types; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_enabled_event_types
+ALTER TABLE ONLY public.realm_enabled_event_types
     ADD CONSTRAINT constr_realm_enabl_event_types PRIMARY KEY (realm_id, value);
 
 
@@ -3698,7 +3699,7 @@ ALTER TABLE ONLY realm_enabled_event_types
 -- Name: realm_events_listeners constr_realm_events_listeners; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_events_listeners
+ALTER TABLE ONLY public.realm_events_listeners
     ADD CONSTRAINT constr_realm_events_listeners PRIMARY KEY (realm_id, value);
 
 
@@ -3706,7 +3707,7 @@ ALTER TABLE ONLY realm_events_listeners
 -- Name: realm_supported_locales constr_realm_supported_locales; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_supported_locales
+ALTER TABLE ONLY public.realm_supported_locales
     ADD CONSTRAINT constr_realm_supported_locales PRIMARY KEY (realm_id, value);
 
 
@@ -3714,7 +3715,7 @@ ALTER TABLE ONLY realm_supported_locales
 -- Name: identity_provider constraint_2b; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider
+ALTER TABLE ONLY public.identity_provider
     ADD CONSTRAINT constraint_2b PRIMARY KEY (internal_id);
 
 
@@ -3722,7 +3723,7 @@ ALTER TABLE ONLY identity_provider
 -- Name: client_attributes constraint_3c; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_attributes
+ALTER TABLE ONLY public.client_attributes
     ADD CONSTRAINT constraint_3c PRIMARY KEY (client_id, name);
 
 
@@ -3730,7 +3731,7 @@ ALTER TABLE ONLY client_attributes
 -- Name: event_entity constraint_4; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY event_entity
+ALTER TABLE ONLY public.event_entity
     ADD CONSTRAINT constraint_4 PRIMARY KEY (id);
 
 
@@ -3738,7 +3739,7 @@ ALTER TABLE ONLY event_entity
 -- Name: federated_identity constraint_40; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY federated_identity
+ALTER TABLE ONLY public.federated_identity
     ADD CONSTRAINT constraint_40 PRIMARY KEY (identity_provider, user_id);
 
 
@@ -3746,7 +3747,7 @@ ALTER TABLE ONLY federated_identity
 -- Name: realm constraint_4a; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm
+ALTER TABLE ONLY public.realm
     ADD CONSTRAINT constraint_4a PRIMARY KEY (id);
 
 
@@ -3754,7 +3755,7 @@ ALTER TABLE ONLY realm
 -- Name: client_session_role constraint_5; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_role
+ALTER TABLE ONLY public.client_session_role
     ADD CONSTRAINT constraint_5 PRIMARY KEY (client_session, role_id);
 
 
@@ -3762,7 +3763,7 @@ ALTER TABLE ONLY client_session_role
 -- Name: user_session constraint_57; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session
+ALTER TABLE ONLY public.user_session
     ADD CONSTRAINT constraint_57 PRIMARY KEY (id);
 
 
@@ -3770,7 +3771,7 @@ ALTER TABLE ONLY user_session
 -- Name: user_federation_provider constraint_5c; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_provider
+ALTER TABLE ONLY public.user_federation_provider
     ADD CONSTRAINT constraint_5c PRIMARY KEY (id);
 
 
@@ -3778,7 +3779,7 @@ ALTER TABLE ONLY user_federation_provider
 -- Name: client_session_note constraint_5e; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_note
+ALTER TABLE ONLY public.client_session_note
     ADD CONSTRAINT constraint_5e PRIMARY KEY (client_session, name);
 
 
@@ -3786,7 +3787,7 @@ ALTER TABLE ONLY client_session_note
 -- Name: client constraint_7; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client
+ALTER TABLE ONLY public.client
     ADD CONSTRAINT constraint_7 PRIMARY KEY (id);
 
 
@@ -3794,7 +3795,7 @@ ALTER TABLE ONLY client
 -- Name: client_session constraint_8; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session
+ALTER TABLE ONLY public.client_session
     ADD CONSTRAINT constraint_8 PRIMARY KEY (id);
 
 
@@ -3802,7 +3803,7 @@ ALTER TABLE ONLY client_session
 -- Name: scope_mapping constraint_81; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_mapping
+ALTER TABLE ONLY public.scope_mapping
     ADD CONSTRAINT constraint_81 PRIMARY KEY (client_id, role_id);
 
 
@@ -3810,7 +3811,7 @@ ALTER TABLE ONLY scope_mapping
 -- Name: client_node_registrations constraint_84; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_node_registrations
+ALTER TABLE ONLY public.client_node_registrations
     ADD CONSTRAINT constraint_84 PRIMARY KEY (client_id, name);
 
 
@@ -3818,7 +3819,7 @@ ALTER TABLE ONLY client_node_registrations
 -- Name: realm_attribute constraint_9; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_attribute
+ALTER TABLE ONLY public.realm_attribute
     ADD CONSTRAINT constraint_9 PRIMARY KEY (name, realm_id);
 
 
@@ -3826,7 +3827,7 @@ ALTER TABLE ONLY realm_attribute
 -- Name: realm_required_credential constraint_92; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_required_credential
+ALTER TABLE ONLY public.realm_required_credential
     ADD CONSTRAINT constraint_92 PRIMARY KEY (realm_id, type);
 
 
@@ -3834,7 +3835,7 @@ ALTER TABLE ONLY realm_required_credential
 -- Name: keycloak_role constraint_a; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_role
+ALTER TABLE ONLY public.keycloak_role
     ADD CONSTRAINT constraint_a PRIMARY KEY (id);
 
 
@@ -3842,7 +3843,7 @@ ALTER TABLE ONLY keycloak_role
 -- Name: admin_event_entity constraint_admin_event_entity; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_event_entity
+ALTER TABLE ONLY public.admin_event_entity
     ADD CONSTRAINT constraint_admin_event_entity PRIMARY KEY (id);
 
 
@@ -3850,7 +3851,7 @@ ALTER TABLE ONLY admin_event_entity
 -- Name: authenticator_config_entry constraint_auth_cfg_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authenticator_config_entry
+ALTER TABLE ONLY public.authenticator_config_entry
     ADD CONSTRAINT constraint_auth_cfg_pk PRIMARY KEY (authenticator_id, name);
 
 
@@ -3858,7 +3859,7 @@ ALTER TABLE ONLY authenticator_config_entry
 -- Name: authentication_execution constraint_auth_exec_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authentication_execution
+ALTER TABLE ONLY public.authentication_execution
     ADD CONSTRAINT constraint_auth_exec_pk PRIMARY KEY (id);
 
 
@@ -3866,7 +3867,7 @@ ALTER TABLE ONLY authentication_execution
 -- Name: authentication_flow constraint_auth_flow_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authentication_flow
+ALTER TABLE ONLY public.authentication_flow
     ADD CONSTRAINT constraint_auth_flow_pk PRIMARY KEY (id);
 
 
@@ -3874,7 +3875,7 @@ ALTER TABLE ONLY authentication_flow
 -- Name: authenticator_config constraint_auth_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authenticator_config
+ALTER TABLE ONLY public.authenticator_config
     ADD CONSTRAINT constraint_auth_pk PRIMARY KEY (id);
 
 
@@ -3882,7 +3883,7 @@ ALTER TABLE ONLY authenticator_config
 -- Name: client_session_auth_status constraint_auth_status_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_auth_status
+ALTER TABLE ONLY public.client_session_auth_status
     ADD CONSTRAINT constraint_auth_status_pk PRIMARY KEY (client_session, authenticator);
 
 
@@ -3890,7 +3891,7 @@ ALTER TABLE ONLY client_session_auth_status
 -- Name: user_role_mapping constraint_c; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_role_mapping
+ALTER TABLE ONLY public.user_role_mapping
     ADD CONSTRAINT constraint_c PRIMARY KEY (role_id, user_id);
 
 
@@ -3898,7 +3899,7 @@ ALTER TABLE ONLY user_role_mapping
 -- Name: composite_role constraint_composite_role; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY composite_role
+ALTER TABLE ONLY public.composite_role
     ADD CONSTRAINT constraint_composite_role PRIMARY KEY (composite, child_role);
 
 
@@ -3906,7 +3907,7 @@ ALTER TABLE ONLY composite_role
 -- Name: credential_attribute constraint_credential_attr; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY credential_attribute
+ALTER TABLE ONLY public.credential_attribute
     ADD CONSTRAINT constraint_credential_attr PRIMARY KEY (id);
 
 
@@ -3914,7 +3915,7 @@ ALTER TABLE ONLY credential_attribute
 -- Name: client_session_prot_mapper constraint_cs_pmp_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_prot_mapper
+ALTER TABLE ONLY public.client_session_prot_mapper
     ADD CONSTRAINT constraint_cs_pmp_pk PRIMARY KEY (client_session, protocol_mapper_id);
 
 
@@ -3922,7 +3923,7 @@ ALTER TABLE ONLY client_session_prot_mapper
 -- Name: identity_provider_config constraint_d; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider_config
+ALTER TABLE ONLY public.identity_provider_config
     ADD CONSTRAINT constraint_d PRIMARY KEY (identity_provider_id, name);
 
 
@@ -3930,7 +3931,7 @@ ALTER TABLE ONLY identity_provider_config
 -- Name: policy_config constraint_dpc; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY policy_config
+ALTER TABLE ONLY public.policy_config
     ADD CONSTRAINT constraint_dpc PRIMARY KEY (policy_id, name);
 
 
@@ -3938,7 +3939,7 @@ ALTER TABLE ONLY policy_config
 -- Name: realm_smtp_config constraint_e; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_smtp_config
+ALTER TABLE ONLY public.realm_smtp_config
     ADD CONSTRAINT constraint_e PRIMARY KEY (realm_id, name);
 
 
@@ -3946,7 +3947,7 @@ ALTER TABLE ONLY realm_smtp_config
 -- Name: credential constraint_f; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY credential
+ALTER TABLE ONLY public.credential
     ADD CONSTRAINT constraint_f PRIMARY KEY (id);
 
 
@@ -3954,7 +3955,7 @@ ALTER TABLE ONLY credential
 -- Name: user_federation_config constraint_f9; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_config
+ALTER TABLE ONLY public.user_federation_config
     ADD CONSTRAINT constraint_f9 PRIMARY KEY (user_federation_provider_id, name);
 
 
@@ -3962,7 +3963,7 @@ ALTER TABLE ONLY user_federation_config
 -- Name: resource_server_perm_ticket constraint_fapmt; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
+ALTER TABLE ONLY public.resource_server_perm_ticket
     ADD CONSTRAINT constraint_fapmt PRIMARY KEY (id);
 
 
@@ -3970,7 +3971,7 @@ ALTER TABLE ONLY resource_server_perm_ticket
 -- Name: resource_server_resource constraint_farsr; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_resource
+ALTER TABLE ONLY public.resource_server_resource
     ADD CONSTRAINT constraint_farsr PRIMARY KEY (id);
 
 
@@ -3978,7 +3979,7 @@ ALTER TABLE ONLY resource_server_resource
 -- Name: resource_server_policy constraint_farsrp; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_policy
+ALTER TABLE ONLY public.resource_server_policy
     ADD CONSTRAINT constraint_farsrp PRIMARY KEY (id);
 
 
@@ -3986,7 +3987,7 @@ ALTER TABLE ONLY resource_server_policy
 -- Name: associated_policy constraint_farsrpap; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY associated_policy
+ALTER TABLE ONLY public.associated_policy
     ADD CONSTRAINT constraint_farsrpap PRIMARY KEY (policy_id, associated_policy_id);
 
 
@@ -3994,7 +3995,7 @@ ALTER TABLE ONLY associated_policy
 -- Name: resource_policy constraint_farsrpp; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_policy
+ALTER TABLE ONLY public.resource_policy
     ADD CONSTRAINT constraint_farsrpp PRIMARY KEY (resource_id, policy_id);
 
 
@@ -4002,7 +4003,7 @@ ALTER TABLE ONLY resource_policy
 -- Name: resource_server_scope constraint_farsrs; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_scope
+ALTER TABLE ONLY public.resource_server_scope
     ADD CONSTRAINT constraint_farsrs PRIMARY KEY (id);
 
 
@@ -4010,7 +4011,7 @@ ALTER TABLE ONLY resource_server_scope
 -- Name: resource_scope constraint_farsrsp; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_scope
+ALTER TABLE ONLY public.resource_scope
     ADD CONSTRAINT constraint_farsrsp PRIMARY KEY (resource_id, scope_id);
 
 
@@ -4018,7 +4019,7 @@ ALTER TABLE ONLY resource_scope
 -- Name: scope_policy constraint_farsrsps; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_policy
+ALTER TABLE ONLY public.scope_policy
     ADD CONSTRAINT constraint_farsrsps PRIMARY KEY (scope_id, policy_id);
 
 
@@ -4026,7 +4027,7 @@ ALTER TABLE ONLY scope_policy
 -- Name: user_entity constraint_fb; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_entity
+ALTER TABLE ONLY public.user_entity
     ADD CONSTRAINT constraint_fb PRIMARY KEY (id);
 
 
@@ -4034,7 +4035,7 @@ ALTER TABLE ONLY user_entity
 -- Name: fed_credential_attribute constraint_fed_credential_attr; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_credential_attribute
+ALTER TABLE ONLY public.fed_credential_attribute
     ADD CONSTRAINT constraint_fed_credential_attr PRIMARY KEY (id);
 
 
@@ -4042,7 +4043,7 @@ ALTER TABLE ONLY fed_credential_attribute
 -- Name: user_federation_mapper_config constraint_fedmapper_cfg_pm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_mapper_config
+ALTER TABLE ONLY public.user_federation_mapper_config
     ADD CONSTRAINT constraint_fedmapper_cfg_pm PRIMARY KEY (user_federation_mapper_id, name);
 
 
@@ -4050,7 +4051,7 @@ ALTER TABLE ONLY user_federation_mapper_config
 -- Name: user_federation_mapper constraint_fedmapperpm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_mapper
+ALTER TABLE ONLY public.user_federation_mapper
     ADD CONSTRAINT constraint_fedmapperpm PRIMARY KEY (id);
 
 
@@ -4058,7 +4059,7 @@ ALTER TABLE ONLY user_federation_mapper
 -- Name: fed_user_consent_cl_scope constraint_fgrntcsnt_clsc_pm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_user_consent_cl_scope
+ALTER TABLE ONLY public.fed_user_consent_cl_scope
     ADD CONSTRAINT constraint_fgrntcsnt_clsc_pm PRIMARY KEY (user_consent_id, scope_id);
 
 
@@ -4066,7 +4067,7 @@ ALTER TABLE ONLY fed_user_consent_cl_scope
 -- Name: user_consent_client_scope constraint_grntcsnt_clsc_pm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_consent_client_scope
+ALTER TABLE ONLY public.user_consent_client_scope
     ADD CONSTRAINT constraint_grntcsnt_clsc_pm PRIMARY KEY (user_consent_id, scope_id);
 
 
@@ -4074,7 +4075,7 @@ ALTER TABLE ONLY user_consent_client_scope
 -- Name: user_consent constraint_grntcsnt_pm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_consent
+ALTER TABLE ONLY public.user_consent
     ADD CONSTRAINT constraint_grntcsnt_pm PRIMARY KEY (id);
 
 
@@ -4082,7 +4083,7 @@ ALTER TABLE ONLY user_consent
 -- Name: keycloak_group constraint_group; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_group
+ALTER TABLE ONLY public.keycloak_group
     ADD CONSTRAINT constraint_group PRIMARY KEY (id);
 
 
@@ -4090,7 +4091,7 @@ ALTER TABLE ONLY keycloak_group
 -- Name: group_attribute constraint_group_attribute_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_attribute
+ALTER TABLE ONLY public.group_attribute
     ADD CONSTRAINT constraint_group_attribute_pk PRIMARY KEY (id);
 
 
@@ -4098,7 +4099,7 @@ ALTER TABLE ONLY group_attribute
 -- Name: group_role_mapping constraint_group_role; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_role_mapping
+ALTER TABLE ONLY public.group_role_mapping
     ADD CONSTRAINT constraint_group_role PRIMARY KEY (role_id, group_id);
 
 
@@ -4106,7 +4107,7 @@ ALTER TABLE ONLY group_role_mapping
 -- Name: identity_provider_mapper constraint_idpm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider_mapper
+ALTER TABLE ONLY public.identity_provider_mapper
     ADD CONSTRAINT constraint_idpm PRIMARY KEY (id);
 
 
@@ -4114,7 +4115,7 @@ ALTER TABLE ONLY identity_provider_mapper
 -- Name: idp_mapper_config constraint_idpmconfig; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY idp_mapper_config
+ALTER TABLE ONLY public.idp_mapper_config
     ADD CONSTRAINT constraint_idpmconfig PRIMARY KEY (idp_mapper_id, name);
 
 
@@ -4122,7 +4123,7 @@ ALTER TABLE ONLY idp_mapper_config
 -- Name: migration_model constraint_migmod; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY migration_model
+ALTER TABLE ONLY public.migration_model
     ADD CONSTRAINT constraint_migmod PRIMARY KEY (id);
 
 
@@ -4130,7 +4131,7 @@ ALTER TABLE ONLY migration_model
 -- Name: offline_client_session constraint_offl_cl_ses_pk3; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY offline_client_session
+ALTER TABLE ONLY public.offline_client_session
     ADD CONSTRAINT constraint_offl_cl_ses_pk3 PRIMARY KEY (user_session_id, client_id, client_storage_provider, external_client_id, offline_flag);
 
 
@@ -4138,7 +4139,7 @@ ALTER TABLE ONLY offline_client_session
 -- Name: offline_user_session constraint_offl_us_ses_pk2; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY offline_user_session
+ALTER TABLE ONLY public.offline_user_session
     ADD CONSTRAINT constraint_offl_us_ses_pk2 PRIMARY KEY (user_session_id, offline_flag);
 
 
@@ -4146,7 +4147,7 @@ ALTER TABLE ONLY offline_user_session
 -- Name: protocol_mapper constraint_pcm; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY protocol_mapper
+ALTER TABLE ONLY public.protocol_mapper
     ADD CONSTRAINT constraint_pcm PRIMARY KEY (id);
 
 
@@ -4154,7 +4155,7 @@ ALTER TABLE ONLY protocol_mapper
 -- Name: protocol_mapper_config constraint_pmconfig; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY protocol_mapper_config
+ALTER TABLE ONLY public.protocol_mapper_config
     ADD CONSTRAINT constraint_pmconfig PRIMARY KEY (protocol_mapper_id, name);
 
 
@@ -4162,7 +4163,7 @@ ALTER TABLE ONLY protocol_mapper_config
 -- Name: realm_default_roles constraint_realm_default_roles; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_roles
+ALTER TABLE ONLY public.realm_default_roles
     ADD CONSTRAINT constraint_realm_default_roles PRIMARY KEY (realm_id, role_id);
 
 
@@ -4170,7 +4171,7 @@ ALTER TABLE ONLY realm_default_roles
 -- Name: redirect_uris constraint_redirect_uris; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY redirect_uris
+ALTER TABLE ONLY public.redirect_uris
     ADD CONSTRAINT constraint_redirect_uris PRIMARY KEY (client_id, value);
 
 
@@ -4178,7 +4179,7 @@ ALTER TABLE ONLY redirect_uris
 -- Name: required_action_config constraint_req_act_cfg_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY required_action_config
+ALTER TABLE ONLY public.required_action_config
     ADD CONSTRAINT constraint_req_act_cfg_pk PRIMARY KEY (required_action_id, name);
 
 
@@ -4186,7 +4187,7 @@ ALTER TABLE ONLY required_action_config
 -- Name: required_action_provider constraint_req_act_prv_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY required_action_provider
+ALTER TABLE ONLY public.required_action_provider
     ADD CONSTRAINT constraint_req_act_prv_pk PRIMARY KEY (id);
 
 
@@ -4194,7 +4195,7 @@ ALTER TABLE ONLY required_action_provider
 -- Name: user_required_action constraint_required_action; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_required_action
+ALTER TABLE ONLY public.user_required_action
     ADD CONSTRAINT constraint_required_action PRIMARY KEY (required_action, user_id);
 
 
@@ -4202,7 +4203,7 @@ ALTER TABLE ONLY user_required_action
 -- Name: user_attribute constraint_user_attribute_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_attribute
+ALTER TABLE ONLY public.user_attribute
     ADD CONSTRAINT constraint_user_attribute_pk PRIMARY KEY (id);
 
 
@@ -4210,7 +4211,7 @@ ALTER TABLE ONLY user_attribute
 -- Name: user_group_membership constraint_user_group; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_group_membership
+ALTER TABLE ONLY public.user_group_membership
     ADD CONSTRAINT constraint_user_group PRIMARY KEY (group_id, user_id);
 
 
@@ -4218,7 +4219,7 @@ ALTER TABLE ONLY user_group_membership
 -- Name: user_session_note constraint_usn_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session_note
+ALTER TABLE ONLY public.user_session_note
     ADD CONSTRAINT constraint_usn_pk PRIMARY KEY (user_session, name);
 
 
@@ -4226,7 +4227,7 @@ ALTER TABLE ONLY user_session_note
 -- Name: web_origins constraint_web_origins; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY web_origins
+ALTER TABLE ONLY public.web_origins
     ADD CONSTRAINT constraint_web_origins PRIMARY KEY (client_id, value);
 
 
@@ -4234,7 +4235,7 @@ ALTER TABLE ONLY web_origins
 -- Name: client_scope_attributes pk_cl_tmpl_attr; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_attributes
+ALTER TABLE ONLY public.client_scope_attributes
     ADD CONSTRAINT pk_cl_tmpl_attr PRIMARY KEY (scope_id, name);
 
 
@@ -4242,7 +4243,7 @@ ALTER TABLE ONLY client_scope_attributes
 -- Name: client_scope pk_cli_template; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope
+ALTER TABLE ONLY public.client_scope
     ADD CONSTRAINT pk_cli_template PRIMARY KEY (id);
 
 
@@ -4250,7 +4251,7 @@ ALTER TABLE ONLY client_scope
 -- Name: databasechangeloglock pk_databasechangeloglock; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY databasechangeloglock
+ALTER TABLE ONLY public.databasechangeloglock
     ADD CONSTRAINT pk_databasechangeloglock PRIMARY KEY (id);
 
 
@@ -4258,7 +4259,7 @@ ALTER TABLE ONLY databasechangeloglock
 -- Name: resource_server pk_resource_server; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server
+ALTER TABLE ONLY public.resource_server
     ADD CONSTRAINT pk_resource_server PRIMARY KEY (id);
 
 
@@ -4266,7 +4267,7 @@ ALTER TABLE ONLY resource_server
 -- Name: client_scope_role_mapping pk_template_scope; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_role_mapping
+ALTER TABLE ONLY public.client_scope_role_mapping
     ADD CONSTRAINT pk_template_scope PRIMARY KEY (scope_id, role_id);
 
 
@@ -4274,7 +4275,7 @@ ALTER TABLE ONLY client_scope_role_mapping
 -- Name: default_client_scope r_def_cli_scope_bind; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY default_client_scope
+ALTER TABLE ONLY public.default_client_scope
     ADD CONSTRAINT r_def_cli_scope_bind PRIMARY KEY (realm_id, scope_id);
 
 
@@ -4282,7 +4283,7 @@ ALTER TABLE ONLY default_client_scope
 -- Name: resource_attribute res_attr_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_attribute
+ALTER TABLE ONLY public.resource_attribute
     ADD CONSTRAINT res_attr_pk PRIMARY KEY (id);
 
 
@@ -4290,7 +4291,7 @@ ALTER TABLE ONLY resource_attribute
 -- Name: session_uuids session_uuids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY session_uuids
+ALTER TABLE ONLY public.session_uuids
     ADD CONSTRAINT session_uuids_pkey PRIMARY KEY (uuid);
 
 
@@ -4298,7 +4299,7 @@ ALTER TABLE ONLY session_uuids
 -- Name: keycloak_group sibling_names; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_group
+ALTER TABLE ONLY public.keycloak_group
     ADD CONSTRAINT sibling_names UNIQUE (realm_id, parent_group, name);
 
 
@@ -4306,7 +4307,7 @@ ALTER TABLE ONLY keycloak_group
 -- Name: identity_provider uk_2daelwnibji49avxsrtuf6xj33; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider
+ALTER TABLE ONLY public.identity_provider
     ADD CONSTRAINT uk_2daelwnibji49avxsrtuf6xj33 UNIQUE (provider_alias, realm_id);
 
 
@@ -4314,7 +4315,7 @@ ALTER TABLE ONLY identity_provider
 -- Name: client_default_roles uk_8aelwnibji49avxsrtuf6xjow; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_default_roles
+ALTER TABLE ONLY public.client_default_roles
     ADD CONSTRAINT uk_8aelwnibji49avxsrtuf6xjow UNIQUE (role_id);
 
 
@@ -4322,7 +4323,7 @@ ALTER TABLE ONLY client_default_roles
 -- Name: client uk_b71cjlbenv945rb6gcon438at; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client
+ALTER TABLE ONLY public.client
     ADD CONSTRAINT uk_b71cjlbenv945rb6gcon438at UNIQUE (realm_id, client_id);
 
 
@@ -4330,7 +4331,7 @@ ALTER TABLE ONLY client
 -- Name: client_scope uk_cli_scope; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope
+ALTER TABLE ONLY public.client_scope
     ADD CONSTRAINT uk_cli_scope UNIQUE (realm_id, name);
 
 
@@ -4338,7 +4339,7 @@ ALTER TABLE ONLY client_scope
 -- Name: user_entity uk_dykn684sl8up1crfei6eckhd7; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_entity
+ALTER TABLE ONLY public.user_entity
     ADD CONSTRAINT uk_dykn684sl8up1crfei6eckhd7 UNIQUE (realm_id, email_constraint);
 
 
@@ -4346,7 +4347,7 @@ ALTER TABLE ONLY user_entity
 -- Name: resource_server_resource uk_frsr6t700s9v50bu18ws5ha6; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_resource
+ALTER TABLE ONLY public.resource_server_resource
     ADD CONSTRAINT uk_frsr6t700s9v50bu18ws5ha6 UNIQUE (name, owner, resource_server_id);
 
 
@@ -4354,7 +4355,7 @@ ALTER TABLE ONLY resource_server_resource
 -- Name: resource_server_perm_ticket uk_frsr6t700s9v50bu18ws5pmt; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
+ALTER TABLE ONLY public.resource_server_perm_ticket
     ADD CONSTRAINT uk_frsr6t700s9v50bu18ws5pmt UNIQUE (owner, requester, resource_server_id, resource_id, scope_id);
 
 
@@ -4362,7 +4363,7 @@ ALTER TABLE ONLY resource_server_perm_ticket
 -- Name: resource_server_policy uk_frsrpt700s9v50bu18ws5ha6; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_policy
+ALTER TABLE ONLY public.resource_server_policy
     ADD CONSTRAINT uk_frsrpt700s9v50bu18ws5ha6 UNIQUE (name, resource_server_id);
 
 
@@ -4370,7 +4371,7 @@ ALTER TABLE ONLY resource_server_policy
 -- Name: resource_server_scope uk_frsrst700s9v50bu18ws5ha6; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_scope
+ALTER TABLE ONLY public.resource_server_scope
     ADD CONSTRAINT uk_frsrst700s9v50bu18ws5ha6 UNIQUE (name, resource_server_id);
 
 
@@ -4378,7 +4379,7 @@ ALTER TABLE ONLY resource_server_scope
 -- Name: realm_default_roles uk_h4wpd7w4hsoolni3h0sw7btje; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_roles
+ALTER TABLE ONLY public.realm_default_roles
     ADD CONSTRAINT uk_h4wpd7w4hsoolni3h0sw7btje UNIQUE (role_id);
 
 
@@ -4386,7 +4387,7 @@ ALTER TABLE ONLY realm_default_roles
 -- Name: user_consent uk_jkuwuvd56ontgsuhogm8uewrt; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_consent
+ALTER TABLE ONLY public.user_consent
     ADD CONSTRAINT uk_jkuwuvd56ontgsuhogm8uewrt UNIQUE (client_id, client_storage_provider, external_client_id, user_id);
 
 
@@ -4394,7 +4395,7 @@ ALTER TABLE ONLY user_consent
 -- Name: realm uk_orvsdmla56612eaefiq6wl5oi; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm
+ALTER TABLE ONLY public.realm
     ADD CONSTRAINT uk_orvsdmla56612eaefiq6wl5oi UNIQUE (name);
 
 
@@ -4402,7 +4403,7 @@ ALTER TABLE ONLY realm
 -- Name: user_entity uk_ru8tt6t700s9v50bu18ws5ha6; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_entity
+ALTER TABLE ONLY public.user_entity
     ADD CONSTRAINT uk_ru8tt6t700s9v50bu18ws5ha6 UNIQUE (realm_id, username);
 
 
@@ -4998,762 +4999,759 @@ CREATE INDEX idx_web_orig_client ON public.web_origins USING btree (client_id);
 -- Name: client_session_auth_status auth_status_constraint; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_auth_status
-    ADD CONSTRAINT auth_status_constraint FOREIGN KEY (client_session) REFERENCES client_session(id);
+ALTER TABLE ONLY public.client_session_auth_status
+    ADD CONSTRAINT auth_status_constraint FOREIGN KEY (client_session) REFERENCES public.client_session(id);
 
 
 --
 -- Name: identity_provider fk2b4ebc52ae5c3b34; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider
-    ADD CONSTRAINT fk2b4ebc52ae5c3b34 FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.identity_provider
+    ADD CONSTRAINT fk2b4ebc52ae5c3b34 FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: client_attributes fk3c47c64beacca966; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_attributes
-    ADD CONSTRAINT fk3c47c64beacca966 FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.client_attributes
+    ADD CONSTRAINT fk3c47c64beacca966 FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: federated_identity fk404288b92ef007a6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY federated_identity
-    ADD CONSTRAINT fk404288b92ef007a6 FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.federated_identity
+    ADD CONSTRAINT fk404288b92ef007a6 FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: client_node_registrations fk4129723ba992f594; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_node_registrations
-    ADD CONSTRAINT fk4129723ba992f594 FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.client_node_registrations
+    ADD CONSTRAINT fk4129723ba992f594 FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: client_session_note fk5edfb00ff51c2736; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_note
-    ADD CONSTRAINT fk5edfb00ff51c2736 FOREIGN KEY (client_session) REFERENCES client_session(id);
+ALTER TABLE ONLY public.client_session_note
+    ADD CONSTRAINT fk5edfb00ff51c2736 FOREIGN KEY (client_session) REFERENCES public.client_session(id);
 
 
 --
 -- Name: user_session_note fk5edfb00ff51d3472; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session_note
-    ADD CONSTRAINT fk5edfb00ff51d3472 FOREIGN KEY (user_session) REFERENCES user_session(id);
+ALTER TABLE ONLY public.user_session_note
+    ADD CONSTRAINT fk5edfb00ff51d3472 FOREIGN KEY (user_session) REFERENCES public.user_session(id);
 
 
 --
 -- Name: client_session_role fk_11b7sgqw18i532811v7o2dv76; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_role
-    ADD CONSTRAINT fk_11b7sgqw18i532811v7o2dv76 FOREIGN KEY (client_session) REFERENCES client_session(id);
+ALTER TABLE ONLY public.client_session_role
+    ADD CONSTRAINT fk_11b7sgqw18i532811v7o2dv76 FOREIGN KEY (client_session) REFERENCES public.client_session(id);
 
 
 --
 -- Name: redirect_uris fk_1burs8pb4ouj97h5wuppahv9f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY redirect_uris
-    ADD CONSTRAINT fk_1burs8pb4ouj97h5wuppahv9f FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.redirect_uris
+    ADD CONSTRAINT fk_1burs8pb4ouj97h5wuppahv9f FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: user_federation_provider fk_1fj32f6ptolw2qy60cd8n01e8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_provider
-    ADD CONSTRAINT fk_1fj32f6ptolw2qy60cd8n01e8 FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.user_federation_provider
+    ADD CONSTRAINT fk_1fj32f6ptolw2qy60cd8n01e8 FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: client_session_prot_mapper fk_33a8sgqw18i532811v7o2dk89; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session_prot_mapper
-    ADD CONSTRAINT fk_33a8sgqw18i532811v7o2dk89 FOREIGN KEY (client_session) REFERENCES client_session(id);
+ALTER TABLE ONLY public.client_session_prot_mapper
+    ADD CONSTRAINT fk_33a8sgqw18i532811v7o2dk89 FOREIGN KEY (client_session) REFERENCES public.client_session(id);
 
 
 --
 -- Name: realm_required_credential fk_5hg65lybevavkqfki3kponh9v; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_required_credential
-    ADD CONSTRAINT fk_5hg65lybevavkqfki3kponh9v FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_required_credential
+    ADD CONSTRAINT fk_5hg65lybevavkqfki3kponh9v FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: resource_attribute fk_5hrm2vlf9ql5fu022kqepovbr; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_attribute
-    ADD CONSTRAINT fk_5hrm2vlf9ql5fu022kqepovbr FOREIGN KEY (resource_id) REFERENCES resource_server_resource(id);
+ALTER TABLE ONLY public.resource_attribute
+    ADD CONSTRAINT fk_5hrm2vlf9ql5fu022kqepovbr FOREIGN KEY (resource_id) REFERENCES public.resource_server_resource(id);
 
 
 --
 -- Name: user_attribute fk_5hrm2vlf9ql5fu043kqepovbr; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_attribute
-    ADD CONSTRAINT fk_5hrm2vlf9ql5fu043kqepovbr FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.user_attribute
+    ADD CONSTRAINT fk_5hrm2vlf9ql5fu043kqepovbr FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: user_required_action fk_6qj3w1jw9cvafhe19bwsiuvmd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_required_action
-    ADD CONSTRAINT fk_6qj3w1jw9cvafhe19bwsiuvmd FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.user_required_action
+    ADD CONSTRAINT fk_6qj3w1jw9cvafhe19bwsiuvmd FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: keycloak_role fk_6vyqfe4cn4wlq8r6kt5vdsj5c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_role
-    ADD CONSTRAINT fk_6vyqfe4cn4wlq8r6kt5vdsj5c FOREIGN KEY (realm) REFERENCES realm(id);
+ALTER TABLE ONLY public.keycloak_role
+    ADD CONSTRAINT fk_6vyqfe4cn4wlq8r6kt5vdsj5c FOREIGN KEY (realm) REFERENCES public.realm(id);
 
 
 --
 -- Name: realm_smtp_config fk_70ej8xdxgxd0b9hh6180irr0o; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_smtp_config
-    ADD CONSTRAINT fk_70ej8xdxgxd0b9hh6180irr0o FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_smtp_config
+    ADD CONSTRAINT fk_70ej8xdxgxd0b9hh6180irr0o FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: client_default_roles fk_8aelwnibji49avxsrtuf6xjow; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_default_roles
-    ADD CONSTRAINT fk_8aelwnibji49avxsrtuf6xjow FOREIGN KEY (role_id) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.client_default_roles
+    ADD CONSTRAINT fk_8aelwnibji49avxsrtuf6xjow FOREIGN KEY (role_id) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: realm_attribute fk_8shxd6l3e9atqukacxgpffptw; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_attribute
-    ADD CONSTRAINT fk_8shxd6l3e9atqukacxgpffptw FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_attribute
+    ADD CONSTRAINT fk_8shxd6l3e9atqukacxgpffptw FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: composite_role fk_a63wvekftu8jo1pnj81e7mce2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY composite_role
-    ADD CONSTRAINT fk_a63wvekftu8jo1pnj81e7mce2 FOREIGN KEY (composite) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.composite_role
+    ADD CONSTRAINT fk_a63wvekftu8jo1pnj81e7mce2 FOREIGN KEY (composite) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: acl fk_acl_1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY acl
-    ADD CONSTRAINT fk_acl_1 FOREIGN KEY (design_id) REFERENCES api_designs(id);
+ALTER TABLE ONLY public.acl
+    ADD CONSTRAINT fk_acl_1 FOREIGN KEY (design_id) REFERENCES public.api_designs(id);
 
 
 --
 -- Name: authentication_execution fk_auth_exec_flow; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authentication_execution
-    ADD CONSTRAINT fk_auth_exec_flow FOREIGN KEY (flow_id) REFERENCES authentication_flow(id);
+ALTER TABLE ONLY public.authentication_execution
+    ADD CONSTRAINT fk_auth_exec_flow FOREIGN KEY (flow_id) REFERENCES public.authentication_flow(id);
 
 
 --
 -- Name: authentication_execution fk_auth_exec_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authentication_execution
-    ADD CONSTRAINT fk_auth_exec_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.authentication_execution
+    ADD CONSTRAINT fk_auth_exec_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: authentication_flow fk_auth_flow_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authentication_flow
-    ADD CONSTRAINT fk_auth_flow_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.authentication_flow
+    ADD CONSTRAINT fk_auth_flow_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: authenticator_config fk_auth_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY authenticator_config
-    ADD CONSTRAINT fk_auth_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.authenticator_config
+    ADD CONSTRAINT fk_auth_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: client_session fk_b4ao2vcvat6ukau74wbwtfqo1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_session
-    ADD CONSTRAINT fk_b4ao2vcvat6ukau74wbwtfqo1 FOREIGN KEY (session_id) REFERENCES user_session(id);
+ALTER TABLE ONLY public.client_session
+    ADD CONSTRAINT fk_b4ao2vcvat6ukau74wbwtfqo1 FOREIGN KEY (session_id) REFERENCES public.user_session(id);
 
 
 --
 -- Name: user_role_mapping fk_c4fqv34p1mbylloxang7b1q3l; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_role_mapping
-    ADD CONSTRAINT fk_c4fqv34p1mbylloxang7b1q3l FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.user_role_mapping
+    ADD CONSTRAINT fk_c4fqv34p1mbylloxang7b1q3l FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: client_scope_client fk_c_cli_scope_client; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_client
-    ADD CONSTRAINT fk_c_cli_scope_client FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.client_scope_client
+    ADD CONSTRAINT fk_c_cli_scope_client FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: client_scope_client fk_c_cli_scope_scope; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_client
-    ADD CONSTRAINT fk_c_cli_scope_scope FOREIGN KEY (scope_id) REFERENCES client_scope(id);
+ALTER TABLE ONLY public.client_scope_client
+    ADD CONSTRAINT fk_c_cli_scope_scope FOREIGN KEY (scope_id) REFERENCES public.client_scope(id);
 
 
 --
 -- Name: client_scope_attributes fk_cl_scope_attr_scope; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_attributes
-    ADD CONSTRAINT fk_cl_scope_attr_scope FOREIGN KEY (scope_id) REFERENCES client_scope(id);
+ALTER TABLE ONLY public.client_scope_attributes
+    ADD CONSTRAINT fk_cl_scope_attr_scope FOREIGN KEY (scope_id) REFERENCES public.client_scope(id);
 
 
 --
 -- Name: client_scope_role_mapping fk_cl_scope_rm_role; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_role_mapping
-    ADD CONSTRAINT fk_cl_scope_rm_role FOREIGN KEY (role_id) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.client_scope_role_mapping
+    ADD CONSTRAINT fk_cl_scope_rm_role FOREIGN KEY (role_id) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: client_scope_role_mapping fk_cl_scope_rm_scope; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope_role_mapping
-    ADD CONSTRAINT fk_cl_scope_rm_scope FOREIGN KEY (scope_id) REFERENCES client_scope(id);
+ALTER TABLE ONLY public.client_scope_role_mapping
+    ADD CONSTRAINT fk_cl_scope_rm_scope FOREIGN KEY (scope_id) REFERENCES public.client_scope(id);
 
 
 --
 -- Name: client_user_session_note fk_cl_usr_ses_note; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_user_session_note
-    ADD CONSTRAINT fk_cl_usr_ses_note FOREIGN KEY (client_session) REFERENCES client_session(id);
+ALTER TABLE ONLY public.client_user_session_note
+    ADD CONSTRAINT fk_cl_usr_ses_note FOREIGN KEY (client_session) REFERENCES public.client_session(id);
 
 
 --
 -- Name: protocol_mapper fk_cli_scope_mapper; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY protocol_mapper
-    ADD CONSTRAINT fk_cli_scope_mapper FOREIGN KEY (client_scope_id) REFERENCES client_scope(id);
+ALTER TABLE ONLY public.protocol_mapper
+    ADD CONSTRAINT fk_cli_scope_mapper FOREIGN KEY (client_scope_id) REFERENCES public.client_scope(id);
 
 
 --
 -- Name: client_initial_access fk_client_init_acc_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_initial_access
-    ADD CONSTRAINT fk_client_init_acc_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.client_initial_access
+    ADD CONSTRAINT fk_client_init_acc_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: codegen fk_codegen_1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY codegen
-    ADD CONSTRAINT fk_codegen_1 FOREIGN KEY (design_id) REFERENCES api_designs(id);
+ALTER TABLE ONLY public.codegen
+    ADD CONSTRAINT fk_codegen_1 FOREIGN KEY (design_id) REFERENCES public.api_designs(id);
 
 
 --
 -- Name: component_config fk_component_config; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY component_config
-    ADD CONSTRAINT fk_component_config FOREIGN KEY (component_id) REFERENCES component(id);
+ALTER TABLE ONLY public.component_config
+    ADD CONSTRAINT fk_component_config FOREIGN KEY (component_id) REFERENCES public.component(id);
 
 
 --
 -- Name: component fk_component_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY component
-    ADD CONSTRAINT fk_component_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.component
+    ADD CONSTRAINT fk_component_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: api_content fk_content_1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY api_content
-    ADD CONSTRAINT fk_content_1 FOREIGN KEY (design_id) REFERENCES api_designs(id);
+ALTER TABLE ONLY public.api_content
+    ADD CONSTRAINT fk_content_1 FOREIGN KEY (design_id) REFERENCES public.api_designs(id);
 
 
 --
 -- Name: credential_attribute fk_cred_attr; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY credential_attribute
-    ADD CONSTRAINT fk_cred_attr FOREIGN KEY (credential_id) REFERENCES credential(id);
+ALTER TABLE ONLY public.credential_attribute
+    ADD CONSTRAINT fk_cred_attr FOREIGN KEY (credential_id) REFERENCES public.credential(id);
 
 
 --
 -- Name: realm_default_groups fk_def_groups_group; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_groups
-    ADD CONSTRAINT fk_def_groups_group FOREIGN KEY (group_id) REFERENCES keycloak_group(id);
+ALTER TABLE ONLY public.realm_default_groups
+    ADD CONSTRAINT fk_def_groups_group FOREIGN KEY (group_id) REFERENCES public.keycloak_group(id);
 
 
 --
 -- Name: realm_default_groups fk_def_groups_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_groups
-    ADD CONSTRAINT fk_def_groups_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_default_groups
+    ADD CONSTRAINT fk_def_groups_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: realm_default_roles fk_evudb1ppw84oxfax2drs03icc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_roles
-    ADD CONSTRAINT fk_evudb1ppw84oxfax2drs03icc FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_default_roles
+    ADD CONSTRAINT fk_evudb1ppw84oxfax2drs03icc FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: fed_credential_attribute fk_fed_cred_attr; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fed_credential_attribute
-    ADD CONSTRAINT fk_fed_cred_attr FOREIGN KEY (credential_id) REFERENCES fed_user_credential(id);
+ALTER TABLE ONLY public.fed_credential_attribute
+    ADD CONSTRAINT fk_fed_cred_attr FOREIGN KEY (credential_id) REFERENCES public.fed_user_credential(id);
 
 
 --
 -- Name: user_federation_mapper_config fk_fedmapper_cfg; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_mapper_config
-    ADD CONSTRAINT fk_fedmapper_cfg FOREIGN KEY (user_federation_mapper_id) REFERENCES user_federation_mapper(id);
+ALTER TABLE ONLY public.user_federation_mapper_config
+    ADD CONSTRAINT fk_fedmapper_cfg FOREIGN KEY (user_federation_mapper_id) REFERENCES public.user_federation_mapper(id);
 
 
 --
 -- Name: user_federation_mapper fk_fedmapperpm_fedprv; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_mapper
-    ADD CONSTRAINT fk_fedmapperpm_fedprv FOREIGN KEY (federation_provider_id) REFERENCES user_federation_provider(id);
+ALTER TABLE ONLY public.user_federation_mapper
+    ADD CONSTRAINT fk_fedmapperpm_fedprv FOREIGN KEY (federation_provider_id) REFERENCES public.user_federation_provider(id);
 
 
 --
 -- Name: user_federation_mapper fk_fedmapperpm_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_mapper
-    ADD CONSTRAINT fk_fedmapperpm_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.user_federation_mapper
+    ADD CONSTRAINT fk_fedmapperpm_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: associated_policy fk_frsr5s213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY associated_policy
-    ADD CONSTRAINT fk_frsr5s213xcx4wnkog82ssrfy FOREIGN KEY (associated_policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.associated_policy
+    ADD CONSTRAINT fk_frsr5s213xcx4wnkog82ssrfy FOREIGN KEY (associated_policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: scope_policy fk_frsrasp13xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_policy
-    ADD CONSTRAINT fk_frsrasp13xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.scope_policy
+    ADD CONSTRAINT fk_frsrasp13xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: resource_server_perm_ticket fk_frsrho213xcx4wnkog82sspmt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
-    ADD CONSTRAINT fk_frsrho213xcx4wnkog82sspmt FOREIGN KEY (resource_server_id) REFERENCES resource_server(id);
+ALTER TABLE ONLY public.resource_server_perm_ticket
+    ADD CONSTRAINT fk_frsrho213xcx4wnkog82sspmt FOREIGN KEY (resource_server_id) REFERENCES public.resource_server(id);
 
 
 --
 -- Name: resource_server_resource fk_frsrho213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_resource
-    ADD CONSTRAINT fk_frsrho213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES resource_server(id);
+ALTER TABLE ONLY public.resource_server_resource
+    ADD CONSTRAINT fk_frsrho213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES public.resource_server(id);
 
 
 --
 -- Name: resource_server_perm_ticket fk_frsrho213xcx4wnkog83sspmt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
-    ADD CONSTRAINT fk_frsrho213xcx4wnkog83sspmt FOREIGN KEY (resource_id) REFERENCES resource_server_resource(id);
+ALTER TABLE ONLY public.resource_server_perm_ticket
+    ADD CONSTRAINT fk_frsrho213xcx4wnkog83sspmt FOREIGN KEY (resource_id) REFERENCES public.resource_server_resource(id);
 
 
 --
 -- Name: resource_server_perm_ticket fk_frsrho213xcx4wnkog84sspmt; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
-    ADD CONSTRAINT fk_frsrho213xcx4wnkog84sspmt FOREIGN KEY (scope_id) REFERENCES resource_server_scope(id);
+ALTER TABLE ONLY public.resource_server_perm_ticket
+    ADD CONSTRAINT fk_frsrho213xcx4wnkog84sspmt FOREIGN KEY (scope_id) REFERENCES public.resource_server_scope(id);
 
 
 --
 -- Name: associated_policy fk_frsrpas14xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY associated_policy
-    ADD CONSTRAINT fk_frsrpas14xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.associated_policy
+    ADD CONSTRAINT fk_frsrpas14xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: scope_policy fk_frsrpass3xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_policy
-    ADD CONSTRAINT fk_frsrpass3xcx4wnkog82ssrfy FOREIGN KEY (scope_id) REFERENCES resource_server_scope(id);
+ALTER TABLE ONLY public.scope_policy
+    ADD CONSTRAINT fk_frsrpass3xcx4wnkog82ssrfy FOREIGN KEY (scope_id) REFERENCES public.resource_server_scope(id);
 
 
 --
 -- Name: resource_server_perm_ticket fk_frsrpo2128cx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_perm_ticket
-    ADD CONSTRAINT fk_frsrpo2128cx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.resource_server_perm_ticket
+    ADD CONSTRAINT fk_frsrpo2128cx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: resource_server_policy fk_frsrpo213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_policy
-    ADD CONSTRAINT fk_frsrpo213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES resource_server(id);
+ALTER TABLE ONLY public.resource_server_policy
+    ADD CONSTRAINT fk_frsrpo213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES public.resource_server(id);
 
 
 --
 -- Name: resource_scope fk_frsrpos13xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_scope
-    ADD CONSTRAINT fk_frsrpos13xcx4wnkog82ssrfy FOREIGN KEY (resource_id) REFERENCES resource_server_resource(id);
+ALTER TABLE ONLY public.resource_scope
+    ADD CONSTRAINT fk_frsrpos13xcx4wnkog82ssrfy FOREIGN KEY (resource_id) REFERENCES public.resource_server_resource(id);
 
 
 --
 -- Name: resource_policy fk_frsrpos53xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_policy
-    ADD CONSTRAINT fk_frsrpos53xcx4wnkog82ssrfy FOREIGN KEY (resource_id) REFERENCES resource_server_resource(id);
+ALTER TABLE ONLY public.resource_policy
+    ADD CONSTRAINT fk_frsrpos53xcx4wnkog82ssrfy FOREIGN KEY (resource_id) REFERENCES public.resource_server_resource(id);
 
 
 --
 -- Name: resource_policy fk_frsrpp213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_policy
-    ADD CONSTRAINT fk_frsrpp213xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.resource_policy
+    ADD CONSTRAINT fk_frsrpp213xcx4wnkog82ssrfy FOREIGN KEY (policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: resource_scope fk_frsrps213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_scope
-    ADD CONSTRAINT fk_frsrps213xcx4wnkog82ssrfy FOREIGN KEY (scope_id) REFERENCES resource_server_scope(id);
+ALTER TABLE ONLY public.resource_scope
+    ADD CONSTRAINT fk_frsrps213xcx4wnkog82ssrfy FOREIGN KEY (scope_id) REFERENCES public.resource_server_scope(id);
 
 
 --
 -- Name: resource_server_scope fk_frsrso213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY resource_server_scope
-    ADD CONSTRAINT fk_frsrso213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES resource_server(id);
+ALTER TABLE ONLY public.resource_server_scope
+    ADD CONSTRAINT fk_frsrso213xcx4wnkog82ssrfy FOREIGN KEY (resource_server_id) REFERENCES public.resource_server(id);
 
 
 --
 -- Name: composite_role fk_gr7thllb9lu8q4vqa4524jjy8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY composite_role
-    ADD CONSTRAINT fk_gr7thllb9lu8q4vqa4524jjy8 FOREIGN KEY (child_role) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.composite_role
+    ADD CONSTRAINT fk_gr7thllb9lu8q4vqa4524jjy8 FOREIGN KEY (child_role) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: user_consent_client_scope fk_grntcsnt_clsc_usc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_consent_client_scope
-    ADD CONSTRAINT fk_grntcsnt_clsc_usc FOREIGN KEY (user_consent_id) REFERENCES user_consent(id);
+ALTER TABLE ONLY public.user_consent_client_scope
+    ADD CONSTRAINT fk_grntcsnt_clsc_usc FOREIGN KEY (user_consent_id) REFERENCES public.user_consent(id);
 
 
 --
 -- Name: user_consent fk_grntcsnt_user; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_consent
-    ADD CONSTRAINT fk_grntcsnt_user FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.user_consent
+    ADD CONSTRAINT fk_grntcsnt_user FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: group_attribute fk_group_attribute_group; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_attribute
-    ADD CONSTRAINT fk_group_attribute_group FOREIGN KEY (group_id) REFERENCES keycloak_group(id);
+ALTER TABLE ONLY public.group_attribute
+    ADD CONSTRAINT fk_group_attribute_group FOREIGN KEY (group_id) REFERENCES public.keycloak_group(id);
 
 
 --
 -- Name: keycloak_group fk_group_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_group
-    ADD CONSTRAINT fk_group_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.keycloak_group
+    ADD CONSTRAINT fk_group_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: group_role_mapping fk_group_role_group; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_role_mapping
-    ADD CONSTRAINT fk_group_role_group FOREIGN KEY (group_id) REFERENCES keycloak_group(id);
+ALTER TABLE ONLY public.group_role_mapping
+    ADD CONSTRAINT fk_group_role_group FOREIGN KEY (group_id) REFERENCES public.keycloak_group(id);
 
 
 --
 -- Name: group_role_mapping fk_group_role_role; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY group_role_mapping
-    ADD CONSTRAINT fk_group_role_role FOREIGN KEY (role_id) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.group_role_mapping
+    ADD CONSTRAINT fk_group_role_role FOREIGN KEY (role_id) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: realm_default_roles fk_h4wpd7w4hsoolni3h0sw7btje; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_default_roles
-    ADD CONSTRAINT fk_h4wpd7w4hsoolni3h0sw7btje FOREIGN KEY (role_id) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.realm_default_roles
+    ADD CONSTRAINT fk_h4wpd7w4hsoolni3h0sw7btje FOREIGN KEY (role_id) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: realm_enabled_event_types fk_h846o4h0w8epx5nwedrf5y69j; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_enabled_event_types
-    ADD CONSTRAINT fk_h846o4h0w8epx5nwedrf5y69j FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_enabled_event_types
+    ADD CONSTRAINT fk_h846o4h0w8epx5nwedrf5y69j FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: realm_events_listeners fk_h846o4h0w8epx5nxev9f5y69j; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_events_listeners
-    ADD CONSTRAINT fk_h846o4h0w8epx5nxev9f5y69j FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_events_listeners
+    ADD CONSTRAINT fk_h846o4h0w8epx5nxev9f5y69j FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: identity_provider_mapper fk_idpm_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider_mapper
-    ADD CONSTRAINT fk_idpm_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.identity_provider_mapper
+    ADD CONSTRAINT fk_idpm_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: idp_mapper_config fk_idpmconfig; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY idp_mapper_config
-    ADD CONSTRAINT fk_idpmconfig FOREIGN KEY (idp_mapper_id) REFERENCES identity_provider_mapper(id);
+ALTER TABLE ONLY public.idp_mapper_config
+    ADD CONSTRAINT fk_idpmconfig FOREIGN KEY (idp_mapper_id) REFERENCES public.identity_provider_mapper(id);
 
 
 --
 -- Name: acl_invites fk_invites_1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY acl_invites
-    ADD CONSTRAINT fk_invites_1 FOREIGN KEY (design_id) REFERENCES api_designs(id);
+ALTER TABLE ONLY public.acl_invites
+    ADD CONSTRAINT fk_invites_1 FOREIGN KEY (design_id) REFERENCES public.api_designs(id);
 
 
 --
 -- Name: keycloak_role fk_kjho5le2c0ral09fl8cm9wfw9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY keycloak_role
-    ADD CONSTRAINT fk_kjho5le2c0ral09fl8cm9wfw9 FOREIGN KEY (client) REFERENCES client(id);
+ALTER TABLE ONLY public.keycloak_role
+    ADD CONSTRAINT fk_kjho5le2c0ral09fl8cm9wfw9 FOREIGN KEY (client) REFERENCES public.client(id);
 
 
 --
 -- Name: web_origins fk_lojpho213xcx4wnkog82ssrfy; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY web_origins
-    ADD CONSTRAINT fk_lojpho213xcx4wnkog82ssrfy FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.web_origins
+    ADD CONSTRAINT fk_lojpho213xcx4wnkog82ssrfy FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: client_default_roles fk_nuilts7klwqw2h8m2b5joytky; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_default_roles
-    ADD CONSTRAINT fk_nuilts7klwqw2h8m2b5joytky FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.client_default_roles
+    ADD CONSTRAINT fk_nuilts7klwqw2h8m2b5joytky FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: scope_mapping fk_ouse064plmlr732lxjcn1q5f1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_mapping
-    ADD CONSTRAINT fk_ouse064plmlr732lxjcn1q5f1 FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.scope_mapping
+    ADD CONSTRAINT fk_ouse064plmlr732lxjcn1q5f1 FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: scope_mapping fk_p3rh9grku11kqfrs4fltt7rnq; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope_mapping
-    ADD CONSTRAINT fk_p3rh9grku11kqfrs4fltt7rnq FOREIGN KEY (role_id) REFERENCES keycloak_role(id);
+ALTER TABLE ONLY public.scope_mapping
+    ADD CONSTRAINT fk_p3rh9grku11kqfrs4fltt7rnq FOREIGN KEY (role_id) REFERENCES public.keycloak_role(id);
 
 
 --
 -- Name: client fk_p56ctinxxb9gsk57fo49f9tac; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client
-    ADD CONSTRAINT fk_p56ctinxxb9gsk57fo49f9tac FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.client
+    ADD CONSTRAINT fk_p56ctinxxb9gsk57fo49f9tac FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: protocol_mapper fk_pcm_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY protocol_mapper
-    ADD CONSTRAINT fk_pcm_realm FOREIGN KEY (client_id) REFERENCES client(id);
+ALTER TABLE ONLY public.protocol_mapper
+    ADD CONSTRAINT fk_pcm_realm FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
 --
 -- Name: credential fk_pfyr0glasqyl0dei3kl69r6v0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY credential
-    ADD CONSTRAINT fk_pfyr0glasqyl0dei3kl69r6v0 FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.credential
+    ADD CONSTRAINT fk_pfyr0glasqyl0dei3kl69r6v0 FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: protocol_mapper_config fk_pmconfig; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY protocol_mapper_config
-    ADD CONSTRAINT fk_pmconfig FOREIGN KEY (protocol_mapper_id) REFERENCES protocol_mapper(id);
+ALTER TABLE ONLY public.protocol_mapper_config
+    ADD CONSTRAINT fk_pmconfig FOREIGN KEY (protocol_mapper_id) REFERENCES public.protocol_mapper(id);
 
 
 --
 -- Name: default_client_scope fk_r_def_cli_scope_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY default_client_scope
-    ADD CONSTRAINT fk_r_def_cli_scope_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.default_client_scope
+    ADD CONSTRAINT fk_r_def_cli_scope_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: default_client_scope fk_r_def_cli_scope_scope; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY default_client_scope
-    ADD CONSTRAINT fk_r_def_cli_scope_scope FOREIGN KEY (scope_id) REFERENCES client_scope(id);
+ALTER TABLE ONLY public.default_client_scope
+    ADD CONSTRAINT fk_r_def_cli_scope_scope FOREIGN KEY (scope_id) REFERENCES public.client_scope(id);
 
 
 --
 -- Name: client_scope fk_realm_cli_scope; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY client_scope
-    ADD CONSTRAINT fk_realm_cli_scope FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.client_scope
+    ADD CONSTRAINT fk_realm_cli_scope FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: required_action_provider fk_req_act_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY required_action_provider
-    ADD CONSTRAINT fk_req_act_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.required_action_provider
+    ADD CONSTRAINT fk_req_act_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: realm_supported_locales fk_supported_locales_realm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm_supported_locales
-    ADD CONSTRAINT fk_supported_locales_realm FOREIGN KEY (realm_id) REFERENCES realm(id);
+ALTER TABLE ONLY public.realm_supported_locales
+    ADD CONSTRAINT fk_supported_locales_realm FOREIGN KEY (realm_id) REFERENCES public.realm(id);
 
 
 --
 -- Name: user_federation_config fk_t13hpu1j94r2ebpekr39x5eu5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_federation_config
-    ADD CONSTRAINT fk_t13hpu1j94r2ebpekr39x5eu5 FOREIGN KEY (user_federation_provider_id) REFERENCES user_federation_provider(id);
+ALTER TABLE ONLY public.user_federation_config
+    ADD CONSTRAINT fk_t13hpu1j94r2ebpekr39x5eu5 FOREIGN KEY (user_federation_provider_id) REFERENCES public.user_federation_provider(id);
 
 
 --
 -- Name: realm fk_traf444kk6qrkms7n56aiwq5y; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY realm
-    ADD CONSTRAINT fk_traf444kk6qrkms7n56aiwq5y FOREIGN KEY (master_admin_client) REFERENCES client(id);
+ALTER TABLE ONLY public.realm
+    ADD CONSTRAINT fk_traf444kk6qrkms7n56aiwq5y FOREIGN KEY (master_admin_client) REFERENCES public.client(id);
 
 
 --
 -- Name: user_group_membership fk_user_group_user; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_group_membership
-    ADD CONSTRAINT fk_user_group_user FOREIGN KEY (user_id) REFERENCES user_entity(id);
+ALTER TABLE ONLY public.user_group_membership
+    ADD CONSTRAINT fk_user_group_user FOREIGN KEY (user_id) REFERENCES public.user_entity(id);
 
 
 --
 -- Name: policy_config fkdc34197cf864c4e43; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY policy_config
-    ADD CONSTRAINT fkdc34197cf864c4e43 FOREIGN KEY (policy_id) REFERENCES resource_server_policy(id);
+ALTER TABLE ONLY public.policy_config
+    ADD CONSTRAINT fkdc34197cf864c4e43 FOREIGN KEY (policy_id) REFERENCES public.resource_server_policy(id);
 
 
 --
 -- Name: identity_provider_config fkdc4897cf864c4e43; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY identity_provider_config
-    ADD CONSTRAINT fkdc4897cf864c4e43 FOREIGN KEY (identity_provider_id) REFERENCES identity_provider(internal_id);
+ALTER TABLE ONLY public.identity_provider_config
+    ADD CONSTRAINT fkdc4897cf864c4e43 FOREIGN KEY (identity_provider_id) REFERENCES public.identity_provider(internal_id);
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: -
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: -
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
