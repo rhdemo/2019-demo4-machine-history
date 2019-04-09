@@ -503,3 +503,7 @@ ALTER TABLE ONLY maintenance_record
 -- PostgreSQL database dump complete
 --
 
+
+insert into machine_record (id, name) values (0, 'Hydraulic Press');
+update maintenance_record SET machine_id=0 where machine_id=10;
+delete from machine_record where id = 10;
