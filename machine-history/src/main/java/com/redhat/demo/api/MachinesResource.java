@@ -26,5 +26,6 @@ public interface MachinesResource {
 
   @Path("/{id}")
   @GET
+  @Produces("application/json")
   MachineState generatedMethod1(@PathParam("id") Integer id);
 }
