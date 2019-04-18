@@ -41,6 +41,25 @@
         "required" : true,
         "type" : "integer"
       } ]
+    },
+    "/machines/{id}" : {
+      "get" : {
+        "operationId" : "getMachineState",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/MachineState"
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "type" : "integer"
+      } ]
     }
   },
   "definitions" : {
