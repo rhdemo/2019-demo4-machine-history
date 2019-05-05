@@ -44,7 +44,7 @@
     },
     "/machines/{id}" : {
       "get" : {
-        "operationId" : "machineState",
+        "operationId" : "currentState",
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
@@ -58,7 +58,7 @@
         "name" : "id",
         "in" : "path",
         "required" : true,
-        "type" : "integer"
+        "type" : "number"
       } ]
     }
   },

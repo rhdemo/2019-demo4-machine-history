@@ -4,6 +4,7 @@ import com.redhat.demo.api.beans.Machine;
 import com.redhat.demo.api.beans.MachineHistory;
 import com.redhat.demo.api.beans.MachineState;
 import java.lang.Integer;
+import java.lang.Number;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,5 +28,5 @@ public interface MachinesResource {
   @Path("/{id}")
   @GET
   @Produces("application/json")
-  MachineState machineState(@PathParam("id") Integer id);
+  MachineState currentState(@PathParam("id") Number id);
 }
